@@ -3,6 +3,7 @@ import 'package:betterloop/features/navigation_screen.dart';
 import 'package:betterloop/features/onboarding/welcome_screen.dart';
 import 'package:betterloop/features/settings/settings_screen.dart';
 import 'package:betterloop/routes/route_names.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import '../features/onboarding/onboarding_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
@@ -22,6 +23,24 @@ class AppRouter {
         return _createRoute();
       case RouteNames.settings:
         return _createSettingsRoute();
+      case "/sign_in":
+        return MaterialPageRoute(
+          builder: (context) {
+            return SignInScreen(
+              // providers: providers,
+              actions: [
+                AuthStateChangeAction<UserCreated>((context, state) {
+                  // Put any new user logic here
+                  // onSignedIn();
+                }),
+                AuthStateChangeAction<SignedIn>((context, state) {
+                  // onSignedIn();
+                  Navigator.pop(context, true);
+                }),
+              ],
+            );
+          },
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(
@@ -50,8 +69,7 @@ Route _createRoute() {
 
 Route _createSettingsRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const SettingsScreen(),
+    pageBuilder: (context, animation, secondaryAnimation) => SettingsScreen(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;

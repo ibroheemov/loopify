@@ -22,7 +22,7 @@ class SingleSettingContainer extends StatelessWidget {
     return AppCard(
       boxShadow: false,
       borderRadius: false,
-      onTap: () {},
+      onTap: onTap,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

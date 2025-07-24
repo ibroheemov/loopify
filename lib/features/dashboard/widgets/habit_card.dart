@@ -105,7 +105,7 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
 
     return goalEnabled
         ? IconButton(
-            onPressed: widget.onComplete,
+            onPressed: widget.isComplete ? null : widget.onComplete,
             icon: Icon(
               widget.isComplete
                   ? Icons.check_circle_rounded

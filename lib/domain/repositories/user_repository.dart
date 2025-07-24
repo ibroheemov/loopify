@@ -1,16 +1,9 @@
-// import 'package:apexhabit/core/error/failures.dart';
-// import 'package:apexhabit/presentation/components/paywall/purchasable_product.dart';
-// import 'package:dartz/dartz.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:betterloop/config/failure.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 
-// abstract class UserRepository {
-//   Future<Either<Failure, void>> initializeFirebase();
-//   Future<Either<Failure, void>> purchaseSubscription(
-//       PurchasableProduct product);
-//   Future<Either<Failure, UserCredential>> signInWithGoogle(
-//       bool linkAnonymousToGoogle);
-//   Future<Either<Failure, void>> getSyncedData(String userId);
-//   Future<Either<Failure, void>> syncedData(String userId);
-//   Future<Either<Failure, void>> signout();
-// }
+abstract class UserRepository {
+  Future<Either<Failure, void>> restore();
+  Future<Either<Failure, void>> backup();
+  Future<Either<Failure, Timestamp?>> lastBackupTime();
+}

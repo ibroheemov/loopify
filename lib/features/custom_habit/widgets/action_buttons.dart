@@ -64,20 +64,23 @@ class ActionButtons extends ConsumerWidget {
 
     if (!formKey.currentState!.validate()) return;
     var uuid = Uuid();
+    final habitId = uuid.v1();
     final name = controller.text.trim();
 
     final habit = Habit(
       color: iconColor,
       icon: HiveIcon(code: icon.codePoint, family: icon.fontFamily),
-      id: uuid.v1(),
+      id: habitId,
       title: name,
       createdAt: DateTime.now(),
       goal: goal,
       weekdays: weekdays,
     );
 
-    NotificationService().scheduleNotification(
-      notificationId: 1222,
+    final hash = habitId.hashCode;
+    await NotificationService().scheduleNotification(
+      notificationId: hash,
+      habit: habit,
       notificationItem: NotificationItem(
           timeH: reminder.hour, timeM: reminder.minute, id: 1222),
       weekdayEntities: reminder.selectedWeekDays,

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "817590284277",
+    "project_id": "betterloop-5b55e",
+    "storage_bucket": "betterloop-5b55e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817590284277:android:03fda24b53f6354d49babc",
+        "android_client_info": {
+          "package_name": "com.example.betterloop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817590284277-hqvrj3mdj23n4mpa316c5amqg6n96k5d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.betterloop",
+            "certificate_hash": "d40be8e728562b1dc61dcb3b26172e7cea935136"
+          }
+        },
+        {
+          "client_id": "817590284277-1vo0scrarghn4j0en7raov4kceshpfcg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRHv0q0M5W6IAKsgPRfSy7YtFPZOK_TTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817590284277-1vo0scrarghn4j0en7raov4kceshpfcg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

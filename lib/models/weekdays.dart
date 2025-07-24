@@ -32,4 +32,18 @@ class Weekdays {
         daysPerWeek: daysPerWeek ?? weekdays.daysPerWeek,
         selectedWeekDays: selectedWeekDays ?? weekdays.selectedWeekDays,
       );
+
+  Map<String, dynamic> toJson() => {
+        'isXdaysPerWeek': isXdaysPerWeek,
+        'daysPerWeek': daysPerWeek,
+        'selectedWeekDays': selectedWeekDays,
+      };
+
+  factory Weekdays.fromJson(Map<String, dynamic> json) {
+    return Weekdays(
+      isXdaysPerWeek: json['isXdaysPerWeek'] ?? false,
+      daysPerWeek: json['daysPerWeek'] ?? 3,
+      selectedWeekDays: List<int>.from(json['selectedWeekDays'] ?? []),
+    );
+  }
 }

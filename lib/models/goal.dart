@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'goal.g.dart';
@@ -25,4 +24,18 @@ class Goal {
         unit: unit ?? goal.unit,
         value: value ?? goal.value,
       );
+
+  Map<String, dynamic> toJson() => {
+        'enabled': enabled,
+        'unit': unit,
+        'value': value,
+      };
+
+  factory Goal.fromJson(Map<String, dynamic> json) {
+    return Goal(
+      enabled: json['enabled'],
+      unit: json['unit'],
+      value: json['value'],
+    );
+  }
 }

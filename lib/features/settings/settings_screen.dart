@@ -1,26 +1,79 @@
+import 'package:betterloop/constants/general_icons.dart';
+import 'package:betterloop/features/settings/providers/backup_notifier.dart';
+import 'package:betterloop/features/settings/widgets/last_backup_time.dart';
 import 'package:betterloop/features/settings/widgets/reasons_to_upgrade.dart';
 import 'package:betterloop/features/settings/widgets/single_setting_container.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:betterloop/widgets/separator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'providers/last_backup_time_provider.dart';
+import 'providers/restore_notifier.dart';
 import 'widgets/app_info_section.dart';
 import 'widgets/support_section.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
-  // User? get user => FirebaseAuth.instance.currentUser;
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  void listenForNotifier() {
+    ref.listen<AsyncValue<void>>(restoreNotifierProvider, (prev, next) {
+      final notifier = ref.read(restoreNotifierProvider.notifier);
+      if (!notifier.hasTriggeredRestore) return;
+
+      next.whenOrNull(
+        data: (_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Restore successful ✅')),
+          );
+        },
+        error: (error, _) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Restore failed ❌: ${error.toString()}')),
+          );
+        },
+      );
+    });
+  }
+
+  void listenForBackupNotifier() {
+    ref.listen<AsyncValue<void>>(backupNotifierProvider, (prev, next) {
+      final notifier = ref.read(backupNotifierProvider.notifier);
+      if (!notifier.hasTriggeredRestore) return;
+
+      next.whenOrNull(
+        data: (_) {
+          ref.invalidate(lastBackupTimeProvider);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Backup successful ✅')),
+          );
+        },
+        error: (error, _) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Backup failed ❌: ${error.toString()}')),
+          );
+        },
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    listenForNotifier();
+    listenForBackupNotifier();
     final textTheme = Theme.of(context).textTheme;
+    final user = FirebaseAuth.instance.currentUser;
+    final backupState = ref.watch(backupNotifierProvider);
+    final restoreState = ref.watch(restoreNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +81,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(
           "Settings",
         ),
-        actions: [],
+        actions: [
+          if (user != null)
+            IconButton(onPressed: _confirmSignout, icon: Icon(Icons.logout))
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -36,42 +92,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Align(
-              //   alignment: Alignment.center,
-              //   child: Column(
-              //     children: [
-              //       Container(
-              //         clipBehavior: Clip.hardEdge,
-              //         width: 100,
-              //         height: 100,
-              //         decoration: BoxDecoration(
-              //           image: null,
-              //           shape: BoxShape.circle,
-              //           color: Theme.of(context).colorScheme.secondary,
-              //         ),
-              //         child: Stack(
-              //           alignment: Alignment.center,
-              //           clipBehavior: Clip.hardEdge,
-              //           children: [
-              //             Positioned(
-              //               bottom: 0,
-              //               child: Container(
-              //                 child: Icon(GeneralIcons.user),
-              //               ),
-              //             )
-              //           ],
-              //         ),
-              //       ),
-              //       SizedBox(height: 10),
-              //       Text(
-              //         "Anonymous",
-              //         style:
-              //             TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              //       ),
-              //       SizedBox(height: 10),
-              //     ],
-              //   ),
-              // ),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        image: user?.photoURL == null
+                            ? null
+                            : DecorationImage(
+                                image: NetworkImage(user!.photoURL!),
+                                fit: BoxFit.fill,
+                              ),
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
+                      child: user?.photoURL == null
+                          ? Center(
+                              child: Icon(GeneralIcons.user, size: 35),
+                            )
+                          : null,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      user != null
+                          ? "${user?.displayName ?? user?.email}"
+                          : "Anonymous",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    LastBackupTime(),
+                    SizedBox(height: AppSpacing.vertical),
+                  ],
+                ),
+              ),
               ReasonsToUpgrade(),
               SizedBox(height: AppSpacing.lg),
               Padding(
@@ -87,13 +145,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Column(
                     children: [
                       SingleSettingContainer(
+                        onTap: () => _onTapBackup(user),
                         icondata: Icons.backup,
                         title: "Backup",
+                        rightContent: backupState.isLoading
+                            ? CupertinoActivityIndicator(radius: 12)
+                            : null,
                       ),
                       Separator(),
                       SingleSettingContainer(
+                        onTap: () => _onTapRestore(user),
                         icondata: Icons.restart_alt_outlined,
                         title: "Restore data",
+                        rightContent: restoreState.isLoading
+                            ? CupertinoActivityIndicator(radius: 12)
+                            : null,
                       ),
                       Separator(),
                       SingleSettingContainer(
@@ -111,6 +177,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _onTapBackup(User? user) {
+    if (user == null) {
+      Navigator.pushNamed(context, "/sign_in").then((signedIn) {
+        if (signedIn == true) {
+          setState(() {});
+        }
+      });
+    } else {
+      ref.read(backupNotifierProvider.notifier).backup();
+    }
+  }
+
+  void _onTapRestore(User? user) {
+    if (user == null) {
+      Navigator.pushNamed(context, "/sign_in").then((signedIn) {
+        if (signedIn == true) {
+          setState(() {});
+        }
+      });
+    } else {
+      ref.read(restoreNotifierProvider.notifier).restore();
+    }
+  }
+
+  void _confirmSignout() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Are you sure you want to Sign out?'),
+        content: const Text(
+            'When you sign out, Backup and Restore feature will be unavailable. You can still restore your backed-up data by signing again.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pop(context);
+              setState(() {});
+            },
+            child: const Text('Yes'),
+          ),
+        ],
       ),
     );
   }

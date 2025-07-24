@@ -14,4 +14,16 @@ class HiveIcon {
   HiveIcon({required this.code, required this.family});
 
   IconData get toIconData => IconData(code, fontFamily: family);
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'family': family,
+      };
+
+  factory HiveIcon.fromJson(Map<String, dynamic> json) {
+    return HiveIcon(
+      code: json['code'],
+      family: json['family'],
+    );
+  }
 }

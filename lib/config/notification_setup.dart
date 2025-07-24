@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 
 class NotificationSetup {
-  static const platform = MethodChannel('com.app.apexhabit/notifications');
+  static const platform = MethodChannel('com.example.betterloop/notifications');
 
   static Future<void> createNotificationChannel() async {
     try {

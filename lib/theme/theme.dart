@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'colors.dart';
 import 'typography.dart';
 
@@ -25,6 +26,13 @@ final ThemeData appLightTheme = ThemeData(
     backgroundColor: Colors.white,
     foregroundColor: AppColors.light.textPrimary,
     scrolledUnderElevation: 0,
+    systemOverlayStyle: SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  ),
+  navigationBarTheme: NavigationBarThemeData(
+    backgroundColor: Colors.transparent,
   ),
   progressIndicatorTheme: ProgressIndicatorThemeData().copyWith(
       color: AppColors.primary, linearTrackColor: AppColors.light.outline),
@@ -52,10 +60,21 @@ final ThemeData appDarkTheme = ThemeData(
     onError: Colors.white,
     outline: AppColors.dark.outline,
   ),
+  navigationBarTheme: NavigationBarThemeData(
+    backgroundColor: Colors.red,
+    elevation: 0,
+  ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    backgroundColor: Colors.red,
+  ),
   appBarTheme: AppBarTheme(
     backgroundColor: AppColors.dark.background,
     foregroundColor: Colors.white,
     scrolledUnderElevation: 0,
+    systemOverlayStyle: SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
   ),
   progressIndicatorTheme: ProgressIndicatorThemeData().copyWith(
       color: AppColors.primary, linearTrackColor: AppColors.dark.outline),

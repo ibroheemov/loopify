@@ -6,17 +6,22 @@ import 'package:collection/collection.dart';
 class HabitLogService {
   static const String _boxName = 'habit_logs';
 
-  static Future<Box<HabitLog>> _openBox() async {
+  static Future<Box<HabitLog>> openBox() async {
     if (!Hive.isBoxOpen(_boxName)) {
       return await Hive.openBox<HabitLog>(_boxName);
     }
     return Hive.box<HabitLog>(_boxName);
   }
 
+  static Future<List<HabitLog>> getAllHabitLogs() async {
+    final box = await openBox();
+    return box.values.toList();
+  }
+
   /// Add a new log for a habit
   static Future<void> logCompletion(Habit habit, int progress,
       [DateTime? date]) async {
-    final box = await _openBox();
+    final box = await openBox();
 
     final log = HabitLog(
       habitId: habit.id,
@@ -29,7 +34,7 @@ class HabitLogService {
 
   static Future<int> getProgressForHabit(String habitId,
       [DateTime? day]) async {
-    final box = await _openBox();
+    final box = await openBox();
     final logs = box.values.where((log) {
       return log.habitId == habitId &&
           isSameDay(log.completedAt,
@@ -41,7 +46,7 @@ class HabitLogService {
 
   static Future<void> undoAllProgressForHabitOnDay(String habitId,
       [DateTime? day]) async {
-    final box = await _openBox(); // Box<HabitLog>
+    final box = await openBox(); // Box<HabitLog>
 
     final keysToDelete = box.keys.where((key) {
       final log = box.get(key);
@@ -60,13 +65,13 @@ class HabitLogService {
 
   /// Get all logs for a specific habit
   static Future<List<HabitLog>> getLogsForHabit(String habitId) async {
-    final box = await _openBox();
+    final box = await openBox();
     return box.values.where((log) => log.habitId == habitId).toList();
   }
 
   /// Get logs completed today for a habit
   static Future<List<HabitLog>> getLogsForHabitToday(String habitId) async {
-    final box = await _openBox();
+    final box = await openBox();
     final now = DateTime.now();
     return box.values
         .where((log) =>
@@ -97,7 +102,7 @@ class HabitLogService {
   static Future<void> removeLogForToday(String habitId) async {
     // print(habitId);
 
-    final box = await _openBox();
+    final box = await openBox();
     final today = DateTime.now();
 
     final logToRemove = box.values.firstWhereOrNull(

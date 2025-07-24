@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:betterloop/config/notification_setup.dart';
+import 'package:betterloop/models/habit.dart';
+import 'package:betterloop/services/habit_notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -53,11 +55,11 @@ class NotificationService {
 
   Future<void> scheduleNotification({
     required int notificationId,
+    required Habit habit,
     required NotificationItem notificationItem,
     required List<int> weekdayEntities,
   }) async {
     // Cancel previously scheduled notifications
-    await cancelNotifications(notificationId);
 
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
@@ -77,7 +79,13 @@ class NotificationService {
       iOS: iOSPlatformChannelSpecifics,
     );
 
+    print('NOTIFICATION weekdayEntities: $weekdayEntities');
     for (var weekdayEntity in weekdayEntities) {
+      final id = notificationId + weekdayEntity;
+      await cancelNotifications(notificationId);
+      print('NOTIFICATION ID: $id');
+      final notificationTemplate =
+          HabitNotificationTemplates.getRandomTemplate(habit.title);
       final tz.TZDateTime scheduledDate = _nextInstanceOfDay(
         day: weekdayEntity,
         timeH: notificationItem.timeH,
@@ -85,9 +93,9 @@ class NotificationService {
       );
 
       await _localNotifications.zonedSchedule(
-        notificationId * 1000 + weekdayEntity,
-        "${_notificationTitle(notificationId)} reminder",
-        "weekdayEntity.body",
+        id,
+        notificationTemplate.title,
+        notificationTemplate.body,
         scheduledDate,
         platformChannelSpecifics,
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,

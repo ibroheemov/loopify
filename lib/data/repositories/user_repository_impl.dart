@@ -1,91 +1,41 @@
-// import 'package:apexhabit/core/error/failures.dart';
-// import 'package:apexhabit/data/datasources/user_remote_datasource.dart';
-// import 'package:apexhabit/domain/repositories/user_repository.dart';
-// import 'package:dartz/dartz.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:betterloop/config/failure.dart';
+import 'package:betterloop/data/datasources/user_remote_datasource.dart';
+import 'package:betterloop/domain/repositories/user_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 
-// class UserRepositoryImpl implements UserRepository {
-//   final UserRemoteDatasource userRemoteDataSource;
+class UserRepositoryImpl implements UserRepository {
+  final UserRemoteDatasource userRemoteDataSource;
 
-//   UserRepositoryImpl({required this.userRemoteDataSource});
+  UserRepositoryImpl(this.userRemoteDataSource);
 
-//   @override
-//   Future<Either<Failure, void>> purchaseSubscription(product) async {
-//     try {
-//       await userRemoteDataSource.purchaseSubscription(product);
-//       return Right(null);
-//     } catch (e) {
-//       return Left(PurchaseSubscriptionFailure());
-//     }
-//   }
+  @override
+  Future<Either<Failure, void>> backup() async {
+    try {
+      await userRemoteDataSource.backup();
+      return Right(null);
+    } catch (e) {
+      return Left(BackupFailure(e.toString()));
+    }
+  }
 
-//   @override
-//   Future<Either<Failure, UserCredential>> signInWithGoogle(
-//       linkAnonymousToGoogle) async {
-//     try {
-//       late UserCredential credential;
-//       if (linkAnonymousToGoogle) {
-//         credential = await userRemoteDataSource.linkAnonymousToGoogle();
-//       } else {
-//         credential = await userRemoteDataSource.signInWithGoogle();
-//       }
-//       print(credential.user);
-//       return Right(credential);
-//     } catch (e) {
-//       return Left(SigninWithGoogleFailure(e.toString()));
-//     }
-//   }
+  @override
+  Future<Either<Failure, void>> restore() async {
+    try {
+      await userRemoteDataSource.restore();
+      return Right(null);
+    } catch (e) {
+      return Left(RestoreFailure(e.toString()));
+    }
+  }
 
-//   @override
-//   Future<Either<Failure, void>> syncedData(userId) async {
-//     try {
-//       await userRemoteDataSource.syncData(userId);
-//       return Right(null);
-//     } catch (e) {
-//       return Left(SyncDataFailure(e.toString()));
-//     }
-//   }
-
-//   @override
-//   Future<Either<Failure, void>> getSyncedData(userId) async {
-//     try {
-//       await userRemoteDataSource.getSyncedData(userId);
-//       return Right(null);
-//     } catch (e) {
-//       return Left(SyncDataFailure(e.toString()));
-//     }
-//   }
-
-//   @override
-//   Future<Either<Failure, bool>> verifypurchase(purchaseDetails) async {
-//     try {
-//       final isSubscribed =
-//           await userRemoteDataSource.verifyPurchase(purchaseDetails);
-//       return Right(isSubscribed);
-//     } catch (e) {
-//       return Left(VerifyPurchaseFailure(e.toString()));
-//     }
-//   }
-
-//   @override
-//   Future<Either<Failure, void>> initializeFirebase() async {
-//     try {
-//       await userRemoteDataSource.initializeFirebase();
-
-//       return Right(null);
-//     } catch (e) {
-//       return Left(VerifyPurchaseFailure(e.toString()));
-//     }
-//   }
-
-//   @override
-//   Future<Either<Failure, void>> signout() async {
-//     try {
-//       await userRemoteDataSource.signout();
-
-//       return Right(null);
-//     } catch (e) {
-//       return Left(VerifyPurchaseFailure(e.toString()));
-//     }
-//   }
-// }
+  @override
+  Future<Either<Failure, Timestamp?>> lastBackupTime() async {
+    try {
+      final val = await userRemoteDataSource.lastBackupTime();
+      return Right(val);
+    } catch (e) {
+      return Left(RestoreFailure(e.toString()));
+    }
+  }
+}

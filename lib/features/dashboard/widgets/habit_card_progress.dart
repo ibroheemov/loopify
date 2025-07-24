@@ -117,7 +117,8 @@ class _HabitCardProgressState extends State<HabitCardProgress>
               progress: progress,
               isComplete: isComplete,
               onComplete: () {
-                HabitLogService.logCompletion(habit, widget.habit.goal.value);
+                HabitLogService.logCompletion(
+                    habit, widget.habit.goal.value - progress);
                 setState(() {});
               },
             ),
