@@ -12,4 +12,8 @@ class GeneralIcons {
       IconData(0xe902, fontFamily: _kFontFam2);
   static const IconData settings = IconData(0xe903, fontFamily: _kFontFam2);
   static const IconData user = IconData(0xe904, fontFamily: _kFontFam2);
+  static const IconData circle_outline =
+      IconData(0xe905, fontFamily: _kFontFam2);
+  static const IconData check_circle_bold =
+      IconData(0xe906, fontFamily: _kFontFam2);
 }

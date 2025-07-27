@@ -1,4 +1,5 @@
 import 'package:betterloop/constants/general_icons.dart';
+import 'package:betterloop/routes/route_names.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomBar extends StatelessWidget {
@@ -32,8 +33,6 @@ class CustomBottomBar extends StatelessWidget {
       children: [
         BottomAppBar(
             height: 65,
-            // shape: const CircularNotchedRectangle(),
-            // notchMargin: 8,
             elevation: 10,
             color: Theme.of(context).colorScheme.surface,
             child: Container()),
@@ -51,7 +50,12 @@ class CustomBottomBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(5, (index) {
                     if (index == 2) {
-                      return const SizedBox(width: 48); // space for FAB
+                      return IconButton.filled(
+                        onPressed: () {
+                          Navigator.pushNamed(context, RouteNames.customHabit);
+                        },
+                        icon: Icon(Icons.add, size: 30),
+                      ); // space for FAB
                     }
 
                     return Container(

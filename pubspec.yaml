@@ -39,7 +39,7 @@ dependencies:
   hive_flutter: ^1.1.0  
   path_provider: ^2.1.0
   uuid: ^4.5.1
-  intl: ^0.19.0
+  intl: ^0.20.2
   flutter_slidable: ^4.0.0
   flutter_local_notifications: ^19.3.1
   flutter_timezone: ^4.1.1
@@ -53,13 +53,20 @@ dependencies:
   firebase_dynamic_links: ^6.1.10
   firebase_ui_oauth_google: ^1.4.2
   cloud_firestore: ^5.6.12
-
+  fl_chart: ^1.0.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^2.0.1
   build_runner: ^2.4.15
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icons/launcher.png"
 
 flutter:
   uses-material-design: true
@@ -71,15 +78,37 @@ flutter:
 
   fonts:
   # Icon Fonts
+    - family: PopularIcons
+      fonts:
+        - asset: assets/fonts/popular.ttf
+    - family: LifeStyleIcons
+      fonts:
+        - asset: assets/fonts/lifestyle.ttf
+    - family: HealthIcons
+      fonts:
+        - asset: assets/fonts/health.ttf
+    - family: DietIcons
+      fonts:
+        - asset: assets/fonts/diet.ttf
+    - family: HobbyIcons
+      fonts:
+        - asset: assets/fonts/hobby.ttf
     - family: NegativeIcons
       fonts:
         - asset: assets/fonts/negative.ttf
+    - family: EfficiencyIcons
+      fonts:
+        - asset: assets/fonts/efficiency.ttf
+    - family: RelationshipIcons
+      fonts:
+        - asset: assets/fonts/relationship.ttf
     - family: GeneralIcons
       fonts:
         - asset: assets/fonts/general.ttf
     - family: GeneralIcons2
       fonts:
         - asset: assets/fonts/general_icons.ttf    
+   
   # Text Fonts
     - family: Nunito
       fonts:

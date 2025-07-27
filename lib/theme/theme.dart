@@ -1,3 +1,4 @@
+import 'package:betterloop/theme/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'colors.dart';
@@ -30,6 +31,7 @@ final ThemeData appLightTheme = ThemeData(
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
+    actionsPadding: EdgeInsets.only(right: AppSpacing.sm_md),
   ),
   navigationBarTheme: NavigationBarThemeData(
     backgroundColor: Colors.transparent,
@@ -75,6 +77,7 @@ final ThemeData appDarkTheme = ThemeData(
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.light,
     ),
+    actionsPadding: EdgeInsets.only(right: AppSpacing.sm_md),
   ),
   progressIndicatorTheme: ProgressIndicatorThemeData().copyWith(
       color: AppColors.primary, linearTrackColor: AppColors.dark.outline),

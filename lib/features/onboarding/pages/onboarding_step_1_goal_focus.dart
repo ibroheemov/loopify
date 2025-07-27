@@ -58,7 +58,7 @@ class _OnboardingStep1GoalFocusState
     ];
 
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         children: [
           SizedBox(height: AppSpacing.lg),

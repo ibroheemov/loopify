@@ -1,10 +1,12 @@
 import 'package:betterloop/features/custom_habit/pages/all_icons.dart';
+import 'package:betterloop/features/custom_habit/providers/goal_provider.dart';
 import 'package:betterloop/features/custom_habit/providers/habit_color_provider.dart';
 import 'package:betterloop/features/custom_habit/widgets/action_buttons.dart';
 import 'package:betterloop/features/custom_habit/widgets/choose_color.dart';
 import 'package:betterloop/features/custom_habit/widgets/daily_goal.dart';
 import 'package:betterloop/features/custom_habit/widgets/habit_days_section.dart';
 import 'package:betterloop/features/custom_habit/widgets/reminder_section.dart';
+import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/helpers.dart';
 import 'package:betterloop/widgets/bottomsheet_wrapper.dart';
@@ -15,7 +17,8 @@ import 'providers/habit_icon_provider.dart';
 import 'widgets/custom_textfield.dart';
 
 class CustomHabitScreen extends ConsumerStatefulWidget {
-  const CustomHabitScreen({super.key});
+  const CustomHabitScreen({super.key, this.habit});
+  final Habit? habit;
 
   @override
   ConsumerState<CustomHabitScreen> createState() => _CustomHabitScreenState();
@@ -25,6 +28,24 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
   final _formKey = GlobalKey<FormState>();
   final _habitNameController = TextEditingController();
   String habitTitle = "";
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Set it only once to avoid repeated updates
+    Future.microtask(() {
+      final habit = widget.habit;
+      if (habit != null) {
+        _habitNameController.text = habit.title;
+        habitTitle = habit.title;
+        ref.read(habitColorProvider.notifier).state = habit.color;
+        ref.read(goalProvider.notifier).state = habit.goal;
+        ref.read(habitIconProvider.notifier).state =
+            IconData(habit.icon.code, fontFamily: habit.icon.family);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -76,7 +97,7 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
                   SizedBox(height: AppSpacing.md),
                   ChooseColor(),
                   SizedBox(height: AppSpacing.md),
-                  SectionDailyGoal(),
+                  SectionDailyGoal(habit: widget.habit),
                   SizedBox(height: AppSpacing.md),
                   SectionHabitDays(),
                   SizedBox(height: AppSpacing.md),
@@ -97,7 +118,8 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return BottomsheetWrapper(screenHeightOf: 0.8, child: AllIcons());
+        return BottomsheetWrapper(
+            screenHeightOf: 0.8, child: AllIcons(ref: ref));
       },
     );
   }

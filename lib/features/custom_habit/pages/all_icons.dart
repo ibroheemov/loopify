@@ -1,4 +1,3 @@
-import 'package:betterloop/constants/negative_icons.dart';
 import 'package:betterloop/features/custom_habit/models/icontype.dart';
 import 'package:betterloop/features/custom_habit/providers/habit_icon_provider.dart';
 import 'package:betterloop/features/custom_habit/widgets/icon_box.dart';
@@ -9,15 +8,15 @@ import 'package:betterloop/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AllIcons extends ConsumerStatefulWidget {
-  const AllIcons({super.key});
+class AllIcons extends StatefulWidget {
+  const AllIcons({super.key, required this.ref});
+  final WidgetRef ref;
 
   @override
-  ConsumerState<AllIcons> createState() => _AllIconsState();
+  State<AllIcons> createState() => _AllIconsState();
 }
 
-class _AllIconsState extends ConsumerState<AllIcons>
-    with TickerProviderStateMixin {
+class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
   late final TabController _tabController;
   IconData? selectedIcon;
   late Color currentColor;
@@ -56,7 +55,7 @@ class _AllIconsState extends ConsumerState<AllIcons>
         controller: _tabController,
         children: [
           ...IconType.values.map((tab) {
-            List<IconMeta> tabicons = NegativeIcons.iconMetaList;
+            List<IconMeta> tabicons = IconType.iconMetaList(tab.value);
 
             return GridView.builder(
               padding: const EdgeInsets.only(top: 10),
@@ -102,6 +101,6 @@ class _AllIconsState extends ConsumerState<AllIcons>
     setState(() {
       selectedIcon = icon;
     });
-    ref.read(habitIconProvider.notifier).state = icon;
+    widget.ref.read(habitIconProvider.notifier).state = icon;
   }
 }

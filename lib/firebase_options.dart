@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -59,4 +56,16 @@ class DefaultFirebaseOptions {
     projectId: 'betterloop-5b55e',
     storageBucket: 'betterloop-5b55e.firebasestorage.app',
   );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyC6gK7biKn_oPKs6xDd2pMOVorZKRpRnWY',
+    appId: '1:817590284277:ios:04c883293774df5749babc',
+    messagingSenderId: '817590284277',
+    projectId: 'betterloop-5b55e',
+    storageBucket: 'betterloop-5b55e.firebasestorage.app',
+    androidClientId: '817590284277-b84t39m2m9nh0d9htktjm4lpgirsljgn.apps.googleusercontent.com',
+    iosClientId: '817590284277-cv11l29neiof76t8hg7hqroleu6unka5.apps.googleusercontent.com',
+    iosBundleId: 'com.example.betterloop',
+  );
+
 }

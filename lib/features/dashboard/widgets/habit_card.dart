@@ -1,4 +1,6 @@
+import 'package:betterloop/constants/general_icons.dart';
 import 'package:betterloop/models/habit.dart';
+import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/services/habit_log_service.dart';
 import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/theme/colors.dart';
@@ -35,6 +37,10 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
     return Padding(
       padding: EdgeInsets.only(bottom: habit.goal.enabled ? 0 : AppSpacing.md),
       child: AppCard(
+        onTap: () {
+          Navigator.pushNamed(context, RouteNames.customHabit,
+              arguments: habit);
+        },
         margin: EdgeInsets.symmetric(horizontal: AppSpacing.md),
         padding: EdgeInsets.all(AppSpacing.md),
         child: Row(
@@ -45,8 +51,9 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
               SizedBox(width: AppSpacing.md),
               _buildTitle(),
               IconButton(
-                  onPressed: () {
-                    HabitService.deleteHabit(habit.id);
+                  onPressed: () async {
+                    await HabitService.deleteHabit(habit.id);
+                    await HabitLogService.deleteLogsForHabit(habit.id);
                   },
                   icon: Icon(Icons.delete))
             ]),
@@ -64,7 +71,14 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(habit.title, style: textTheme.titleMedium),
+        Container(
+          constraints: BoxConstraints(maxWidth: 180),
+          child: Text(
+            habit.title,
+            style: textTheme.titleMedium,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
         if (habit.goal.enabled)
           Row(
             children: [
@@ -123,10 +137,12 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
                 onPressed: () => _onComplete(isCompleted),
                 icon: Icon(
                   isCompleted
-                      ? Icons.check_circle_rounded
-                      : Icons.circle_outlined,
+                      ? GeneralIcons.check_circle_bold
+                      : GeneralIcons.circle_outline,
                   size: 30,
-                  color: isCompleted ? colorScheme.primary : Colors.grey,
+                  color: isCompleted
+                      ? colorScheme.primary
+                      : AppColors.of(context).surfaceSecondary,
                 ),
               );
             },
@@ -138,6 +154,8 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
 
     if (isCompleted) {
       await HabitLogService.removeLogForToday(habit.id);
+      // final date = DateTime.now().add(Duration(days: -9));
+      // await HabitLogService.logCompletion(habit, habit.goal.value, date);
     } else {
       await HabitLogService.logCompletion(habit, habit.goal.value);
     }

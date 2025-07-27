@@ -1,4 +1,5 @@
 import 'package:betterloop/features/custom_habit/providers/weekdays_provider.dart';
+import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/weekdays.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/widgets/app_card.dart';
@@ -9,7 +10,8 @@ import 'choose_weekdays.dart';
 import 'habit_days_x_days_per_week.dart';
 
 class SectionHabitDays extends ConsumerStatefulWidget {
-  const SectionHabitDays({super.key});
+  const SectionHabitDays({super.key, this.habit});
+  final Habit? habit;
 
   @override
   ConsumerState<SectionHabitDays> createState() => _SectionHabitDaysState();

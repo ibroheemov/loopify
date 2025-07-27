@@ -9,6 +9,7 @@ import 'package:betterloop/utils/extensions.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:betterloop/widgets/custom_cupertino_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReminderSection extends ConsumerStatefulWidget {
@@ -21,7 +22,6 @@ class ReminderSection extends ConsumerStatefulWidget {
 class _ReminderSectionState extends ConsumerState<ReminderSection> {
   final expansionController = ExpansionTileController();
   bool enabled = false;
-  int _selectedFruit = 0;
   List<WeekDayEntity> selectedWeekDays = [...weekDays];
 
   @override
@@ -34,6 +34,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          initiallyExpanded: goal.enabled,
           tilePadding: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
           childrenPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm)
               .copyWith(bottom: AppSpacing.md_lg),
@@ -51,7 +52,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
             children: [
               Text("Reminder".toUpperCase(), style: textTheme.titleMedium),
               Text(
-                enabled ? "ON" : "OFF",
+                goal.enabled ? "ON" : "OFF",
                 style: textTheme.titleMedium?.copyWith(
                     color: enabled
                         ? colorScheme.primary
@@ -67,6 +68,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
                 children: [
                   Expanded(
                     child: CustomCupertinoPicker(
+                      initialItem: 0,
                       items: List.generate(24, (val) => val.addZero()),
                       onSelectedItemChanged: _onHourChangedChanged,
                     ),
@@ -74,6 +76,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
                   Text(":", style: textTheme.headlineMedium),
                   Expanded(
                     child: CustomCupertinoPicker(
+                      initialItem: 0,
                       items: List.generate(
                         60,
                         (val) => val.addZero(),
@@ -112,6 +115,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
   }
 
   void _onReminderExpanded(bool val) {
+    requestpermission();
     setState(() {
       enabled = val;
     });
@@ -119,6 +123,18 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
 
     ref.read(reminderProvider.notifier).state =
         Reminder.toReminder(enabled: val, reminder: reminder);
+  }
+
+  void requestpermission() async {
+    await NotificationService().initializePlatformNotifications();
+
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
   }
 
   void _onTapWeekDay({

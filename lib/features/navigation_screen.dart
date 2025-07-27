@@ -14,10 +14,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    if (index == 3) {
-      Navigator.pushNamed(context, RouteNames.settings);
-      return;
+    switch (index) {
+      case 2:
+        Navigator.pushNamed(context, RouteNames.statistics);
+        return;
+      case 3:
+        Navigator.pushNamed(context, RouteNames.settings);
+        return;
+      default:
     }
+
     setState(() {
       _selectedIndex = index;
     });
@@ -32,30 +38,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       body: pages[_selectedIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, RouteNames.customHabit);
-          // Action for central FAB
-        },
-        backgroundColor: colorScheme.primary,
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add),
-        elevation: 0.5,
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
-        ),
-        child: CustomBottomBar(
-          selectedIndex: _selectedIndex,
-          onItemTapped: _onItemTapped,
-        ),
+      bottomNavigationBar: CustomBottomBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

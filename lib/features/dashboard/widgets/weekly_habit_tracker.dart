@@ -41,12 +41,6 @@ class WeeklyHabitTracker extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: weekDates.map((date) {
-                    int progress = 0;
-                    () async {
-                      progress = await HabitLogService.getProgressForHabit(
-                          habit.id, date);
-                    };
-
                     final isCompleted = completedDates.any((d) =>
                         d.year == date.year &&
                         d.month == date.month &&

@@ -128,10 +128,10 @@ class _HabitCardProgressState extends State<HabitCardProgress>
     );
   }
 
-  void _onCompleteByX(int progress, [isTest = false]) {
+  void _onCompleteByX(int progress, [isTest = true]) {
     if (isTest) {
-      final testCompleteBy = 20;
-      final days = 3;
+      final testCompleteBy = -8;
+      final days = 7;
       final date = DateTime.now().add(Duration(days: days));
       HabitLogService.logCompletion(widget.habit, testCompleteBy, date);
       controller.close();

@@ -24,7 +24,7 @@ import 'shared_prefs_service.dart';
 
 class InitSerivces {
   Future<void> initServices() async {
-    await _initNotifications();
+    // await _initNotifications();
     await _initFirebase();
     await _initSharedPrefs();
     await _initHive();
@@ -80,13 +80,6 @@ class InitSerivces {
     if (areas.isEmpty) {
       for (var area in defaultHabitAreas) {
         await HabitAreaService.addArea(area);
-      }
-    }
-    final types = await HabitTypeService.getAllHabitTypes();
-
-    if (types.isEmpty) {
-      for (var type in defaultHabitTypes) {
-        await HabitTypeService.addHabitType(type);
       }
     }
   }

@@ -2,7 +2,6 @@
 
 import 'package:betterloop/data/seed/default_habit_types.dart';
 import 'package:betterloop/features/onboarding/providers/goal_type_provider.dart';
-import 'package:betterloop/features/onboarding/widgets/habit_area_card.dart';
 import 'package:betterloop/features/onboarding/widgets/habit_type_tile.dart';
 import 'package:betterloop/models/goal_type.dart';
 import 'package:betterloop/models/habit_area.dart';
@@ -16,7 +15,6 @@ import 'package:betterloop/widgets/buttons/app_buttons.dart';
 import 'package:betterloop/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingStep2GoalAreas extends ConsumerStatefulWidget {
   const OnboardingStep2GoalAreas({Key? key}) : super(key: key);
@@ -31,8 +29,6 @@ class _OnboardingStep2GoalAreasState
     with SingleTickerProviderStateMixin {
   late Future<List<HabitArea>> _areasFuture;
   Map<String, List<HabitType>> _habitTypesByArea = {};
-  final Map<String, ExpansionTileController> _controllers = {};
-  String? _expandedAreaId;
   bool isLoading = false;
 
   @override
@@ -71,35 +67,31 @@ class _OnboardingStep2GoalAreasState
               Navigator.pushNamed(context, RouteNames.customHabit);
             }),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: Column(
-          children: [
-            SizedBox(height: AppSpacing.lg),
-            Text(
-              'Choose Habit Template',
-              style: textTheme.displayLarge,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: AppSpacing.xxl),
-            Expanded(
-              child: FutureBuilder<List<HabitArea>>(
-                future: _areasFuture,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  final areas = snapshot.data!;
-                  return ListView(
-                      children: _habits(habits: habits, areaId: "onboarding"));
-                },
-              ),
-            ),
-          ],
+        body: FutureBuilder<List<HabitArea>>(
+          future: _areasFuture,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ListView(
+              padding: const EdgeInsets.all(AppSpacing.lg),
+              children: [
+                Text(
+                  'Choose Habit \nTemplate',
+                  style: textTheme.displayLarge,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: AppSpacing.lg),
+                ..._habits(habits: habits, areaId: "onboarding"),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  List<HabitType> _getHabitsForGoal(GoalType? goalType) {
+  List<OnboardingHabit> _getHabitsForGoal(GoalType? goalType) {
     switch (goalType) {
       case GoalType.good:
         return topGoodHabits;
@@ -112,39 +104,8 @@ class _OnboardingStep2GoalAreasState
     }
   }
 
-  void _onExpansionChanged({required bool isExpanded, required String areaId}) {
-    if (isExpanded) {
-      // Collapse previously expanded tile
-      if (_expandedAreaId != null && _expandedAreaId != areaId) {
-        _controllers[_expandedAreaId!]!.collapse();
-      }
-      _expandedAreaId = areaId;
-    } else if (_expandedAreaId == areaId) {
-      _expandedAreaId = null;
-    }
-  }
-
-  List<Widget> _areas(List<HabitArea> areas) {
-    return [
-      ...areas.map((area) {
-        final areaId = area.id;
-        final habits = _habitTypesByArea[area.id] ?? [];
-        _controllers[area.id] =
-            _controllers[area.id] ?? ExpansionTileController();
-
-        return HabitAreaCard(
-          onExpansionChanged: (isExpanded) =>
-              _onExpansionChanged(isExpanded: isExpanded, areaId: areaId),
-          area: area,
-          controller: _controllers[area.id],
-          children: _habits(habits: habits, areaId: areaId),
-        );
-      }),
-    ];
-  }
-
   List<Widget> _habits(
-      {required List<HabitType> habits, required String areaId}) {
+      {required List<OnboardingHabit> habits, required String areaId}) {
     return habits.isNotEmpty
         ? habits
             .asMap()

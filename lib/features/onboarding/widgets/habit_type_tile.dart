@@ -1,8 +1,13 @@
+import 'package:betterloop/data/seed/default_habit_types.dart';
 import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/habit_type.dart';
+import 'package:betterloop/models/hive_icon.dart';
 import 'package:betterloop/models/weekdays.dart';
 import 'package:betterloop/services/habit_service.dart';
+import 'package:betterloop/theme/spacing.dart';
+import 'package:betterloop/utils/helpers.dart';
+import 'package:betterloop/widgets/app_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -16,7 +21,7 @@ final colorss = [
 ];
 
 class HabitTypeTile extends StatefulWidget {
-  final HabitType habitType;
+  final OnboardingHabit habitType;
   final int index;
   final String areaId;
   final Function() onTap;
@@ -46,15 +51,26 @@ class _HabitTypeTileState extends State<HabitTypeTile>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedScale(
-      duration: const Duration(milliseconds: 150),
-      scale: _tapped ? 0.96 : 1.0,
-      curve: Curves.easeInOut,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          // splashFactory: NoSplash.splashFactory,
-          onTap: () async {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      width: double.infinity,
+      height: 80,
+      margin: EdgeInsets.only(bottom: AppSpacing.md),
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 150),
+        scale: _tapped ? 0.96 : 1.0,
+        curve: Curves.easeInOut,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: colorScheme.surface,
+            foregroundColor: colorScheme.onSurface,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28),
+            ),
+          ),
+          onPressed: () async {
             setState(() => _tapped = true);
             await Future.delayed(const Duration(milliseconds: 150));
             setState(() => _tapped = false);
@@ -62,7 +78,10 @@ class _HabitTypeTileState extends State<HabitTypeTile>
 
             final habit = Habit(
               color: iconColor,
-              icon: widget.habitType.icon,
+              icon: HiveIcon(
+                code: widget.habitType.icon.codePoint,
+                family: widget.habitType.icon.fontFamily,
+              ),
               id: uuid.v1(),
               title: widget.habitType.title,
               createdAt: DateTime.now(),
@@ -72,67 +91,39 @@ class _HabitTypeTileState extends State<HabitTypeTile>
             await HabitService.addHabit(habit);
             widget.onTap();
           },
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        widget.habitType.icon.toIconData,
-                        color: parseColor(iconColor),
-                        size: 35,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Helpers.parseColor(iconColor).withAlpha(50)),
+                    child: Center(
+                      child: Icon(
+                        widget.habitType.icon,
+                        color: Helpers.parseColor(iconColor),
+                        size: 30,
                       ),
-                      // Container(
-                      //   width: 35,
-                      //   height: 35,
-                      //   child: SvgPicture.asset(
-                      //     // 'assets/icons/${widget.habit.icon}.svg',
-                      //     'assets/images/icons/bolt.svg',
-                      //     colorFilter: ColorFilter.mode(
-                      //       parseColor(iconColor),
-                      //       BlendMode.srcIn,
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(width: 15),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.habitType.title,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              'Alternate periods of eating and fasting to improve health and metabolism.',
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                  SizedBox(width: AppSpacing.horizontal),
+                  Text(widget.habitType.title, style: textTheme.titleMedium)
+                ],
+              ),
+              AppSvg(
+                path: "assets/images/icons/alt-arrow-right.svg",
+                width: 30,
+                height: 30,
+                color: colorScheme.onBackground,
+              ),
+            ],
           ),
         ),
       ),
     );
-  }
-
-  static Color parseColor(String colorString) {
-    colorString = colorString.replaceAll('#', '');
-    int colorValue = int.parse(colorString, radix: 16);
-    return Color(colorValue).withOpacity(1.0);
   }
 }

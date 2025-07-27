@@ -19,6 +19,11 @@ class AppTypography {
       fontWeight: FontWeight.w600,
       fontFamily: _fontFamily,
     ),
+    headlineSmall: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w900,
+      fontFamily: _fontFamily,
+    ),
     titleLarge: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w600,
@@ -26,7 +31,12 @@ class AppTypography {
     ),
     titleMedium: TextStyle(
       fontSize: 16,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w900,
+      fontFamily: _fontFamily,
+    ),
+    titleSmall: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w900,
       fontFamily: _fontFamily,
     ),
     bodyLarge: TextStyle(

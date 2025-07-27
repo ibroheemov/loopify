@@ -76,7 +76,9 @@ class ActionButtons extends ConsumerWidget {
       goal: goal,
       weekdays: weekdays,
     );
+    await HabitService.addHabit(habit);
 
+    if (!reminder.enabled) return;
     final hash = habitId.hashCode;
     await NotificationService().scheduleNotification(
       notificationId: hash,
@@ -85,7 +87,5 @@ class ActionButtons extends ConsumerWidget {
           timeH: reminder.hour, timeM: reminder.minute, id: 1222),
       weekdayEntities: reminder.selectedWeekDays,
     );
-
-    await HabitService.addHabit(habit);
   }
 }

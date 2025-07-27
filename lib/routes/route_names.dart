@@ -5,6 +5,6 @@ class RouteNames {
   static const String dashboard = '/dashboard';
   static const String customHabit = '/custom_habit';
   static const String auth = '/auth'; // (future use)
-  static const String habits = '/habits'; // (future use)
+  static const String statistics = '/statistics'; // (future use)
   static const String settings = '/settings'; // (future use)
 }
