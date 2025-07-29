@@ -7,6 +7,8 @@ import 'package:betterloop/features/custom_habit/widgets/daily_goal.dart';
 import 'package:betterloop/features/custom_habit/widgets/habit_days_section.dart';
 import 'package:betterloop/features/custom_habit/widgets/reminder_section.dart';
 import 'package:betterloop/models/habit.dart';
+import 'package:betterloop/services/habit_log_service.dart';
+import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/helpers.dart';
 import 'package:betterloop/widgets/bottomsheet_wrapper.dart';
@@ -15,6 +17,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers/habit_icon_provider.dart';
 import 'widgets/custom_textfield.dart';
+
+enum Menu { remove }
 
 class CustomHabitScreen extends ConsumerStatefulWidget {
   const CustomHabitScreen({super.key, this.habit});
@@ -28,6 +32,13 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
   final _formKey = GlobalKey<FormState>();
   final _habitNameController = TextEditingController();
   String habitTitle = "";
+  Habit? habit;
+
+  @override
+  void initState() {
+    habit = widget.habit;
+    super.initState();
+  }
 
   @override
   void didChangeDependencies() {
@@ -71,43 +82,97 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
             width: double.infinity,
             child: Form(
               key: _formKey,
-              child: Column(
+              child: Stack(
                 children: [
-                  _buildIcon(icon: icon, iconColor: iconColor),
-                  SizedBox(height: AppSpacing.md),
-                  Text(
-                    habitTitle.isEmpty ? "E.g. Sleep 8 hours" : habitTitle,
-                    style: textTheme.titleLarge,
-                  ),
-                  SizedBox(height: AppSpacing.lg),
-                  CustomTextField(
-                    label: 'Habit Name',
-                    controller: _habitNameController,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return 'Please enter a habit name';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      setState(() => habitTitle = value);
-                      _formKey.currentState!.validate();
-                    },
-                  ),
-                  SizedBox(height: AppSpacing.md),
-                  ChooseColor(),
-                  SizedBox(height: AppSpacing.md),
-                  SectionDailyGoal(habit: widget.habit),
-                  SizedBox(height: AppSpacing.md),
-                  SectionHabitDays(),
-                  SizedBox(height: AppSpacing.md),
-                  ReminderSection(),
-                  SizedBox(height: AppSpacing.xxl),
+                  if (habit != null)
+                    Positioned(
+                      right: 0,
+                      child: PopupMenuButton<Menu>(
+                        popUpAnimationStyle: AnimationStyle.noAnimation,
+                        icon: const Icon(Icons.more_vert),
+                        onSelected: (Menu item) {
+                          if (item == Menu.remove) {
+                            _confirmDelete();
+                          }
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<Menu>>[
+                          const PopupMenuItem<Menu>(
+                              value: Menu.remove,
+                              child: ListTile(
+                                leading: Icon(Icons.delete),
+                                title: Text('Remove'),
+                              )),
+                        ],
+                      ),
+                    ),
+                  Column(
+                    children: [
+                      _buildIcon(icon: icon, iconColor: iconColor),
+                      SizedBox(height: AppSpacing.md),
+                      Text(
+                        habitTitle.isEmpty ? "E.g. Sleep 8 hours" : habitTitle,
+                        style: textTheme.titleLarge,
+                      ),
+                      SizedBox(height: AppSpacing.lg),
+                      CustomTextField(
+                        label: 'Habit Name',
+                        controller: _habitNameController,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please enter a habit name';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() => habitTitle = value);
+                          _formKey.currentState!.validate();
+                        },
+                      ),
+                      SizedBox(height: AppSpacing.md),
+                      ChooseColor(),
+                      SizedBox(height: AppSpacing.md),
+                      SectionDailyGoal(habit: widget.habit),
+                      SizedBox(height: AppSpacing.md),
+                      SectionHabitDays(),
+                      SizedBox(height: AppSpacing.md),
+                      ReminderSection(),
+                      SizedBox(height: AppSpacing.xxl),
+                    ],
+                  )
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _confirmDelete() {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Are you sure you want to Delete this habit?'),
+        content: const Text(
+            'Deleting wipes out all of your logs for this habit, in case you want them back please backup first before deletion.'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              if (habit == null) return;
+              await HabitService.deleteHabit(habit!.id);
+              await HabitLogService.deleteLogsForHabit(habit!.id);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              setState(() {});
+            },
+            child: const Text('Yes'),
+          ),
+        ],
       ),
     );
   }

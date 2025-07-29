@@ -128,7 +128,7 @@ class _HabitCardProgressState extends State<HabitCardProgress>
     );
   }
 
-  void _onCompleteByX(int progress, [isTest = true]) {
+  void _onCompleteByX(int progress, [isTest = false]) {
     if (isTest) {
       final testCompleteBy = -8;
       final days = 7;

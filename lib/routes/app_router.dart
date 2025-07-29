@@ -22,6 +22,7 @@ import '../features/dashboard/dashboard_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    print(settings.name);
     final arguments = settings.arguments;
 
     switch (settings.name) {
@@ -29,7 +30,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
       case RouteNames.onboarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
-      case RouteNames.navigation:
+      case RouteNames.home:
         return MaterialPageRoute(builder: (_) => const NavigationScreen());
       case RouteNames.dashboard:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());

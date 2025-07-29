@@ -1,4 +1,5 @@
 import 'package:betterloop/features/custom_habit/widgets/bottomsheet_grabber.dart';
+import 'package:betterloop/theme/spacing.dart';
 import 'package:flutter/material.dart';
 
 class BottomsheetWrapper extends StatelessWidget {
@@ -18,7 +19,13 @@ class BottomsheetWrapper extends StatelessWidget {
           : null,
       child: Stack(
         alignment: Alignment.center,
-        children: [Positioned(top: 12, child: BottomsheetGrabber()), child],
+        children: [
+          Positioned(top: 12, child: BottomsheetGrabber()),
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.xl),
+            child: child,
+          )
+        ],
       ),
     );
   }

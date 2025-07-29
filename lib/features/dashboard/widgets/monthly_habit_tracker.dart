@@ -1,3 +1,4 @@
+import 'package:betterloop/features/statistics/widgets/monthly_habit_card.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/services/habit_log_service.dart';
 import 'package:betterloop/theme/colors.dart';
@@ -24,54 +25,12 @@ class MonthlyHabitTracker extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
         child: AppCard(
           child: FutureBuilder<List<DateTime>>(
-            future: HabitLogService.getLogsForHabitInMonth(habit.id, now),
+            future: habit.goal.enabled
+                ? null
+                : HabitLogService.getLogsForHabitInMonth(habit.id, now),
             builder: (context, snapshot) {
               final loggedDays = snapshot.data ?? [];
-
-              return GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: daysInMonth,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 10,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                ),
-                itemBuilder: (context, index) {
-                  final day = index + 1;
-                  final date = DateTime(now.year, now.month, day);
-
-                  final isCompleted = loggedDays.any((log) =>
-                      log.year == date.year &&
-                      log.month == date.month &&
-                      log.day == date.day);
-
-                  return FutureBuilder(
-                    future: habit.goal.enabled
-                        ? HabitLogService.getProgressForHabit(habit.id, date)
-                        : null,
-                    builder: (context, snapshot) {
-                      int progress = 0;
-                      final hasData = snapshot.hasData;
-                      if (hasData) {
-                        progress = snapshot.data!;
-                      }
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: (!habit.goal.enabled && isCompleted)
-                              ? Helpers.parseColor(habit.color)
-                              : progress == 0
-                                  ? AppColors.of(context).onSurfaceBg
-                                  : Helpers.parseColor(habit.color)
-                                      .withOpacity(progress / habit.goal.value),
-                        ),
-                        alignment: Alignment.center,
-                      );
-                    },
-                  );
-                },
-              );
+              return SimpleCalendar(loggedDays: loggedDays, habit: habit);
             },
           ),
         ),

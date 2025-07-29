@@ -1,3 +1,4 @@
+import 'package:betterloop/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class HabitDaysBox extends StatelessWidget {
@@ -35,7 +36,7 @@ class HabitDaysBox extends StatelessWidget {
           shape: BoxShape.circle,
           color: isSelected
               ? colorScheme.primary.withOpacity(0.2)
-              : colorScheme.outline,
+              : AppColors.of(context).surfaceSecondary,
         ),
         child: Center(
           child: Text(

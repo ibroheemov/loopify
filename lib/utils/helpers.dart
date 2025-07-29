@@ -1,5 +1,8 @@
 import 'dart:ui';
 
+import 'package:betterloop/features/settings/widgets/choose_themes.dart';
+import 'package:flutter/material.dart';
+
 class Helpers {
   static Color parseColor(String colorString) {
     colorString = colorString.replaceAll('#', '');
@@ -29,5 +32,14 @@ class Helpers {
       final years = (difference.inDays / 365).floor();
       return '$years ${years == 1 ? 'year' : 'years'} ago';
     }
+  }
+
+  static int getNumberOfDaysInMonth() {
+    DateTime firstDayOfNextMonth =
+        DateTime(DateTime.now().year, DateTime.now().month + 1, 1);
+    // Subtracting one day from the first day of the next month gives the last day of the current month
+    DateTime lastDayOfMonth = firstDayOfNextMonth.subtract(Duration(days: 1));
+    // Return the day component of the last day of the month, which gives the number of days in the month
+    return lastDayOfMonth.day;
   }
 }

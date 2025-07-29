@@ -24,6 +24,7 @@ class WeeklyHabitTracker extends StatelessWidget {
     final weekDates =
         List.generate(7, (i) => startOfWeek.add(Duration(days: i)));
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -38,33 +39,52 @@ class WeeklyHabitTracker extends StatelessWidget {
             return Container(
               margin: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
               child: AppCard(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: weekDates.map((date) {
-                    final isCompleted = completedDates.any((d) =>
-                        d.year == date.year &&
-                        d.month == date.month &&
-                        d.day == date.day);
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 180),
+                          child: Text(
+                            habit.title,
+                            style: textTheme.titleMedium?.copyWith(
+                                color: Helpers.parseColor(habit.color)),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: AppSpacing.sm),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: weekDates.map((date) {
+                        final isCompleted = completedDates.any((d) =>
+                            d.year == date.year &&
+                            d.month == date.month &&
+                            d.day == date.day);
 
-                    return FutureBuilder(
-                      future: habit.goal.enabled
-                          ? HabitLogService.getProgressForHabit(habit.id, date)
-                          : null,
-                      builder: (context, snapshot) {
-                        int progress = 0;
-                        final hasData = snapshot.hasData;
-                        if (hasData) {
-                          progress = snapshot.data!;
-                        }
-                        return _buildWeekday(
-                          context: context,
-                          date: date,
-                          progress: progress,
-                          isCompleted: isCompleted,
+                        return FutureBuilder(
+                          future: habit.goal.enabled
+                              ? HabitLogService.getProgressForHabit(
+                                  habit.id, date)
+                              : null,
+                          builder: (context, snapshot) {
+                            int progress = 0;
+                            final hasData = snapshot.hasData;
+                            if (hasData) {
+                              progress = snapshot.data!;
+                            }
+                            return _buildWeekday(
+                              context: context,
+                              date: date,
+                              progress: progress,
+                              isCompleted: isCompleted,
+                            );
+                          },
                         );
-                      },
-                    );
-                  }).toList(),
+                      }).toList(),
+                    ),
+                  ],
                 ),
               ),
             );

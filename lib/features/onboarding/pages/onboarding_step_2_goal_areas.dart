@@ -64,7 +64,12 @@ class _OnboardingStep2GoalAreasState
         floatingActionButton: PrimaryButton(
             label: "Custom habit",
             onPressed: () {
-              Navigator.pushNamed(context, RouteNames.customHabit);
+              Navigator.pushNamed(context, RouteNames.customHabit)
+                  .then((result) {
+                if (result == true) {
+                  _completeonboarding();
+                }
+              });
             }),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: FutureBuilder<List<HabitArea>>(
@@ -104,6 +109,14 @@ class _OnboardingStep2GoalAreasState
     }
   }
 
+  void _completeonboarding() async {
+    setState(() => isLoading = true);
+    await Future.delayed(const Duration(seconds: 1));
+    SharedPrefsService().setOnboardingComplete(true);
+    setState(() => isLoading = false);
+    Navigator.pushNamed(context, RouteNames.home);
+  }
+
   List<Widget> _habits(
       {required List<OnboardingHabit> habits, required String areaId}) {
     return habits.isNotEmpty
@@ -116,13 +129,7 @@ class _OnboardingStep2GoalAreasState
                     habitType: habit,
                     areaId: areaId,
                     index: i,
-                    onTap: () async {
-                      setState(() => isLoading = true);
-                      await Future.delayed(const Duration(seconds: 1));
-                      SharedPrefsService().setOnboardingComplete(true);
-                      setState(() => isLoading = false);
-                      Navigator.pushNamed(context, RouteNames.navigation);
-                    }),
+                    onTap: _completeonboarding),
               );
             })
             .values

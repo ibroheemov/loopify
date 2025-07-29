@@ -28,13 +28,13 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final goal = ref.watch(goalProvider);
+    final reminder = ref.watch(reminderProvider);
     return AppCard(
       padding: EdgeInsets.all(0),
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          initiallyExpanded: goal.enabled,
+          initiallyExpanded: reminder.enabled,
           tilePadding: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
           childrenPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm)
               .copyWith(bottom: AppSpacing.md_lg),
@@ -52,7 +52,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
             children: [
               Text("Reminder".toUpperCase(), style: textTheme.titleMedium),
               Text(
-                goal.enabled ? "ON" : "OFF",
+                reminder.enabled ? "ON" : "OFF",
                 style: textTheme.titleMedium?.copyWith(
                     color: enabled
                         ? colorScheme.primary

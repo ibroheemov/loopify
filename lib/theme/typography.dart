@@ -31,7 +31,7 @@ class AppTypography {
     ),
     titleMedium: TextStyle(
       fontSize: 16,
-      fontWeight: FontWeight.w900,
+      fontWeight: FontWeight.w600,
       fontFamily: _fontFamily,
     ),
     titleSmall: TextStyle(

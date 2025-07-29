@@ -1,3 +1,4 @@
+import 'package:betterloop/utils/theme_extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/shared_prefs_keys.dart';
 
@@ -14,6 +15,9 @@ class SharedPrefsService {
     _prefs = await SharedPreferences.getInstance();
   }
 
+  // Keys
+  static const _keyThemeMode = 'theme_mode';
+
   bool get onboardingComplete =>
       _prefs?.getBool(SharedPrefsKeys.onboardingComplete) ?? false;
 
@@ -27,5 +31,12 @@ class SharedPrefsService {
     await _prefs?.setString(SharedPrefsKeys.userName, name);
   }
 
-  // Add more getters/setters as needed...
+  AppThemeMode get themeMode {
+    final value = _prefs?.getString(_keyThemeMode);
+    return AppThemeModeExt.fromString(value);
+  }
+
+  Future<void> setThemeMode(AppThemeMode mode) async {
+    await _prefs?.setString(_keyThemeMode, mode.name);
+  }
 }

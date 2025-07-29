@@ -9,6 +9,9 @@ final ThemeData appLightTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.light.background,
   primaryColor: AppColors.primary,
   textTheme: AppTypography.textTheme,
+  bottomSheetTheme: BottomSheetThemeData(
+    backgroundColor: AppColors.light.background,
+  ),
   fontFamily: 'Nunito',
   colorScheme: ColorScheme.light(
     primary: AppColors.primary,
@@ -27,10 +30,10 @@ final ThemeData appLightTheme = ThemeData(
     backgroundColor: Colors.white,
     foregroundColor: AppColors.light.textPrimary,
     scrolledUnderElevation: 0,
-    systemOverlayStyle: SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ),
+    // systemOverlayStyle: SystemUiOverlayStyle(
+    //   systemNavigationBarColor: AppColors.light.surface,
+    //   systemNavigationBarIconBrightness: Brightness.dark,
+    // ),
     actionsPadding: EdgeInsets.only(right: AppSpacing.sm_md),
   ),
   navigationBarTheme: NavigationBarThemeData(
@@ -47,6 +50,9 @@ final ThemeData appDarkTheme = ThemeData(
   textTheme: AppTypography.textTheme.apply(
     bodyColor: AppColors.dark.textPrimary,
     displayColor: AppColors.dark.textPrimary,
+  ),
+  bottomSheetTheme: BottomSheetThemeData(
+    backgroundColor: AppColors.dark.background,
   ),
   fontFamily: 'Nunito',
   colorScheme: ColorScheme.dark(
@@ -73,10 +79,10 @@ final ThemeData appDarkTheme = ThemeData(
     backgroundColor: AppColors.dark.background,
     foregroundColor: Colors.white,
     scrolledUnderElevation: 0,
-    systemOverlayStyle: SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
+    // systemOverlayStyle: SystemUiOverlayStyle(
+    //   systemNavigationBarColor: AppColors.dark.surface,
+    //   systemNavigationBarIconBrightness: Brightness.light,
+    // ),
     actionsPadding: EdgeInsets.only(right: AppSpacing.sm_md),
   ),
   progressIndicatorTheme: ProgressIndicatorThemeData().copyWith(

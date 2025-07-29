@@ -5,6 +5,7 @@ import 'package:betterloop/models/icon_meta.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/extensions.dart';
+import 'package:betterloop/widgets/app_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,12 +36,10 @@ class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(15.0),
+    return AppContainer(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: AppSpacing.vertical),
           _buildTabBar(),
           SizedBox(height: AppSpacing.vertical),
           _buildTabBarContent(),

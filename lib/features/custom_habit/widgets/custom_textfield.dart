@@ -23,6 +23,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,6 +33,7 @@ class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           validator: validator,
           onChanged: onChanged,
+          style: textTheme.bodyLarge,
           decoration: InputDecoration(
             filled: true,
             fillColor: theme.colorScheme.surface,
@@ -41,7 +43,7 @@ class CustomTextField extends StatelessWidget {
             focusedErrorBorder: _errorBorder(theme),
             errorBorder: _errorBorder(theme),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           ),
         ),
       ],
@@ -51,14 +53,14 @@ class CustomTextField extends StatelessWidget {
   static _border(ThemeData theme) {
     return OutlineInputBorder(
       borderSide: BorderSide(color: theme.colorScheme.outline),
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(24),
     );
   }
 
   static _errorBorder(ThemeData theme) {
     return OutlineInputBorder(
       borderSide: BorderSide(color: theme.colorScheme.error),
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(24),
     );
   }
 }

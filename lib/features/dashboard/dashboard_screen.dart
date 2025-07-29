@@ -1,4 +1,5 @@
 // lib/features/dashboard/dashboard_screen.dart
+import 'package:betterloop/constants/general_icons.dart';
 import 'package:betterloop/features/dashboard/widgets/habit_card.dart';
 import 'package:betterloop/features/dashboard/widgets/habit_card_progress.dart';
 import 'package:betterloop/features/dashboard/widgets/monthly_habit_tracker.dart';
@@ -6,6 +7,7 @@ import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/theme/colors.dart';
+import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -54,35 +56,49 @@ class _DashboardScreenState extends State<DashboardScreen>
             valueListenable: HabitService.getHabitBoxSync().listenable(),
             builder: _habitsBuilder,
           ),
+          ValueListenableBuilder(
+            valueListenable: HabitService.getHabitBoxSync().listenable(),
+            builder: (context, box, child) {
+              final habits = box.values.toList();
+
+              if (habits.isEmpty) {
+                return Positioned(
+                  left: 45,
+                  child: Image.asset(
+                    "assets/images/empty_habits.png",
+                    width: 250,
+                  ),
+                );
+              }
+              return Container();
+            },
+          ),
           Positioned(
             left: 0,
             right: 0,
-            top: 0,
+            top: AppSpacing.sm,
             child: Container(
               // color: Colors.amber,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // IconButton.filled(
-                  //     onPressed: () {},
-                  //     icon: Icon(
-                  //       Icons.settings,
-                  //       size: 35,
-                  //     )),
-                  // Container(width: 35),
+                  Container(width: 35),
                   _buildTabBar(),
-                  // IconButton.filled(
-                  //     style: IconButton.styleFrom(
-                  //         backgroundColor:
-                  //             AppColors.of(context).backgroundDark),
-                  //     color: AppColors.of(context).textSecondary,
-                  //     onPressed: () {
-                  //       Navigator.pushNamed(context, RouteNames.settings);
-                  //     },
-                  //     icon: Icon(
-                  //       Icons.settings,
-                  //       size: 35,
-                  //     ))
+                  IconButton.filled(
+                      style: IconButton.styleFrom(
+                          fixedSize: Size(52, 52),
+                          backgroundColor:
+                              AppColors.of(context).backgroundDark),
+                      color: AppColors.of(context).textSecondary,
+                      onPressed: () {
+                        Navigator.pushNamed(context, RouteNames.settings);
+                      },
+                      icon: Center(
+                        child: Icon(
+                          GeneralIcons.settings_outline,
+                          size: 30,
+                        ),
+                      ))
                 ],
               ),
             ),
@@ -115,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         tabs: SampleItem.values
             .map((e) => Tab(
                   child: Container(
-                    constraints: BoxConstraints(minWidth: 100, maxHeight: 45),
+                    constraints: BoxConstraints(maxWidth: 80, maxHeight: 45),
                     padding: const EdgeInsets.all(0),
                     child: Center(child: Text(e.name.capitalize())),
                   ),
@@ -127,11 +143,12 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   Widget _habitsBuilder(context, Box<Habit> box, _) {
     final habits = box.values.toList();
+
     return TabBarView(
       controller: _tabController,
       children: [
         ListView.builder(
-          padding: EdgeInsets.only(top: 70),
+          padding: EdgeInsets.only(top: 80),
           itemCount: habits.length,
           itemBuilder: (context, index) {
             final habit = habits[index];
@@ -142,7 +159,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           },
         ),
         ListView.builder(
-          padding: EdgeInsets.only(top: 70),
+          padding: EdgeInsets.only(top: 80),
           itemCount: habits.length,
           itemBuilder: (context, index) {
             final habit = habits[index];
@@ -150,7 +167,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           },
         ),
         ListView.builder(
-          padding: EdgeInsets.only(top: 70),
+          padding: EdgeInsets.only(top: 80),
           itemCount: habits.length,
           itemBuilder: (context, index) {
             final habit = habits[index];

@@ -1,3 +1,4 @@
+import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 
@@ -29,9 +30,12 @@ class SingleSettingContainer extends StatelessWidget {
           Row(
             children: [
               Center(
-                child: Icon(icondata, size: 30),
+                child: Icon(
+                  icondata,
+                  size: 25,
+                ),
               ),
-              SizedBox(width: 20),
+              SizedBox(width: 10),
               Text(
                 title,
                 style: TextStyle(fontSize: 18),

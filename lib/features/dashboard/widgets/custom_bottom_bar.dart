@@ -14,7 +14,7 @@ class CustomBottomBar extends StatelessWidget {
   static final List<IconData> icons = [
     GeneralIcons.betterloop,
     Icons.bubble_chart_outlined,
-    Icons.menu_book_outlined,
+    Icons.stacked_line_chart_rounded,
     GeneralIcons.settings_outline,
   ];
 
@@ -80,6 +80,7 @@ class CustomBottomBar extends StatelessWidget {
                                         (index > 1 ? index - 1 : index)
                                     ? colorScheme.primary
                                     : Colors.grey,
+                                size: 20,
                               ),
                               const SizedBox(height: 4),
                               Text(

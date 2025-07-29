@@ -47,7 +47,7 @@ class ActionButtons extends ConsumerWidget {
             label: "Create habit",
             onPressed: () {
               _onCreateHabit(ref);
-              Navigator.pop(context);
+              Navigator.pop(context, true);
             },
           )
         ],

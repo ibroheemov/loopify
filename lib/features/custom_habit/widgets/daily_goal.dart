@@ -30,10 +30,17 @@ class SectionDailyGoal extends ConsumerStatefulWidget {
 class _SectionDailyGoalState extends ConsumerState<SectionDailyGoal> {
   final expansionController = ExpansionTileController();
   bool initiallyExpanded = false;
+  int unitInitalItem = 0;
+  int valueInitalItem = 0;
 
   @override
   void initState() {
-    initiallyExpanded = widget.habit?.goal.enabled ?? false;
+    final habit = widget.habit;
+    if (habit != null) {
+      initiallyExpanded = habit.goal.enabled;
+      unitInitalItem = _fruitNames.indexOf(habit.goal.unit);
+      valueInitalItem = habit.goal.value - 1;
+    }
     super.initState();
   }
 
@@ -87,7 +94,7 @@ class _SectionDailyGoalState extends ConsumerState<SectionDailyGoal> {
                 children: [
                   Expanded(
                     child: CustomCupertinoPicker(
-                      initialItem: widget.habit?.goal.value,
+                      initialItem: valueInitalItem,
                       items: List.generate(200, (val) => (val + 1).addZero()),
                       onSelectedItemChanged: onGoalValueChanged,
                     ),
@@ -95,7 +102,7 @@ class _SectionDailyGoalState extends ConsumerState<SectionDailyGoal> {
                   Expanded(
                     child: CustomCupertinoPicker(
                       items: _fruitNames,
-                      initialItem: 0,
+                      initialItem: unitInitalItem,
                       onSelectedItemChanged: onGoalUnitChanged,
                     ),
                   ),

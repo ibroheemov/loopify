@@ -1,10 +1,12 @@
 import 'package:betterloop/constants/general_icons.dart';
 import 'package:betterloop/features/settings/providers/backup_notifier.dart';
+import 'package:betterloop/features/settings/widgets/choose_themes.dart';
 import 'package:betterloop/features/settings/widgets/last_backup_time.dart';
 import 'package:betterloop/features/settings/widgets/reasons_to_upgrade.dart';
 import 'package:betterloop/features/settings/widgets/single_setting_container.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_card.dart';
+import 'package:betterloop/widgets/bottomsheet_wrapper.dart';
 import 'package:betterloop/widgets/separator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -163,6 +165,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                       Separator(),
                       SingleSettingContainer(
+                        onTap: () {
+                          _showThemes(context);
+                        },
                         icondata: Icons.dark_mode,
                         title: "Dark mode",
                       ),
@@ -203,6 +208,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     } else {
       ref.read(restoreNotifierProvider.notifier).restore();
     }
+  }
+
+  void _showThemes(BuildContext context) {
+    showModalBottomSheet<void>(
+      // backgroundColor: Theme.of(context).colorScheme.background,
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return BottomsheetWrapper(screenHeightOf: 0.4, child: ChooseThemes());
+      },
+    );
   }
 
   void _confirmSignout() {

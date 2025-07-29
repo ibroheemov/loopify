@@ -47,15 +47,9 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(children: [
-              _buildIcon(habit),
+              buildIcon(habit),
               SizedBox(width: AppSpacing.md),
-              _buildTitle(),
-              IconButton(
-                  onPressed: () async {
-                    await HabitService.deleteHabit(habit.id);
-                    await HabitLogService.deleteLogsForHabit(habit.id);
-                  },
-                  icon: Icon(Icons.delete))
+              buildTitle(),
             ]),
             _builCompletion()
           ],
@@ -64,7 +58,7 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildTitle() {
+  Widget buildTitle() {
     final habit = widget.habit;
     final textTheme = Theme.of(context).textTheme;
 
@@ -98,7 +92,7 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildIcon(Habit habit) {
+  Widget buildIcon(Habit habit) {
     return Container(
       width: 55,
       height: 55,
@@ -122,10 +116,12 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
             onPressed: widget.isComplete ? null : widget.onComplete,
             icon: Icon(
               widget.isComplete
-                  ? Icons.check_circle_rounded
-                  : Icons.circle_outlined,
-              size: 30,
-              color: widget.isComplete ? colorScheme.primary : Colors.grey,
+                  ? GeneralIcons.check_circle_bold
+                  : GeneralIcons.circle_outline,
+              size: 35,
+              color: widget.isComplete
+                  ? colorScheme.primary
+                  : AppColors.of(context).surfaceSecondary,
             ),
           )
         : FutureBuilder(
@@ -139,7 +135,7 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
                   isCompleted
                       ? GeneralIcons.check_circle_bold
                       : GeneralIcons.circle_outline,
-                  size: 30,
+                  size: 35,
                   color: isCompleted
                       ? colorScheme.primary
                       : AppColors.of(context).surfaceSecondary,
