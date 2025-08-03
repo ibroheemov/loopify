@@ -59,8 +59,6 @@ class NotificationService {
     required NotificationItem notificationItem,
     required List<int> weekdayEntities,
   }) async {
-    // Cancel previously scheduled notifications
-
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'daily_notification',
@@ -79,25 +77,26 @@ class NotificationService {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    print('NOTIFICATION weekdayEntities: $weekdayEntities');
     for (var weekdayEntity in weekdayEntities) {
       final id = notificationId + weekdayEntity;
-      await cancelNotifications(notificationId);
-      print('NOTIFICATION ID: $id');
+      await cancelNotifications(id);
       final notificationTemplate =
           HabitNotificationTemplates.getRandomTemplate(habit.title);
+
       final tz.TZDateTime scheduledDate = _nextInstanceOfDay(
         day: weekdayEntity,
         timeH: notificationItem.timeH,
         timeM: notificationItem.timeM,
       );
-
+      print(scheduledDate);
       await _localNotifications.zonedSchedule(
         id,
         notificationTemplate.title,
         notificationTemplate.body,
         scheduledDate,
         platformChannelSpecifics,
+        //  uiLocalNotificationDateInterpretation:
+        //     UILocalNotificationDateInterpretation.wallClockTime,
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       );
@@ -170,9 +169,11 @@ class NotificationService {
         title,
         scheduledDate,
         platformChannelSpecifics,
+
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         // uiLocalNotificationDateInterpretation:
         //     UILocalNotificationDateInterpretation.wallClockTime,
+
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       );
     }

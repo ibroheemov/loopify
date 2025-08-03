@@ -1,4 +1,4 @@
-package com.example.betterloop
+package com.app.apexhabit
 
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -9,7 +9,7 @@ import android.content.Context
 import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity: FlutterActivity() {
-    private val CHANNEL = "com.example.betterloop/notifications"
+    private val CHANNEL = "com.app.apexhabit/notifications"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)

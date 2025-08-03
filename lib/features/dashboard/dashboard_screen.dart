@@ -9,8 +9,10 @@ import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/extensions.dart';
+import 'package:betterloop/widgets/app_container.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 import 'widgets/weekly_habit_tracker.dart';
 
@@ -77,28 +79,29 @@ class _DashboardScreenState extends State<DashboardScreen>
             left: 0,
             right: 0,
             top: AppSpacing.sm,
-            child: Container(
+            child: AppContainer(
               // color: Colors.amber,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(width: 35),
+                  Text(DateFormat.MMMMd().format(DateTime.now()),
+                      style: textTheme.titleSmall),
                   _buildTabBar(),
-                  IconButton.filled(
-                      style: IconButton.styleFrom(
-                          fixedSize: Size(52, 52),
-                          backgroundColor:
-                              AppColors.of(context).backgroundDark),
-                      color: AppColors.of(context).textSecondary,
-                      onPressed: () {
-                        Navigator.pushNamed(context, RouteNames.settings);
-                      },
-                      icon: Center(
-                        child: Icon(
-                          GeneralIcons.settings_outline,
-                          size: 30,
-                        ),
-                      ))
+                  // IconButton.filled(
+                  //     style: IconButton.styleFrom(
+                  //         fixedSize: Size(52, 52),
+                  //         backgroundColor:
+                  //             AppColors.of(context).backgroundDark),
+                  //     color: AppColors.of(context).textSecondary,
+                  //     onPressed: () {
+                  //       Navigator.pushNamed(context, RouteNames.paywall);
+                  //     },
+                  //     icon: Center(
+                  //       child: Icon(
+                  //         GeneralIcons.settings_outline,
+                  //         size: 30,
+                  //       ),
+                  //     ))
                 ],
               ),
             ),
@@ -112,6 +115,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
+      height: 50,
       padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
           color: AppColors.of(context).backgroundDark,
@@ -131,7 +135,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         tabs: SampleItem.values
             .map((e) => Tab(
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 80, maxHeight: 45),
+                    constraints: BoxConstraints(maxWidth: 85, maxHeight: 30),
                     padding: const EdgeInsets.all(0),
                     child: Center(child: Text(e.name.capitalize())),
                   ),
@@ -141,17 +145,35 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+  List<Habit> _todaysHabits(List<Habit> habits) {
+    final int today = DateTime.now().weekday;
+
+    final todaysHabits = habits.where((habit) {
+      final weekdays = habit.weekdays;
+
+      if (weekdays.isXdaysPerWeek) {
+        return true;
+      }
+
+      return weekdays.selectedWeekDays.contains(today);
+    }).toList();
+
+    // return todaysHabits;
+    return habits;
+  }
+
   Widget _habitsBuilder(context, Box<Habit> box, _) {
     final habits = box.values.toList();
+    final todaysHabits = _todaysHabits(habits);
 
     return TabBarView(
       controller: _tabController,
       children: [
         ListView.builder(
           padding: EdgeInsets.only(top: 80),
-          itemCount: habits.length,
+          itemCount: todaysHabits.length,
           itemBuilder: (context, index) {
-            final habit = habits[index];
+            final habit = todaysHabits[index];
             final goalEnabled = habit.goal.enabled;
             return goalEnabled
                 ? HabitCardProgress(habit: habit)

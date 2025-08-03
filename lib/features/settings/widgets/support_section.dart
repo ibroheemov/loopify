@@ -1,7 +1,9 @@
+import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:betterloop/widgets/separator.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'single_setting_container.dart';
 
@@ -29,7 +31,7 @@ class SupportSection extends StatelessWidget {
             children: [
               SingleSettingContainer(
                 onTap: () {
-                  Navigator.pushNamed(context, "faqs");
+                  Navigator.pushNamed(context, RouteNames.faqs);
                 },
                 icondata: Icons.contact_support_rounded,
                 title: "FAQs",
@@ -59,12 +61,12 @@ class SupportSection extends StatelessWidget {
       path: 'apexhabit.help@gmail.com',
     );
 
-    // if (await canLaunchUrl(emailUri)) {
-    //   await launchUrl(emailUri);
-    // } else {
-    //   // Handle the error
-    //   print('Could not launch email client');
-    // }
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(emailUri);
+    } else {
+      // Handle the error
+      print('Could not launch email client');
+    }
   }
 
   void reportBug() async {
@@ -75,11 +77,11 @@ class SupportSection extends StatelessWidget {
           'subject=Bug Report&body=Please describe the bug here...\n\n---\nDevice Info: [Your device info here]',
     );
 
-    // if (await canLaunchUrl(emailUri)) {
-    //   await launchUrl(emailUri);
-    // } else {
-    //   // Handle the error
-    //   print('Could not launch email client');
-    // }
+    if (await canLaunchUrl(emailUri)) {
+      await launchUrl(emailUri);
+    } else {
+      // Handle the error
+      print('Could not launch email client');
+    }
   }
 }

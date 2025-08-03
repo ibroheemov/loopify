@@ -1,8 +1,15 @@
+import 'dart:ffi';
+
+import 'package:betterloop/constants/general_icons.dart';
+import 'package:betterloop/constants/premium_icons.dart';
+import 'package:betterloop/providers/pro_user_provider.dart';
+import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IconBox extends StatelessWidget {
-  final void Function() onTap;
+  final void Function(bool, bool) onTap;
   final IconData icon;
   final bool isSelected;
 
@@ -16,25 +23,49 @@ class IconBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isPremium = premiumicons.contains(icon);
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: isSelected
-              ? colorScheme.primary.withOpacity(0.3)
-              : colorScheme.surface,
-          border: Border.all(width: 0.5, color: colorScheme.outline),
-          borderRadius: BorderRadius.circular(14.0),
+    return Consumer(builder: (context, ref, _) {
+      final isProAsync = ref.watch(isProUserProvider);
+      final isPro = isProAsync.hasValue && isProAsync.value!;
+      // final isPro = true;
+
+      return GestureDetector(
+        onTap: () => onTap(isPremium, isPro),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected
+                ? colorScheme.primary.withOpacity(0.3)
+                : colorScheme.surface,
+            border: Border.all(
+                width: 0.5,
+                color: isPremium && !isPro
+                    ? AppColors.accent
+                    : colorScheme.outline),
+            borderRadius: BorderRadius.circular(14.0),
+          ),
+          child: Stack(
+            children: [
+              if (isPremium && !isPro)
+                Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Icon(
+                      GeneralIcons.star,
+                      color: AppColors.accent,
+                      size: 15,
+                    )),
+              Center(
+                child: Icon(icon,
+                    color: isSelected
+                        ? colorScheme.primary
+                        : AppColors.of(context).textSecondary,
+                    size: 40),
+              )
+            ],
+          ),
         ),
-        child: Center(
-          child: Icon(icon,
-              color: isSelected
-                  ? colorScheme.primary
-                  : AppColors.of(context).textSecondary,
-              size: 40),
-        ),
-      ),
-    );
+      );
+    });
   }
 }

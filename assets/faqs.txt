@@ -1,0 +1,60 @@
+FAQs for Bettered
+1. General Questions
+Q: What is Bettered?
+A: Bettered is a habit tracker app designed to help you build better habits, track your progress, and achieve your goals.
+
+Q: Is Bettered free to use?
+A: Bettered is free to use with a limited number of habits. You can unlock additional features and habits by subscribing to Bettered Premium.
+
+2. Using the App
+Q: How do I create a new habit?
+A: You have 2 options, Option 1: Go to the "Main" screen where you see a list of your created habits under which there is a button named "Create a new habit". Option 2: In the "Main" screen, at the very right bottom, there is a plus button select a category, and follow the prompts to customize your habit.
+
+Q: Can I set reminders for my habits?
+A: Yes! You can set reminders in the habit settings or enable morning, afternoon, and evening reminders in the app settings.
+
+Q: How do I delete a habit?
+A: To delete a habit, swipe left on the habit in your list and confirm the deletion.
+
+Q: Can I use Bettered offline?
+A: Yes! Bettered is offline-first. Your data syncs automatically when you reconnect to the internet.
+
+3. Subscription and Premium Features
+Q: What’s included in Bettered Premium?
+A: Bettered Premium includes unlimited habits, access to exclusive challenges, advanced habit analytics, and more.
+
+Q: How do I subscribe to Bettered Premium?
+A: Go to Settings > Subscription and select your preferred plan.
+
+Q: Can I cancel my subscription?
+A: Yes, you can cancel your subscription anytime through the App Store or Google Play Store settings.
+
+Q: How do I restore my subscription on a new device?
+A: Go to Settings > Restore Purchases and log in with the same account you used to subscribe.
+
+4. Data & Sync
+Q: How do I sync my data across devices?
+A: Log in with the same account on each device to sync your data automatically.
+
+Q: Can I back up my data?
+A: Yes, your data is automatically backed up to our secure servers if you’re logged in.
+
+Q: What happens if I uninstall the app?
+A: Your data will remain safe if you've synced it to the cloud. Just log in again after reinstalling.
+
+5. Troubleshooting
+Q: I’m not receiving notifications. What should I do?
+A: Check if notifications are enabled for Bettered in your device settings. Ensure reminder times are set in the app.
+
+Q: I forgot my password. How can I reset it?
+A: Tap "Forgot Password" on the login screen and follow the instructions to reset your password.
+
+Q: My app crashed. What should I do?
+A: Restart the app and check for updates. If the issue persists, contact support at contact@bettered.com.
+
+6. Contact and Support
+Q: How can I contact support?
+A: You can email us at contact@bettered.com or use the "Contact Us" option in the app settings.
+
+Q: How do I provide feedback or suggest a new feature?
+A: We love hearing from our users! Use the "Feedback" option in Settings or email us.

@@ -62,6 +62,7 @@ class _OnboardingStep2GoalAreasState
       isLoading: isLoading,
       child: Scaffold(
         floatingActionButton: PrimaryButton(
+            isRounded: true,
             label: "Custom habit",
             onPressed: () {
               Navigator.pushNamed(context, RouteNames.customHabit)
@@ -79,7 +80,8 @@ class _OnboardingStep2GoalAreasState
               return const Center(child: CircularProgressIndicator());
             }
             return ListView(
-              padding: const EdgeInsets.all(AppSpacing.lg),
+              padding:
+                  const EdgeInsets.all(AppSpacing.lg).copyWith(bottom: 200),
               children: [
                 Text(
                   'Choose Habit \nTemplate',
@@ -114,7 +116,8 @@ class _OnboardingStep2GoalAreasState
     await Future.delayed(const Duration(seconds: 1));
     SharedPrefsService().setOnboardingComplete(true);
     setState(() => isLoading = false);
-    Navigator.pushNamed(context, RouteNames.home);
+    Navigator.pushNamedAndRemoveUntil(
+        context, RouteNames.home, ModalRoute.withName('/'));
   }
 
   List<Widget> _habits(

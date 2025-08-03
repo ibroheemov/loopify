@@ -72,8 +72,10 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton:
-          ActionButtons(formKey: _formKey, controller: _habitNameController),
+      floatingActionButton: ActionButtons(
+          formKey: _formKey,
+          controller: _habitNameController,
+          habitTobeUpdated: habit),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -134,9 +136,9 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
                       SizedBox(height: AppSpacing.md),
                       SectionDailyGoal(habit: widget.habit),
                       SizedBox(height: AppSpacing.md),
-                      SectionHabitDays(),
+                      SectionHabitDays(habit: widget.habit),
                       SizedBox(height: AppSpacing.md),
-                      ReminderSection(),
+                      ReminderSection(habit: widget.habit),
                       SizedBox(height: AppSpacing.xxl),
                     ],
                   )

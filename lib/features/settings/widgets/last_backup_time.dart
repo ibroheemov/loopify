@@ -1,5 +1,6 @@
 import 'package:betterloop/features/settings/providers/last_backup_time_provider.dart';
 import 'package:betterloop/theme/colors.dart';
+import 'package:betterloop/theme/spacing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,9 +17,12 @@ class LastBackupTime extends ConsumerWidget {
       color: AppColors.of(context).surfaceSecondary,
     );
     return ref.watch(lastBackupTimeProvider).when(
-          data: (time) => Text(
-            time == null ? 'No backup yet' : "Last backup: ${_result(time)}",
-            style: style,
+          data: (time) => Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.md),
+            child: Text(
+              time == null ? 'No backup yet' : "Last backup: ${_result(time)}",
+              style: style,
+            ),
           ),
           loading: () => Text("Getting last backuptime...", style: style),
           error: (e, _) => Text('Failed: $e'),

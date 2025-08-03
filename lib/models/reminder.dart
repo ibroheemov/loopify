@@ -39,4 +39,20 @@ class Reminder {
         minute: minute ?? reminder.minute,
         selectedWeekDays: selectedWeekDays ?? reminder.selectedWeekDays,
       );
+
+  Map<String, dynamic> toJson() => {
+        'enabled': enabled,
+        'hour': hour,
+        'minute': minute,
+        'selectedWeekDays': selectedWeekDays,
+      };
+
+  factory Reminder.fromJson(Map<String, dynamic> json) {
+    return Reminder(
+      enabled: json['enabled'] ?? false,
+      hour: json['hour'] ?? 19,
+      minute: json['minute'] ?? 0,
+      selectedWeekDays: List<int>.from(json['selectedWeekDays'] ?? []),
+    );
+  }
 }

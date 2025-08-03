@@ -5,7 +5,7 @@ class HabitService {
   static const _boxName = 'habits';
 
   static Box<Habit> getHabitBoxSync() {
-    return Hive.box<Habit>(_boxName); // assuming it's already opened
+    return Hive.box<Habit>(_boxName);
   }
 
   static Future<Box<Habit>> openBox() async {

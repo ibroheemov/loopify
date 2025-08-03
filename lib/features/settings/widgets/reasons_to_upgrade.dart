@@ -1,3 +1,4 @@
+import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -12,9 +13,13 @@ class ReasonsToUpgrade extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         AppCard(
+          onTap: () {
+            Navigator.pushNamed(context, RouteNames.paywall);
+          },
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(width: 30),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
@@ -26,11 +31,11 @@ class ReasonsToUpgrade extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 55,
-          top: -10,
+          left: 0,
+          top: -5,
           child: LottieBuilder.asset(
             "assets/images/icons/premium-star-animation.json",
-            width: 80,
+            width: 70,
           ),
         ),
       ],

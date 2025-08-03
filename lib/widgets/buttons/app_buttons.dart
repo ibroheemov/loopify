@@ -6,6 +6,7 @@ class PrimaryButton extends StatelessWidget {
   final bool isLoading;
   final IconData? icon;
   final bool isRounded;
+  final bool isSmall;
 
   const PrimaryButton({
     super.key,
@@ -13,12 +14,14 @@ class PrimaryButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.isRounded = false,
+    this.isSmall = false,
     this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return SizedBox(
       // width: double.infinity,
@@ -38,8 +41,9 @@ class PrimaryButton extends StatelessWidget {
                 strokeWidth: 2,
               )
             : Text(label,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                style: isSmall
+                    ? textTheme.titleMedium
+                    : textTheme.titleLarge?.copyWith(color: Colors.white)),
         onPressed: isLoading ? null : onPressed,
       ),
     );
@@ -59,6 +63,7 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return SizedBox(
       // width: double.infinity,
@@ -72,7 +77,7 @@ class SecondaryButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(label, style: const TextStyle(fontSize: 16)),
+        child: Text(label, style: textTheme.titleMedium),
       ),
     );
   }

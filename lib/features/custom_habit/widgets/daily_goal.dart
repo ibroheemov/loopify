@@ -6,7 +6,6 @@ import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/extensions.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:betterloop/widgets/custom_cupertino_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +16,8 @@ const List<String> _fruitNames = <String>[
   'Hours',
   'Minutes',
   'Times',
+  'Steps',
+  '\$',
 ];
 
 class SectionDailyGoal extends ConsumerStatefulWidget {

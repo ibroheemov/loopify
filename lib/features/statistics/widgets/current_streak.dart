@@ -14,8 +14,13 @@ class CurrentStreak extends ConsumerStatefulWidget {
 
 class _CurrentStreakState extends ConsumerState<CurrentStreak> {
   int value = 0;
+  bool isXdaysPerWeek = false;
 
   Future<void> calculateStreak(Habit habit) async {
+    if (habit.weekdays.isXdaysPerWeek) {
+      setState(() => isXdaysPerWeek = true);
+      return;
+    }
     final streak = await HabitLogService.getCurrentMonthStreak(habit);
     setState(() => value = streak);
   }
@@ -35,7 +40,7 @@ class _CurrentStreakState extends ConsumerState<CurrentStreak> {
     return StatCard(
       color: Color(0xFFF63466),
       title: "Current \nstreak",
-      value: value.toString(),
+      value: isXdaysPerWeek ? "N/A" : value.toString(),
       bottomText: "Best streak:",
     );
   }

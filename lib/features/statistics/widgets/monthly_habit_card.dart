@@ -61,36 +61,44 @@ class _SimpleCalendarState extends State<SimpleCalendar> {
       // print(day);
       final thisDay = day;
       final date = DateTime(now.year, now.month, day);
+      final isDayApplicable =
+          widget.habit.weekdays.selectedWeekDays.contains(date.weekday);
 
       currentRow.add(
-        FutureBuilder(
-          future: widget.habit.goal.enabled
-              ? HabitLogService.getProgressForHabit(widget.habit.id, date)
-              : null,
-          builder: (context, snapshot) {
-            int progress = 0;
-            final hasData = snapshot.hasData;
-            if (hasData) {
-              progress = snapshot.data!;
-            }
-            return Center(
-              child: Container(
+        !isDayApplicable
+            ? Container(
                 width: 30,
                 height: 30,
                 margin: EdgeInsets.only(bottom: 5),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: boxColor(day: thisDay, progress: progress),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  '$thisDay',
-                  style: TextStyle(fontSize: 12),
-                ),
+              )
+            : FutureBuilder(
+                future: widget.habit.goal.enabled
+                    ? HabitLogService.getProgressForHabit(widget.habit.id, date)
+                    : null,
+                builder: (context, snapshot) {
+                  int progress = 0;
+                  final hasData = snapshot.hasData;
+                  if (hasData) {
+                    progress = snapshot.data!;
+                  }
+                  return Center(
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      margin: EdgeInsets.only(bottom: 5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: boxColor(day: thisDay, progress: progress),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '$thisDay',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       );
 
       if (currentRow.length == 7) {

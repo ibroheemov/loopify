@@ -24,33 +24,80 @@ class _HabitChartWithDropdownState
 
   Future<void> loadLogsForHabit(String habitId) async {
     final habit = ref.read(currentHabitProvider);
+    if (habit == null) return;
+
     final now = selectedMonth;
     final int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
+    final weekdaysCfg = habit.weekdays;
 
-    // final logsBox = await HabitLogService.openBox();
-    // final allLogs = logsBox.values.where((log) =>
-    //     log.habitId == habitId &&
-    //     log.completedAt.year == selectedMonth.year &&
-    //     log.completedAt.month == selectedMonth.month);
-    Map<int, double> mapped = {};
+    // Filled only for the days we care about; gaps will be skipped by fl_chart.
+    final Map<int, double> mapped = {};
 
-    if (habit!.goal.enabled) {
-      for (var i = 0; i < daysInMonth; i++) {
-        final progress = await HabitLogService.getProgressForHabit(
-            habitId, DateTime(now.year, now.month, i, 0));
-        mapped[i] = ((progress / habit.goal.value) * 100).ceilToDouble();
-      }
-    } else {
-      for (var i = 0; i < daysInMonth; i++) {
-        final isCompleted = await HabitLogService.isHabitCompleted(
-            habitId, DateTime(now.year, now.month, i, 0));
-        mapped[i] = isCompleted ? 100 : 0;
+    // Helper that returns the completion % for a single date.
+    Future<double> _getPercent(DateTime date) async {
+      if (habit.goal.enabled) {
+        final p = await HabitLogService.getProgressForHabit(habitId, date);
+        return ((p / habit.goal.value) * 100).clamp(0, 100);
+      } else {
+        final done = await HabitLogService.isHabitCompleted(habitId, date);
+        return done ? 100.0 : 0.0;
       }
     }
 
-    setState(() => dayToProgress = mapped);
-    setState(() => loading = false);
+    // Collect futures so we don’t block sequentially.
+    final List<Future<void>> futures = [];
+
+    for (int day = 1; day <= daysInMonth; day++) {
+      final date = DateTime(now.year, now.month, day);
+      final weekday = date.weekday; // 1 = Mon … 7 = Sun
+
+      // Is this day actually part of the schedule?
+      final bool isScheduledDay = weekdaysCfg.isXdaysPerWeek ||
+          weekdaysCfg.selectedWeekDays.contains(weekday);
+
+      if (!isScheduledDay) {
+        // leave a gap: fl_chart will simply skip missing spots
+        continue;
+      }
+
+      futures.add(_getPercent(date).then((percent) {
+        mapped[day] = percent;
+      }));
+    }
+
+    await Future.wait(futures);
+
+    setState(() {
+      dayToProgress = mapped; // e.g. {1: 100, 3: 0, 5: 100, ...}
+      loading = false;
+    });
   }
+
+  /* ###### OLD FUNCTION ###### */
+  // Future<void> loadLogsForHabit(String habitId) async {
+  //   final habit = ref.read(currentHabitProvider);
+  //   final now = selectedMonth;
+  //   final int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
+
+  //   Map<int, double> mapped = {};
+
+  //   if (habit!.goal.enabled) {
+  //     for (var i = 0; i < daysInMonth; i++) {
+  //       final progress = await HabitLogService.getProgressForHabit(
+  //           habitId, DateTime(now.year, now.month, i, 0));
+  //       mapped[i] = ((progress / habit.goal.value) * 100).ceilToDouble();
+  //     }
+  //   } else {
+  //     for (var i = 0; i < daysInMonth; i++) {
+  //       final isCompleted = await HabitLogService.isHabitCompleted(
+  //           habitId, DateTime(now.year, now.month, i, 0));
+  //       mapped[i] = isCompleted ? 100 : 0;
+  //     }
+  //   }
+
+  //   setState(() => dayToProgress = mapped);
+  //   setState(() => loading = false);
+  // }
 
   void _listenCurrentHabit() {
     ref.listen<Habit?>(currentHabitProvider, (prev, next) async {

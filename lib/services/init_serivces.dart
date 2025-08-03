@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:betterloop/config/auth_config.dart';
 import 'package:betterloop/data/seed/default_habit_areas.dart';
 import 'package:betterloop/data/seed/default_habit_types.dart';
@@ -18,13 +20,15 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'habit_area_service.dart';
 import 'shared_prefs_service.dart';
 
 class InitSerivces {
   Future<void> initServices() async {
-    // await _initNotifications();
+    await _initNotifications();
+    await initPlatformState();
     await _initFirebase();
     await _initSharedPrefs();
     await _initHive();
@@ -45,14 +49,6 @@ class InitSerivces {
 
   Future<void> _initNotifications() async {
     await NotificationService().initializePlatformNotifications();
-
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
   }
 
   Future<void> _initSharedPrefs() async {
@@ -82,5 +78,24 @@ class InitSerivces {
         await HabitAreaService.addArea(area);
       }
     }
+  }
+
+//...
+
+  Future<void> initPlatformState() async {
+    await Purchases.setLogLevel(LogLevel.info);
+
+    PurchasesConfiguration configuration;
+    if (Platform.isAndroid) {
+      configuration =
+          PurchasesConfiguration("goog_WsXhpXocsxygVKAfvQzrLfHMQUT");
+    } else if (Platform.isIOS) {
+      configuration =
+          PurchasesConfiguration("<revenuecat_project_apple_api_key>");
+    } else {
+      configuration =
+          PurchasesConfiguration("goog_WsXhpXocsxygVKAfvQzrLfHMQUT");
+    }
+    await Purchases.configure(configuration);
   }
 }

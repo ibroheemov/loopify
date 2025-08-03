@@ -7,25 +7,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:817590284277:android:03fda24b53f6354d49babc",
+        "mobilesdk_app_id": "1:817590284277:android:861ee8e7ef122ac849babc",
         "android_client_info": {
-          "package_name": "com.example.betterloop"
+          "package_name": "com.app.apexhabit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "817590284277-b84t39m2m9nh0d9htktjm4lpgirsljgn.apps.googleusercontent.com",
+          "client_id": "817590284277-dsfjdb2va36r8eorv9asfipr72ohddeo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.betterloop",
-            "certificate_hash": "6abee37ef78f14bf113aa022f2d5450c69005faa"
+            "package_name": "com.app.apexhabit",
+            "certificate_hash": "193fd9c6ba08b08a8b3b243b2c89e8012fcff0cb"
           }
         },
         {
-          "client_id": "817590284277-hqvrj3mdj23n4mpa316c5amqg6n96k5d.apps.googleusercontent.com",
+          "client_id": "817590284277-vdsi76ulam452ieo6e60e4kp061l3iro.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.betterloop",
+            "package_name": "com.app.apexhabit",
             "certificate_hash": "d40be8e728562b1dc61dcb3b26172e7cea935136"
           }
         },
@@ -45,6 +45,13 @@
             {
               "client_id": "817590284277-1vo0scrarghn4j0en7raov4kceshpfcg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "817590284277-cv11l29neiof76t8hg7hqroleu6unka5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.betterloop"
+              }
             }
           ]
         }

@@ -3,6 +3,7 @@ import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/habit_type.dart';
 import 'package:betterloop/models/hive_icon.dart';
+import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/models/weekdays.dart';
 import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/theme/spacing.dart';
@@ -57,7 +58,7 @@ class _HabitTypeTileState extends State<HabitTypeTile>
     return Container(
       width: double.infinity,
       height: 80,
-      margin: EdgeInsets.only(bottom: AppSpacing.md),
+      margin: EdgeInsets.only(bottom: AppSpacing.sm_md),
       child: AnimatedScale(
         duration: const Duration(milliseconds: 150),
         scale: _tapped ? 0.96 : 1.0,
@@ -87,6 +88,7 @@ class _HabitTypeTileState extends State<HabitTypeTile>
               createdAt: DateTime.now(),
               goal: Goal.defaultGoal(),
               weekdays: Weekdays.defaultWeekdays(),
+              reminder: Reminder.defaultReminder(),
             );
             await HabitService.addHabit(habit);
             widget.onTap();

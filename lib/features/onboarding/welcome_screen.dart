@@ -25,7 +25,7 @@ class WelcomeScreen extends StatelessWidget {
             //     size: 80, color: Theme.of(context).colorScheme.primary),
             const SizedBox(height: AppSpacing.lg),
             Text(
-              'Welcome to BetterLoop!',
+              'Welcome to Loopify!',
               style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
             ),
@@ -37,10 +37,12 @@ class WelcomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
             PrimaryButton(
-                label: "Let's get started",
-                onPressed: () {
-                  Navigator.pushNamed(context, RouteNames.onboarding);
-                })
+              isRounded: true,
+              label: "Let's get started",
+              onPressed: () {
+                Navigator.pushNamed(context, RouteNames.onboarding);
+              },
+            )
           ],
         ),
       ),

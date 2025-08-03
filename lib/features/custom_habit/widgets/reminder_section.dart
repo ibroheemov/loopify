@@ -1,6 +1,7 @@
 import 'package:betterloop/features/custom_habit/providers/goal_provider.dart';
 import 'package:betterloop/features/custom_habit/providers/reminder_provider.dart';
 import 'package:betterloop/features/custom_habit/widgets/choose_weekdays.dart';
+import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/services/notification_service.dart';
 import 'package:betterloop/theme/colors.dart';
@@ -13,7 +14,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReminderSection extends ConsumerStatefulWidget {
-  const ReminderSection({super.key});
+  const ReminderSection({super.key, this.habit});
+  final Habit? habit;
 
   @override
   ConsumerState<ReminderSection> createState() => _ReminderSectionState();
@@ -21,20 +23,36 @@ class ReminderSection extends ConsumerStatefulWidget {
 
 class _ReminderSectionState extends ConsumerState<ReminderSection> {
   final expansionController = ExpansionTileController();
+  int hour = 19;
+  int minute = 0;
   bool enabled = false;
   List<WeekDayEntity> selectedWeekDays = [...weekDays];
+
+  @override
+  void initState() {
+    final habit = widget.habit;
+    if (habit != null) {
+      enabled = habit.reminder.enabled;
+      final weekdayIds = habit.reminder.selectedWeekDays;
+      selectedWeekDays =
+          weekDays.where((e) => weekdayIds.contains(e.id)).toList();
+      hour = habit.reminder.hour;
+      minute = habit.reminder.minute;
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
-    final reminder = ref.watch(reminderProvider);
     return AppCard(
       padding: EdgeInsets.all(0),
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          initiallyExpanded: reminder.enabled,
+          initiallyExpanded: enabled,
           tilePadding: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
           childrenPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm)
               .copyWith(bottom: AppSpacing.md_lg),
@@ -52,7 +70,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
             children: [
               Text("Reminder".toUpperCase(), style: textTheme.titleMedium),
               Text(
-                reminder.enabled ? "ON" : "OFF",
+                enabled ? "ON" : "OFF",
                 style: textTheme.titleMedium?.copyWith(
                     color: enabled
                         ? colorScheme.primary
@@ -68,7 +86,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
                 children: [
                   Expanded(
                     child: CustomCupertinoPicker(
-                      initialItem: 0,
+                      initialItem: hour,
                       items: List.generate(24, (val) => val.addZero()),
                       onSelectedItemChanged: _onHourChangedChanged,
                     ),
@@ -76,7 +94,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
                   Text(":", style: textTheme.headlineMedium),
                   Expanded(
                     child: CustomCupertinoPicker(
-                      initialItem: 0,
+                      initialItem: minute,
                       items: List.generate(
                         60,
                         (val) => val.addZero(),
@@ -126,8 +144,6 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
   }
 
   void requestpermission() async {
-    await NotificationService().initializePlatformNotifications();
-
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
 

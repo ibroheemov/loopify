@@ -30,12 +30,14 @@ class _SectionHabitDaysState extends ConsumerState<SectionHabitDays> {
 
   @override
   void initState() {
-    // final habit = context.read<CurrentHabitCubit>().state;
-    // final weekdayIds = habit.selectedWeekDays;
-    // isXdaysPerWeek = habit.isSpecificDays;
-    // selectedWeekDays =
-    //     weekDays.where((e) => weekdayIds.contains(e.id)).toList();
-    // xDaysPerWeek = habit.xDaysPerWeek;
+    final habit = widget.habit;
+    if (habit != null) {
+      final weekdayIds = habit.weekdays.selectedWeekDays;
+      isXdaysPerWeek = habit.weekdays.isXdaysPerWeek;
+      selectedWeekDays =
+          weekDays.where((e) => weekdayIds.contains(e.id)).toList();
+      xDaysPerWeek = habit.weekdays.daysPerWeek;
+    }
 
     super.initState();
   }
@@ -109,7 +111,7 @@ class _SectionHabitDaysState extends ConsumerState<SectionHabitDays> {
 
     String text = '';
     for (var day in filteredWeekDays) {
-      text += '${day.name.substring(0, 3)}, ';
+      text += '${day.name.substring(0, 2)}, ';
     }
 
     return text.trim().substring(0, text.length - 2);

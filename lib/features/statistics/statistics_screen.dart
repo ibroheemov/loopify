@@ -1,8 +1,10 @@
 import 'package:betterloop/features/statistics/habit_progress_chart.dart';
 import 'package:betterloop/features/statistics/widgets/current_streak.dart';
+import 'package:betterloop/providers/pro_user_provider.dart';
 import 'package:betterloop/theme/spacing.dart';
 
 import 'package:betterloop/widgets/app_container.dart';
+import 'package:betterloop/widgets/blur_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,56 +24,65 @@ class StatisticsScreen extends ConsumerStatefulWidget {
 class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          HabitsDropdown(
-            onSelected: (habit) async {
-              ref.read(currentHabitProvider.notifier).state = habit;
-            },
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: AppContainer(
-            child: Column(
-              children: [
-                SizedBox(height: AppSpacing.lg),
-                SizedBox(
-                  height: 300,
-                  child: HabitChartWithDropdown(),
+    return Consumer(
+      builder: (context, ref, _) {
+        final isProAsync = ref.watch(isProUserProvider);
+
+        return BlurredOverlay(
+          blur: isProAsync.hasValue && !isProAsync.value!,
+          child: Scaffold(
+            appBar: AppBar(
+              actions: [
+                HabitsDropdown(
+                  onSelected: (habit) async {
+                    ref.read(currentHabitProvider.notifier).state = habit;
+                  },
                 ),
-                SizedBox(height: AppSpacing.lg),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CurrentStreak(),
-                    ),
-                    SizedBox(width: 15),
-                    Expanded(
-                      child: CompletionRate(),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Row(
-                  children: [
-                    Expanded(
-                      child: PerfectDays(),
-                    ),
-                    SizedBox(width: 15),
-                    // [ TODO ] Consider replacing with total times completed in a month
-                    Expanded(
-                      child: AveragePerDaily(),
-                    ),
-                  ],
-                )
               ],
             ),
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: AppContainer(
+                  child: Column(
+                    children: [
+                      SizedBox(height: AppSpacing.lg),
+                      SizedBox(
+                        height: 300,
+                        child: HabitChartWithDropdown(),
+                      ),
+                      SizedBox(height: AppSpacing.lg),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CurrentStreak(),
+                          ),
+                          SizedBox(width: 15),
+                          Expanded(
+                            child: CompletionRate(),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PerfectDays(),
+                          ),
+                          SizedBox(width: 15),
+                          // [ TODO ] Consider replacing with total times completed in a month
+                          Expanded(
+                            child: AveragePerDaily(),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

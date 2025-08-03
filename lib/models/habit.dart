@@ -1,5 +1,6 @@
 import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/hive_icon.dart';
+import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/models/weekdays.dart';
 import 'package:hive/hive.dart';
 part 'habit.g.dart';
@@ -27,6 +28,9 @@ class Habit extends HiveObject {
   @HiveField(6)
   final Weekdays weekdays;
 
+  @HiveField(7)
+  final Reminder reminder;
+
   Habit({
     required this.id,
     required this.title,
@@ -35,5 +39,6 @@ class Habit extends HiveObject {
     required this.createdAt,
     required this.goal,
     required this.weekdays,
+    required this.reminder,
   });
 }

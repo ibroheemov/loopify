@@ -1,8 +1,10 @@
+import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:betterloop/widgets/separator.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'single_setting_container.dart';
 
@@ -30,7 +32,7 @@ class AppInfoSection extends StatelessWidget {
             children: [
               SingleSettingContainer(
                 onTap: () {
-                  Navigator.pushNamed(context, "privacy_policy");
+                  Navigator.pushNamed(context, RouteNames.policy);
                 },
                 icondata: Icons.privacy_tip,
                 title: "Privacy policy",
@@ -40,7 +42,7 @@ class AppInfoSection extends StatelessWidget {
                 icondata: Icons.numbers,
                 title: "App version",
                 rightContent: Text(
-                  "1.0.0+5",
+                  "1.0.0",
                   style: textTheme.titleMedium
                       ?.copyWith(color: AppColors.of(context).surfaceSecondary),
                 ),
@@ -48,10 +50,10 @@ class AppInfoSection extends StatelessWidget {
               Separator(),
               SingleSettingContainer(
                 onTap: () {
-                  // Share.share(
-                  //   'Check out Bettered, the ultimate habit tracker app! Download now: https://play.google.com/store/apps/details?id=com.app.apexhabit', // Replace with your actual app link
-                  //   subject: 'Join Bettered Today!',
-                  // );
+                  Share.share(
+                    'Check out Loopify, the ultimate habit tracker app! Download now: https://play.google.com/store/apps/details?id=com.app.apexhabit', // Replace with your actual app link
+                    subject: 'Join Loopify Today!',
+                  );
                 },
                 icondata: Icons.share,
                 title: "Share app",

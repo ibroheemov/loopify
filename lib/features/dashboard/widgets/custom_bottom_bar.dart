@@ -1,6 +1,9 @@
 import 'package:betterloop/constants/general_icons.dart';
+import 'package:betterloop/providers/pro_user_provider.dart';
 import 'package:betterloop/routes/route_names.dart';
+import 'package:betterloop/services/habit_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CustomBottomBar extends StatelessWidget {
   const CustomBottomBar({
@@ -50,12 +53,25 @@ class CustomBottomBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(5, (index) {
                     if (index == 2) {
-                      return IconButton.filled(
-                        onPressed: () {
-                          Navigator.pushNamed(context, RouteNames.customHabit);
-                        },
-                        icon: Icon(Icons.add, size: 30),
-                      ); // space for FAB
+                      return Consumer(builder: (context, ref, _) {
+                        final isProAsync = ref.watch(isProUserProvider);
+                        final isPro = isProAsync.hasValue && isProAsync.value!;
+                        // final isPro = true;
+
+                        return IconButton.filled(
+                          onPressed: () async {
+                            final habits = await HabitService.getAllHabits();
+                            if (habits.length >= 2 && !isPro) {
+                              Navigator.pushNamed(context, RouteNames.paywall);
+                            } else {
+                              Navigator.pushNamed(
+                                  context, RouteNames.customHabit);
+                            }
+                          },
+                          icon: Icon(Icons.add, size: 30),
+                        );
+                      });
+                      // space for FAB
                     }
 
                     return Container(

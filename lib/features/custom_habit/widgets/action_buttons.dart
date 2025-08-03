@@ -17,12 +17,19 @@ import 'package:uuid/uuid.dart';
 
 class ActionButtons extends ConsumerWidget {
   const ActionButtons(
-      {super.key, required this.formKey, required this.controller});
+      {super.key,
+      required this.formKey,
+      required this.controller,
+      this.habitTobeUpdated})
+      : isUpdate = habitTobeUpdated != null;
   final GlobalKey<FormState> formKey;
   final TextEditingController controller;
+  final bool isUpdate;
+  final Habit? habitTobeUpdated;
 
   @override
   Widget build(BuildContext context, ref) {
+    print(isUpdate);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppSpacing.horizontal),
       width: double.infinity,
@@ -44,8 +51,9 @@ class ActionButtons extends ConsumerWidget {
           SizedBox(width: AppSpacing.sm),
           PrimaryButton(
             isRounded: true,
-            label: "Create habit",
+            label: isUpdate ? "Save habit" : "Create habit",
             onPressed: () {
+              if (!formKey.currentState!.validate()) return;
               _onCreateHabit(ref);
               Navigator.pop(context, true);
             },
@@ -62,7 +70,6 @@ class ActionButtons extends ConsumerWidget {
     final reminder = ref.read(reminderProvider);
     final weekdays = ref.read(weekdaysProvider);
 
-    if (!formKey.currentState!.validate()) return;
     var uuid = Uuid();
     final habitId = uuid.v1();
     final name = controller.text.trim();
@@ -70,13 +77,19 @@ class ActionButtons extends ConsumerWidget {
     final habit = Habit(
       color: iconColor,
       icon: HiveIcon(code: icon.codePoint, family: icon.fontFamily),
-      id: habitId,
+      id: isUpdate ? habitTobeUpdated!.id : habitId,
       title: name,
       createdAt: DateTime.now(),
       goal: goal,
       weekdays: weekdays,
+      reminder: reminder,
     );
-    await HabitService.addHabit(habit);
+
+    if (isUpdate) {
+      await HabitService.updateHabit(habit);
+    } else {
+      await HabitService.addHabit(habit);
+    }
 
     if (!reminder.enabled) return;
     final hash = habitId.hashCode;

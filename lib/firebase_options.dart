@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCRHv0q0M5W6IAKsgPRfSy7YtFPZOK_TTQ',
-    appId: '1:817590284277:android:03fda24b53f6354d49babc',
+    appId: '1:817590284277:android:861ee8e7ef122ac849babc',
     messagingSenderId: '817590284277',
     projectId: 'betterloop-5b55e',
     storageBucket: 'betterloop-5b55e.firebasestorage.app',
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '817590284277',
     projectId: 'betterloop-5b55e',
     storageBucket: 'betterloop-5b55e.firebasestorage.app',
-    androidClientId: '817590284277-b84t39m2m9nh0d9htktjm4lpgirsljgn.apps.googleusercontent.com',
+    androidClientId: '817590284277-dsfjdb2va36r8eorv9asfipr72ohddeo.apps.googleusercontent.com',
     iosClientId: '817590284277-cv11l29neiof76t8hg7hqroleu6unka5.apps.googleusercontent.com',
     iosBundleId: 'com.example.betterloop',
   );

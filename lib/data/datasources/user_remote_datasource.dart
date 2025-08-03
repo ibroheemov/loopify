@@ -2,6 +2,7 @@ import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/habit_log.dart';
 import 'package:betterloop/models/hive_icon.dart';
+import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/models/weekdays.dart';
 import 'package:betterloop/services/habit_log_service.dart';
 import 'package:betterloop/services/habit_service.dart';
@@ -102,6 +103,7 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
           createdAt: DateTime.parse(data['createdAt']),
           goal: Goal.fromJson(data['goal']),
           weekdays: Weekdays.fromJson(data['weekdays']),
+          reminder: Reminder.fromJson(data['reminder']),
         ),
       );
     }

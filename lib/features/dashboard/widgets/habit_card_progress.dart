@@ -76,11 +76,7 @@ class _HabitCardProgressState extends State<HabitCardProgress>
                     children: [
                       Flexible(
                         child: AppCard(
-                            onTap: () {
-                              HabitLogService.logCompletion(habit, 1);
-                              controller.close();
-                              setState(() {});
-                            },
+                            onTap: () => _onCompleteByOne(habit),
                             color: Helpers.parseColor(habit.color),
                             padding: EdgeInsets.all(0),
                             margin: EdgeInsets.only(right: AppSpacing.md),
@@ -128,10 +124,20 @@ class _HabitCardProgressState extends State<HabitCardProgress>
     );
   }
 
+  void _onCompleteByOne(Habit habit, [isTest = false]) {
+    if (isTest) {
+      _onCompleteByX(1);
+    } else {
+      HabitLogService.logCompletion(habit, 1);
+      controller.close();
+      setState(() {});
+    }
+  }
+
   void _onCompleteByX(int progress, [isTest = false]) {
     if (isTest) {
-      final testCompleteBy = -8;
-      final days = 7;
+      final testCompleteBy = 7;
+      final days = 17;
       final date = DateTime.now().add(Duration(days: days));
       HabitLogService.logCompletion(widget.habit, testCompleteBy, date);
       controller.close();

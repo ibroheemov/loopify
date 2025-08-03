@@ -142,21 +142,45 @@ class HabitLogService {
 
   static Future<double> getAverageDailyProgress(
       Habit habit, DateTime month) async {
-    final totalDays = DateUtils.getDaysInMonth(month.year, month.month);
+    final year = month.year;
+    final monthNumber = month.month;
+    final daysInMonth = DateUtils.getDaysInMonth(year, monthNumber);
+    final weekdays = habit.weekdays;
+
     int totalProgress = 0;
+    int countedDays = 0;
 
     if (habit.goal.enabled) {
-      for (int day = 1; day <= totalDays; day++) {
-        final date = DateTime(month.year, month.month, day);
+      for (int day = 1; day <= daysInMonth; day++) {
+        final date = DateTime(year, monthNumber, day);
+        final weekday = date.weekday;
+
+        // Count only valid days
+        final isExpectedDay = weekdays.isXdaysPerWeek ||
+            weekdays.selectedWeekDays.contains(weekday);
+        if (!isExpectedDay) continue;
+
         final progress =
             await HabitLogService.getProgressForHabit(habit.id, date);
         totalProgress += progress;
+        countedDays++;
       }
-      return totalProgress / totalDays;
+      return countedDays == 0 ? 0 : totalProgress / countedDays;
     } else {
       final logs = await getLogsForHabitInMonth(habit.id, month);
 
-      return logs.length / totalDays;
+      // Count only valid days
+      int expectedDays = 0;
+      for (int day = 1; day <= daysInMonth; day++) {
+        final date = DateTime(year, monthNumber, day);
+        final weekday = date.weekday;
+
+        final isExpectedDay = weekdays.isXdaysPerWeek ||
+            weekdays.selectedWeekDays.contains(weekday);
+        if (isExpectedDay) expectedDays++;
+      }
+
+      return expectedDays == 0 ? 0 : logs.length / expectedDays;
     }
   }
 
@@ -164,17 +188,25 @@ class HabitLogService {
     final year = month.year;
     final monthNumber = month.month;
     final daysInMonth = DateUtils.getDaysInMonth(year, monthNumber);
+    final weekdays = habit.weekdays;
 
     int perfectDays = 0;
 
     for (int day = 1; day <= daysInMonth; day++) {
       final date = DateTime(year, monthNumber, day);
+      final weekday = date.weekday; // 1 = Monday, ..., 7 = Sunday
+
+      final isExpectedDay = weekdays.isXdaysPerWeek
+          ? true // All days are potential candidates
+          : weekdays.selectedWeekDays.contains(weekday);
+
+      if (!isExpectedDay) continue;
+
       bool isPerfect = false;
 
       if (habit.goal.enabled) {
         final progress =
             await HabitLogService.getProgressForHabit(habit.id, date);
-
         isPerfect = progress == habit.goal.value;
       } else {
         isPerfect = await HabitLogService.isHabitCompleted(habit.id, date);
@@ -190,18 +222,30 @@ class HabitLogService {
       Habit habit, DateTime month) async {
     final year = month.year;
     final monthNumber = month.month;
-
     final daysInMonth = DateUtils.getDaysInMonth(year, monthNumber);
+    final weekdays = habit.weekdays;
+
     int completedDays = 0;
+    int expectedCompletions = 0;
 
     for (int day = 1; day <= daysInMonth; day++) {
       final date = DateTime(year, monthNumber, day);
-      bool isCompleted = false;
+      final weekday = date.weekday; // 1 = Monday, ..., 7 = Sunday
 
+      // Should this day be counted toward the goal?
+      final bool isExpectedDay = weekdays.isXdaysPerWeek
+          ? true // all days are valid; we'll count weeks later
+          : weekdays.selectedWeekDays.contains(weekday);
+
+      if (!isExpectedDay) continue;
+
+      // Increment expected only for applicable days
+      expectedCompletions++;
+
+      bool isCompleted = false;
       if (habit.goal.enabled) {
         final progress =
             await HabitLogService.getProgressForHabit(habit.id, date);
-
         isCompleted = progress == habit.goal.value;
       } else {
         isCompleted = await HabitLogService.isHabitCompleted(habit.id, date);
@@ -210,23 +254,45 @@ class HabitLogService {
       if (isCompleted) completedDays++;
     }
 
-    final completionRate = (completedDays / daysInMonth) * 100;
+    // Special handling if X times per week mode is enabled
+    if (weekdays.isXdaysPerWeek) {
+      // Count how many weeks are in this month
+      final firstDay = DateTime(year, monthNumber, 1);
+      final lastDay = DateTime(year, monthNumber, daysInMonth);
+
+      // Calculate number of full or partial weeks in the month
+      int totalWeeks =
+          ((lastDay.difference(firstDay).inDays + firstDay.weekday) / 7).ceil();
+      expectedCompletions = totalWeeks * weekdays.daysPerWeek;
+    }
+
+    if (expectedCompletions == 0) return 0;
+
+    final completionRate = (completedDays / expectedCompletions) * 100;
     return completionRate;
   }
 
   static Future<int> getCurrentMonthStreak(Habit habit) async {
+    if (habit.weekdays.isXdaysPerWeek) {
+      throw Exception("Use weekly streak logic for flexible weekly goals");
+    }
+
     final now = DateTime.now();
     int streak = 0;
 
     for (int i = 0; i < now.day; i++) {
       final date = DateTime(now.year, now.month, now.day - i);
 
+      // Only consider scheduled days
+      final isScheduledDay =
+          habit.weekdays.selectedWeekDays.contains(date.weekday);
+      if (!isScheduledDay) continue;
+
       bool isCompleted = false;
 
       if (habit.goal.enabled) {
         final progress =
             await HabitLogService.getProgressForHabit(habit.id, date);
-
         isCompleted = progress == habit.goal.value;
       } else {
         isCompleted = await HabitLogService.isHabitCompleted(habit.id, date);
@@ -235,7 +301,7 @@ class HabitLogService {
       if (isCompleted) {
         streak++;
       } else {
-        break; // streak ends
+        break; // streak broken on a scheduled day
       }
     }
 

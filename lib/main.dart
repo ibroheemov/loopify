@@ -39,17 +39,6 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     SystemChrome.setSystemUIOverlayStyle(
-  //       const SystemUiOverlayStyle(),
-  //     );
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final appTheme = ref.watch(themeProvider);

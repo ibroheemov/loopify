@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.0+12
 
 environment:
   sdk: ^3.6.1
@@ -41,7 +41,7 @@ dependencies:
   uuid: ^4.5.1
   intl: ^0.20.2
   flutter_slidable: ^4.0.0
-  flutter_local_notifications: ^19.3.1
+  flutter_local_notifications: ^19.4.0
   flutter_timezone: ^4.1.1
   lottie: ^3.1.0
   dartz: ^0.10.1
@@ -54,6 +54,10 @@ dependencies:
   firebase_ui_oauth_google: ^1.4.2
   cloud_firestore: ^5.6.12
   fl_chart: ^1.0.0
+  purchases_flutter: ^9.1.0
+  in_app_update: ^4.2.3
+  url_launcher: ^6.3.1
+  share_plus: ^10.1.2
   
 dev_dependencies:
   flutter_test:
@@ -67,19 +71,25 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/icons/launcher.png"
+  image_path_ios: "assets/images/icons/launcher.png"
+  image_path_android: "assets/images/icons/launcher.png"
+  adaptive_icon_background: "#FCE9EC" 
+  adaptive_icon_foreground: "assets/ic_foreground.png"
 
 flutter_native_splash:
-  android: true
+  android: true 
   ios: true
-  color: "#48D50C"
-  image: assets/splash_logo.png
+  color: "#FCE9EC"
+  image: assets/android_splash.png
+  image_ios: assets/ios_splash.png
+
   
   android_12:
     android: true
     ios: true
-    color: "#48D50C"
-    image: assets/splash_logo.png
+    color: "#FCE9EC"
+    image: assets/android_splash.png
+    
 
 flutter:
   uses-material-design: true
@@ -88,6 +98,8 @@ flutter:
     - assets/images/onboarding/
     - assets/images/
     - assets/images/icons/   
+    - assets/privacy_policy.txt
+    - assets/faqs.txt
 
   fonts:
   # Icon Fonts
@@ -117,10 +129,7 @@ flutter:
         - asset: assets/fonts/relationship.ttf
     - family: GeneralIcons
       fonts:
-        - asset: assets/fonts/general.ttf
-    - family: GeneralIcons2
-      fonts:
-        - asset: assets/fonts/general_icons.ttf    
+        - asset: assets/fonts/general_icons.ttf
    
   # Text Fonts
     - family: Nunito

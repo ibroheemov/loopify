@@ -1,0 +1,35 @@
+Privacy Policy for Bettered
+
+Last updated: [Insert Date]
+
+1. Information We Collect
+We collect the following data to provide and improve our services:
+
+Personal information (e.g., email, username) when you create an account.
+Usage data (e.g., habits tracked, app interactions).
+Notification preferences and device information for reminders.
+2. How We Use Your Information
+We use your data to:
+
+Provide habit tracking and app features.
+Sync and back up your habits.
+Improve app functionality through analytics.
+3. Data Sharing
+We do not share your personal data with third parties, except:
+
+When required by law.
+To service providers that help maintain the app (e.g., Firebase).
+4. Your Choices
+You can:
+
+Update or delete your account information.
+Opt out of notifications through settings.
+Request deletion of all your data via apexhabit.help@gmail.com
+5. Security
+We use encryption and secure servers to protect your data. However, no system is 100% secure.
+
+6. Changes to This Policy
+We may update this policy periodically. Changes will be reflected in the app.
+
+Contact Us:
+For questions, email us at apexhabit.help@gmail.com

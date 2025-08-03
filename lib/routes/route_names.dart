@@ -4,7 +4,10 @@ class RouteNames {
   static const String home = '/';
   static const String dashboard = '/dashboard';
   static const String customHabit = '/custom_habit';
-  static const String auth = '/auth'; // (future use)
-  static const String statistics = '/statistics'; // (future use)
-  static const String settings = '/settings'; // (future use)
+  static const String auth = '/auth';
+  static const String statistics = '/statistics';
+  static const String settings = '/settings';
+  static const String paywall = '/paywall';
+  static const String policy = '/policy';
+  static const String faqs = '/faqs';
 }

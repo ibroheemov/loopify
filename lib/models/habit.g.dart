@@ -24,13 +24,14 @@ class HabitAdapter extends TypeAdapter<Habit> {
       createdAt: fields[4] as DateTime,
       goal: fields[5] as Goal,
       weekdays: fields[6] as Weekdays,
+      reminder: fields[7] as Reminder,
     );
   }
 
   @override
   void write(BinaryWriter writer, Habit obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class HabitAdapter extends TypeAdapter<Habit> {
       ..writeByte(5)
       ..write(obj.goal)
       ..writeByte(6)
-      ..write(obj.weekdays);
+      ..write(obj.weekdays)
+      ..writeByte(7)
+      ..write(obj.reminder);
   }
 
   @override

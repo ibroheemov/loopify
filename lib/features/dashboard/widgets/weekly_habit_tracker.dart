@@ -98,27 +98,42 @@ class WeeklyHabitTracker extends StatelessWidget {
     required int progress,
     required bool isCompleted,
   }) {
+    final isDayApplicable =
+        habit.weekdays.selectedWeekDays.contains(date.weekday);
+    final isMonday = date.weekday == 1;
+    final isSunday = date.weekday == 7;
+
     return GestureDetector(
       child: Column(
         children: [
-          Text(DateFormat.E().format(date)), // Mon, Tue...
+          Opacity(
+            opacity: isDayApplicable ? 1 : 0.3,
+            child: Text(DateFormat.E().format(date)),
+          ), // Mon, Tue...
           const SizedBox(height: 4),
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: (!habit.goal.enabled && isCompleted)
-                  ? Helpers.parseColor(habit.color)
-                  : progress == 0
-                      ? AppColors.of(context).onSurfaceBg
-                      : Helpers.parseColor(habit.color)
-                          .withOpacity(progress / habit.goal.value),
-            ),
-            child: Center(
-              child: isCompleted
-                  ? const Icon(Icons.check, color: Colors.white, size: 20)
-                  : const Icon(Icons.remove, color: Colors.white54, size: 20),
+          Opacity(
+            opacity: isDayApplicable ? 1 : 0,
+            child: Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: (!habit.goal.enabled && isCompleted)
+                    ? Helpers.parseColor(habit.color)
+                    : progress == 0
+                        ? AppColors.of(context).onSurfaceBg
+                        : Helpers.parseColor(habit.color)
+                            .withOpacity(progress / habit.goal.value),
+              ),
+              child: (isMonday || isSunday)
+                  ? Center(child: Text(date.day.toString()))
+                  : Center(
+                      child: isCompleted
+                          ? const Icon(Icons.check,
+                              color: Colors.white, size: 20)
+                          : const Icon(Icons.remove,
+                              color: Colors.white54, size: 20),
+                    ),
             ),
           ),
         ],
