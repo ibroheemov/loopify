@@ -34,7 +34,7 @@ class ReasonsToUpgrade extends StatelessWidget {
           left: 0,
           top: -5,
           child: LottieBuilder.asset(
-            "assets/images/icons/premium-star-animation.json",
+            "assets/lottie/premium-star-animation.json",
             width: 70,
           ),
         ),

@@ -1,4 +1,6 @@
 import 'package:betterloop/constants/general_icons.dart';
+import 'package:betterloop/features/challenges/pages/challenge_details_screen.dart';
+import 'package:betterloop/features/counter/counter_screen.dart';
 import 'package:betterloop/features/custom_habit/custom_habit_screen.dart';
 import 'package:betterloop/features/custom_habit/providers/goal_provider.dart';
 import 'package:betterloop/features/custom_habit/providers/habit_icon_provider.dart';
@@ -12,6 +14,7 @@ import 'package:betterloop/features/settings/pages/policy_screen.dart';
 import 'package:betterloop/features/settings/settings_screen.dart';
 import 'package:betterloop/features/statistics/providers/current_habit_provider.dart';
 import 'package:betterloop/features/statistics/statistics_screen.dart';
+import 'package:betterloop/models/challenge.dart';
 import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/reminder.dart';
@@ -25,7 +28,6 @@ import '../features/dashboard/dashboard_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    print(settings.name);
     final arguments = settings.arguments;
 
     switch (settings.name) {
@@ -34,13 +36,21 @@ class AppRouter {
       case RouteNames.onboarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
       case RouteNames.home:
-        return MaterialPageRoute(builder: (_) => const NavigationScreen());
+        return MaterialPageRoute(
+            builder: (_) => NavigationScreen(
+                  fromOnboarding: arguments != null ? arguments as bool : false,
+                ));
       case RouteNames.dashboard:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
       case RouteNames.policy:
         return MaterialPageRoute(builder: (_) => PolicyScreen());
       case RouteNames.faqs:
         return MaterialPageRoute(builder: (_) => FaqsScreen());
+      case RouteNames.counter:
+        return _createAnimatedRoute(CounterScreen(habit: arguments as Habit));
+      case RouteNames.challenge:
+        return _createAnimatedRoute(
+            ChallengeDetailsScreen(challenge: arguments as Challenge));
       case RouteNames.customHabit:
         return _createAnimatedRoute(ProviderScope(
           overrides: [
@@ -49,9 +59,7 @@ class AppRouter {
             reminderProvider.overrideWith((ref) => Reminder.defaultReminder()),
             weekdaysProvider.overrideWith((ref) => Weekdays.defaultWeekdays())
           ],
-          child: CustomHabitScreen(
-            habit: arguments as Habit?,
-          ),
+          child: CustomHabitScreen(habit: arguments as Habit?),
         ));
       case RouteNames.statistics:
         return _createAnimatedRoute(ProviderScope(

@@ -38,14 +38,16 @@ class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AppContainer(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildTabBar(),
-          SizedBox(height: AppSpacing.vertical),
-          _buildTabBarContent(),
-        ],
+    return SafeArea(
+      child: AppContainer(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildTabBar(),
+            SizedBox(height: AppSpacing.vertical),
+            _buildTabBarContent(),
+          ],
+        ),
       ),
     );
   }
@@ -59,7 +61,8 @@ class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
             List<IconMeta> tabicons = IconType.iconMetaList(tab.value);
 
             return GridView.builder(
-              padding: const EdgeInsets.only(top: 10),
+              padding:
+                  const EdgeInsets.symmetric(vertical: AppSpacing.vertical),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 crossAxisSpacing: 10,

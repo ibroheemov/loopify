@@ -5,12 +5,14 @@ import 'package:betterloop/constants/hobby_icons.dart';
 import 'package:betterloop/constants/lifestyle_icons.dart';
 import 'package:betterloop/constants/negative_icons.dart';
 import 'package:betterloop/constants/popular.dart';
+import 'package:betterloop/constants/random_icons.dart';
 import 'package:betterloop/constants/relationship_icons.dart';
 import 'package:betterloop/models/icon_meta.dart';
 
 enum IconType {
   popular('popular'),
   lifeStyle('lifeStyle'),
+  random('random'),
   health('health'),
   diet('diet'),
   negative('negative'),
@@ -26,6 +28,8 @@ enum IconType {
     switch (value) {
       case 'popular':
         return PopularIcons.iconMetaList;
+      case 'random':
+        return RandomIcons.iconMetaList;
       case 'lifeStyle':
         return LifeStyleIcons.iconMetaList;
       case 'health':

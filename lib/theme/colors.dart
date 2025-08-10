@@ -37,7 +37,7 @@ class AppColors {
     card: Color(0xFF1E1E1E),
     appBar: Color(0xFF1E1E1E),
     outline: Color(0xFF1E1E1E),
-    surfaceSecondary: Color.fromARGB(255, 63, 63, 63),
+    surfaceSecondary: Color(0xFF454545),
   );
 
   /// Call this with `context` to get the appropriate theme colors

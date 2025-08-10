@@ -10,4 +10,6 @@ class RouteNames {
   static const String paywall = '/paywall';
   static const String policy = '/policy';
   static const String faqs = '/faqs';
+  static const String counter = '/counter';
+  static const String challenge = '/challenge';
 }

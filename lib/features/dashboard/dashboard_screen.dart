@@ -1,5 +1,6 @@
 // lib/features/dashboard/dashboard_screen.dart
 import 'package:betterloop/constants/general_icons.dart';
+import 'package:betterloop/data/seed/default_habit_types.dart';
 import 'package:betterloop/features/dashboard/widgets/habit_card.dart';
 import 'package:betterloop/features/dashboard/widgets/habit_card_progress.dart';
 import 'package:betterloop/features/dashboard/widgets/monthly_habit_tracker.dart';
@@ -13,6 +14,7 @@ import 'package:betterloop/widgets/app_container.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 import 'widgets/weekly_habit_tracker.dart';
 
@@ -175,6 +177,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           itemBuilder: (context, index) {
             final habit = todaysHabits[index];
             final goalEnabled = habit.goal.enabled;
+
             return goalEnabled
                 ? HabitCardProgress(habit: habit)
                 : HabitCard(habit: habit);

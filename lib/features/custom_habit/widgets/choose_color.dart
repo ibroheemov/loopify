@@ -17,9 +17,9 @@ final app_colors = [
   AppColor(value: "1B8FFF"),
   AppColor(value: "10C580"),
   AppColor(value: "F8BD33"),
-  AppColor(value: "933DFF", isPremium: true),
-  AppColor(value: "FE7450", isPremium: true),
-  AppColor(value: "F63466", isPremium: true),
+  AppColor(value: "933DFF"),
+  AppColor(value: "FE7450"),
+  AppColor(value: "F63466"),
 ];
 
 class ChooseColor extends ConsumerStatefulWidget {

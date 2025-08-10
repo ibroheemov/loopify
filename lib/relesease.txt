@@ -1,26 +1,13 @@
 App release requirenments
 
-1. Optimize statistics screen code / UI freeze at launchs
-2. Protect an unlock premium features - Unlimited habits / Statistics / Premium icons and colors / Backup and restore
-9. Finish settings ✅
-4. Show today's date / current week range / current Month ✅
-1. Make 2 colors permium ✅
-1. Android notifications ✅
-3. Adjust daily / weekly / monthly sections to weekdays ✅
-5. Add in-app updates ✅
-1. Change app name - Loopify ✅
-2. Native splash screen - ✅
-3. Handle system bars on dark and light themes - ✅
-11. Add revenue cat ✅ 
-15. Coming soon - Challenges ✅
-6. when selected both, add padding to compensate "Custom habit" button ✅
+1. Challenges
+1. Home widgets
+1. Optimize statistics screen code / UI freeze at launchs ⚠️
 1. Add premium icons ⚠️
 4. Add week/date/month pickers ⚠️
 4. Remove Skip button from onboarding ⚠️
 5. There is infinite loop in onborading step 2 ⚠️
-7. showcaseview ⚠️
 8. Infinite UI loop in settings ⚠️
-10. Ask for notifications permission ⚠️
 12. Ability to customise day, week and month ⚠️
 13. Automatically backup when signed in ⚠️
-14. choose from tepmplates ⚠️
+14. choose from templates ⚠️

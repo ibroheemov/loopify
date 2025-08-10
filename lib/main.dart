@@ -44,6 +44,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     final appTheme = ref.watch(themeProvider);
     final isDark = appTheme.themeMode == ThemeMode.dark;
 
+    print(appTheme.themeMode);
+
     final systemUiStyle = SystemUiOverlayStyle(
       systemNavigationBarColor: isDark ? AppColors.dark.surface : Colors.white,
       systemNavigationBarIconBrightness:

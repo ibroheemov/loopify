@@ -6,3 +6,17 @@ abstract class UseCase<Type, Params> {
 }
 
 class NoParams {}
+
+abstract class Params {}
+
+class JoinChallengeParams implements Params {
+  final String challengeId;
+  final String userId;
+  final String displayName;
+
+  JoinChallengeParams({
+    required this.challengeId,
+    required this.userId,
+    required this.displayName,
+  });
+}

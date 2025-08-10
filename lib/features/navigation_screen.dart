@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
 
 class NavigationScreen extends StatefulWidget {
-  const NavigationScreen({super.key});
+  const NavigationScreen({super.key, this.fromOnboarding = false});
+  final bool fromOnboarding;
 
   @override
   State<NavigationScreen> createState() => _NavigationScreenState();

@@ -11,6 +11,7 @@ class AppCard extends StatelessWidget {
     this.borderRadius = true,
     this.onTap,
     this.boxShadow = true,
+    this.disabled = false,
   });
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -18,6 +19,7 @@ class AppCard extends StatelessWidget {
   final Color? color;
   final bool boxShadow;
   final bool borderRadius;
+  final bool disabled;
   final void Function()? onTap;
 
   @override
@@ -25,7 +27,7 @@ class AppCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: disabled ? null : onTap,
       child: Container(
           margin: margin,
           clipBehavior: Clip.hardEdge,

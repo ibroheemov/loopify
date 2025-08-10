@@ -15,7 +15,7 @@ class PremiumFeatures extends StatelessWidget {
       children: [
         PremiumFeature(text: "Create Unlimited Habits"),
         PremiumFeature(text: "Unlock All Icons"),
-        PremiumFeature(text: "Use Premium Color Sets"),
+        // PremiumFeature(text: "Use Premium Color Sets"),
         PremiumFeature(text: "Backup & Restore Data"),
         PremiumFeature(text: "Detailed ananylysis of you progress"),
       ],

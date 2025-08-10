@@ -31,6 +31,9 @@ class Habit extends HiveObject {
   @HiveField(7)
   final Reminder reminder;
 
+  @HiveField(8)
+  final bool showcaseview;
+
   Habit({
     required this.id,
     required this.title,
@@ -40,5 +43,6 @@ class Habit extends HiveObject {
     required this.goal,
     required this.weekdays,
     required this.reminder,
+    this.showcaseview = false,
   });
 }

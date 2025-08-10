@@ -1,11 +1,14 @@
 import 'package:betterloop/constants/lifestyle_icons.dart';
 import 'package:betterloop/constants/negative_icons.dart';
 import 'package:betterloop/constants/popular.dart';
+import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/goal_type.dart';
+import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/hive_icon.dart';
+import 'package:betterloop/models/reminder.dart';
+import 'package:betterloop/models/weekdays.dart';
 import 'package:flutter/material.dart';
-
-import '../../models/habit_type.dart';
+import 'package:uuid/v1.dart';
 
 class OnboardingHabit {
   final String id;
@@ -16,6 +19,8 @@ class OnboardingHabit {
 
   final GoalType type;
 
+  final Goal goal;
+
   final IconData icon;
 
   OnboardingHabit({
@@ -24,18 +29,33 @@ class OnboardingHabit {
     required this.title,
     required this.type,
     required this.icon,
+    required this.goal,
   });
 }
 
-final hiveIcon = NegativeIcons.drink_can_soda;
+final showcaseViewHabit = Habit(
+  id: UuidV1().generate(),
+  title: "Stretch",
+  icon: HiveIcon(
+    code: LifeStyleIcons.stretching_exercises.codePoint,
+    family: LifeStyleIcons.stretching_exercises.fontFamily,
+  ),
+  color: "FE7450",
+  createdAt: DateTime.now(),
+  goal: Goal(enabled: true, unit: "Minutes", value: 20),
+  weekdays: Weekdays.defaultWeekdays(),
+  reminder: Reminder.defaultReminder(),
+  showcaseview: true,
+);
 
 final topGoodHabits = [
   OnboardingHabit(
     id: 'drink_water',
-    title: 'Drink Water',
+    title: 'Drink 8 glasses of water/day',
     type: GoalType.good,
     areaId: "onboarding",
     icon: PopularIcons.glass_of_water_with_drop,
+    goal: Goal(enabled: true, unit: "Glasses", value: 8),
   ),
   OnboardingHabit(
     id: 'wake_early',
@@ -43,13 +63,15 @@ final topGoodHabits = [
     type: GoalType.good,
     areaId: "onboarding",
     icon: LifeStyleIcons.clock,
+    goal: Goal.defaultGoal(),
   ),
   OnboardingHabit(
     id: 'read',
-    title: 'Read 10 Pages',
+    title: 'Read 10 Pages/day',
     type: GoalType.good,
     areaId: "onboarding",
     icon: LifeStyleIcons.book,
+    goal: Goal(enabled: true, unit: "Pages", value: 10),
   ),
   // etc.
 ];
@@ -61,6 +83,7 @@ final topBadHabits = [
     type: GoalType.bad,
     icon: NegativeIcons.cigarette_stop,
     areaId: "onboarding",
+    goal: Goal.defaultGoal(),
   ),
   OnboardingHabit(
     id: 'limit_screen_time',
@@ -68,6 +91,7 @@ final topBadHabits = [
     type: GoalType.bad,
     icon: NegativeIcons.mobile_screen_button_solid,
     areaId: "onboarding",
+    goal: Goal.defaultGoal(),
   ),
   OnboardingHabit(
     id: 'no_sugar',
@@ -75,6 +99,6 @@ final topBadHabits = [
     type: GoalType.bad,
     icon: NegativeIcons.candy,
     areaId: "onboarding",
+    goal: Goal.defaultGoal(),
   ),
-  // etc.
 ];

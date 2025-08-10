@@ -54,7 +54,7 @@ class _SectionHabitDaysState extends ConsumerState<SectionHabitDays> {
             children: [
               if (isXdaysPerWeek)
                 Text(
-                  "${xDaysPerWeek} day(s)".toUpperCase(),
+                  "$xDaysPerWeek day(s)".toUpperCase(),
                   style: TextStyle(
                     // color: theme.textSecondary,
                     fontSize: 14,

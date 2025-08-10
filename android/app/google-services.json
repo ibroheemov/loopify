@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "817590284277-dsfjdb2va36r8eorv9asfipr72ohddeo.apps.googleusercontent.com",
+          "client_id": "817590284277-ejjap74anadb991cnat6u7pim69slr02.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.app.apexhabit",
-            "certificate_hash": "193fd9c6ba08b08a8b3b243b2c89e8012fcff0cb"
+            "certificate_hash": "6abee37ef78f14bf113aa022f2d5450c69005faa"
           }
         },
         {

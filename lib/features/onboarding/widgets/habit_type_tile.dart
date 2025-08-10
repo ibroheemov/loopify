@@ -86,11 +86,12 @@ class _HabitTypeTileState extends State<HabitTypeTile>
               id: uuid.v1(),
               title: widget.habitType.title,
               createdAt: DateTime.now(),
-              goal: Goal.defaultGoal(),
+              goal: widget.habitType.goal,
               weekdays: Weekdays.defaultWeekdays(),
               reminder: Reminder.defaultReminder(),
             );
             await HabitService.addHabit(habit);
+            await HabitService.addHabit(showcaseViewHabit);
             widget.onTap();
           },
           child: Row(
@@ -113,7 +114,14 @@ class _HabitTypeTileState extends State<HabitTypeTile>
                     ),
                   ),
                   SizedBox(width: AppSpacing.horizontal),
-                  Text(widget.habitType.title, style: textTheme.titleMedium)
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 170),
+                    child: Text(
+                      widget.habitType.title,
+                      style: textTheme.titleMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
                 ],
               ),
               AppSvg(

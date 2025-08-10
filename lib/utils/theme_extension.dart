@@ -19,7 +19,7 @@ extension AppThemeModeExt on AppThemeMode {
         return ThemeMode.dark;
       case AppThemeMode.system:
       default:
-        return ThemeMode.system;
+        return ThemeMode.dark;
     }
   }
 

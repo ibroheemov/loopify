@@ -103,7 +103,7 @@ class UserRemoteDatasourceImpl implements UserRemoteDatasource {
           createdAt: DateTime.parse(data['createdAt']),
           goal: Goal.fromJson(data['goal']),
           weekdays: Weekdays.fromJson(data['weekdays']),
-          reminder: Reminder.fromJson(data['reminder']),
+          reminder: Reminder.fromJson(data['reminder'] ?? {}),
         ),
       );
     }

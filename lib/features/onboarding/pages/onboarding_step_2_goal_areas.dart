@@ -117,7 +117,11 @@ class _OnboardingStep2GoalAreasState
     SharedPrefsService().setOnboardingComplete(true);
     setState(() => isLoading = false);
     Navigator.pushNamedAndRemoveUntil(
-        context, RouteNames.home, ModalRoute.withName('/'));
+      context,
+      RouteNames.home,
+      ModalRoute.withName('/'),
+      arguments: true,
+    );
   }
 
   List<Widget> _habits(

@@ -1,10 +1,10 @@
-FAQs for Bettered
+FAQs for Loopify
 1. General Questions
-Q: What is Bettered?
-A: Bettered is a habit tracker app designed to help you build better habits, track your progress, and achieve your goals.
+Q: What is Loopify?
+A: Loopify is a habit tracker app designed to help you build better habits, track your progress, and achieve your goals.
 
-Q: Is Bettered free to use?
-A: Bettered is free to use with a limited number of habits. You can unlock additional features and habits by subscribing to Bettered Premium.
+Q: Is Loopify free to use?
+A: Loopify is free to use with a limited number of habits. You can unlock additional features and habits by subscribing to Loopify Pro.
 
 2. Using the App
 Q: How do I create a new habit?
@@ -16,14 +16,14 @@ A: Yes! You can set reminders in the habit settings or enable morning, afternoon
 Q: How do I delete a habit?
 A: To delete a habit, swipe left on the habit in your list and confirm the deletion.
 
-Q: Can I use Bettered offline?
-A: Yes! Bettered is offline-first. Your data syncs automatically when you reconnect to the internet.
+Q: Can I use Loopify offline?
+A: Yes! Loopify is offline-first. Your data syncs automatically when you reconnect to the internet.
 
 3. Subscription and Premium Features
-Q: What’s included in Bettered Premium?
-A: Bettered Premium includes unlimited habits, access to exclusive challenges, advanced habit analytics, and more.
+Q: What’s included in Loopify Pro?
+A: Loopify Pro includes unlimited habits, advanced habit analytics, and more.
 
-Q: How do I subscribe to Bettered Premium?
+Q: How do I subscribe to Loopify Pro?
 A: Go to Settings > Subscription and select your preferred plan.
 
 Q: Can I cancel my subscription?
@@ -44,17 +44,17 @@ A: Your data will remain safe if you've synced it to the cloud. Just log in agai
 
 5. Troubleshooting
 Q: I’m not receiving notifications. What should I do?
-A: Check if notifications are enabled for Bettered in your device settings. Ensure reminder times are set in the app.
+A: Check if notifications are enabled for Loopify in your device settings. Ensure reminder times are set in the app.
 
 Q: I forgot my password. How can I reset it?
 A: Tap "Forgot Password" on the login screen and follow the instructions to reset your password.
 
 Q: My app crashed. What should I do?
-A: Restart the app and check for updates. If the issue persists, contact support at contact@bettered.com.
+A: Restart the app and check for updates. If the issue persists, contact support at contact@Loopify.com.
 
 6. Contact and Support
 Q: How can I contact support?
-A: You can email us at contact@bettered.com or use the "Contact Us" option in the app settings.
+A: You can email us at contact@Loopify.com or use the "Contact Us" option in the app settings.
 
 Q: How do I provide feedback or suggest a new feature?
 A: We love hearing from our users! Use the "Feedback" option in Settings or email us.
