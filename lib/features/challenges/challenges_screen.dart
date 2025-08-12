@@ -3,15 +3,13 @@ import 'package:betterloop/widgets/app_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'providers/challenge_di.dart';
+import 'providers/challenges_provider.dart';
 
 class ChallengesScreen extends ConsumerWidget {
   const ChallengesScreen({super.key});
 
   @override
   Widget build(BuildContext context, ref) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
     final challengesAsync = ref.watch(challengesProvider);
 
     return Scaffold(

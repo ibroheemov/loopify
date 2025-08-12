@@ -21,3 +21,8 @@ class RestoreFailure extends Failure {
   const RestoreFailure([String message = 'Failed to restore data'])
       : super(message);
 }
+
+class IsUserInChallenge extends Failure {
+  const IsUserInChallenge([String message = 'User is not the challenge'])
+      : super(message);
+}

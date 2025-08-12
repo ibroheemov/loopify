@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:betterloop/config/auth_config.dart';
 import 'package:betterloop/firebase_options.dart';
+import 'package:betterloop/models/challenge.dart';
 import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/habit_area.dart';
@@ -11,6 +12,7 @@ import 'package:betterloop/models/hive_icon.dart';
 import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/models/weekdays.dart';
 import 'package:betterloop/services/habit_service.dart';
+import 'package:betterloop/services/joined_challenges_service.dart';
 import 'package:betterloop/services/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -52,6 +54,8 @@ class InitSerivces {
   Future<void> _initHive() async {
     await Hive.initFlutter();
 
+    JoinedChallengesService.init();
+
     Hive.registerAdapter(HabitAdapter());
     Hive.registerAdapter(HabitAreaAdapter());
     Hive.registerAdapter(HabitTypeAdapter());
@@ -60,6 +64,7 @@ class InitSerivces {
     Hive.registerAdapter(GoalAdapter());
     Hive.registerAdapter(WeekdaysAdapter());
     Hive.registerAdapter(ReminderAdapter());
+    Hive.registerAdapter(ChallengeAdapter());
   }
 
   Future<void> initPlatformState() async {

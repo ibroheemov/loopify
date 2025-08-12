@@ -38,8 +38,13 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
       padding: EdgeInsets.only(bottom: habit.goal.enabled ? 0 : AppSpacing.md),
       child: AppCard(
         onTap: () {
-          Navigator.pushNamed(context, RouteNames.customHabit,
-              arguments: habit);
+          if (habit.isChallenge) {
+            Navigator.pushNamed(context, RouteNames.challenge,
+                arguments: habit.challenge);
+          } else {
+            Navigator.pushNamed(context, RouteNames.customHabit,
+                arguments: habit);
+          }
         },
         margin: EdgeInsets.symmetric(horizontal: AppSpacing.md),
         padding: EdgeInsets.all(AppSpacing.md),
@@ -51,7 +56,7 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
               SizedBox(width: AppSpacing.md),
               buildTitle(),
             ]),
-            _builCompletion()
+            if (!habit.isChallenge) _builCompletion()
           ],
         ),
       ),

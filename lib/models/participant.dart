@@ -1,6 +1,11 @@
 class Participant {
+  final String id;
   final String displayName;
-  final int progress;
+  final int totalProgress;
 
-  Participant({required this.displayName, required this.progress});
+  Participant({
+    required this.id,
+    required this.displayName,
+    required this.totalProgress,
+  });
 }

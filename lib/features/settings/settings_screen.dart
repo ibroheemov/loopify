@@ -8,6 +8,7 @@ import 'package:betterloop/providers/pro_user_provider.dart';
 import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_card.dart';
+import 'package:betterloop/widgets/app_dialog.dart';
 import 'package:betterloop/widgets/bottomsheet_wrapper.dart';
 import 'package:betterloop/widgets/separator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -242,25 +243,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   void _confirmSignout() {
     showDialog<String>(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Are you sure you want to Sign out?'),
-        content: const Text(
-            'When you sign out, Backup and Restore feature will be unavailable. You can still restore your backed-up data by signing again.'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
-              setState(() {});
-            },
-            child: const Text('Yes'),
-          ),
-        ],
+      builder: (BuildContext context) => AppDialog(
+        title: dialogTitle,
+        content: dialogContent,
+        onConfirm: () => onConfirm(),
       ),
     );
+  }
+
+  static const dialogTitle = 'Are you sure you want to Sign out?';
+
+  static const dialogContent =
+      'When you sign out, Backup and Restore feature will be unavailable. You can still restore your backed-up data by signing again.';
+
+  void onConfirm() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pop(context);
+    setState(() {});
   }
 }

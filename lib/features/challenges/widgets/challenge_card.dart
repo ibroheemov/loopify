@@ -76,7 +76,7 @@ class ChallengeCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("200 people joined",
+                      Text("${challenge.participants} people joined",
                           style: textTheme.titleMedium
                               ?.copyWith(color: colorScheme.primary)),
                       IconButton(

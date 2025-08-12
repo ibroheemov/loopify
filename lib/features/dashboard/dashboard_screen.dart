@@ -1,11 +1,8 @@
 // lib/features/dashboard/dashboard_screen.dart
-import 'package:betterloop/constants/general_icons.dart';
-import 'package:betterloop/data/seed/default_habit_types.dart';
 import 'package:betterloop/features/dashboard/widgets/habit_card.dart';
 import 'package:betterloop/features/dashboard/widgets/habit_card_progress.dart';
 import 'package:betterloop/features/dashboard/widgets/monthly_habit_tracker.dart';
 import 'package:betterloop/models/habit.dart';
-import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/theme/spacing.dart';
@@ -14,7 +11,6 @@ import 'package:betterloop/widgets/app_container.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 
 import 'widgets/weekly_habit_tracker.dart';
 
@@ -160,7 +156,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       return weekdays.selectedWeekDays.contains(today);
     }).toList();
 
-    // return todaysHabits;
+    return todaysHabits;
     return habits;
   }
 
@@ -188,7 +184,11 @@ class _DashboardScreenState extends State<DashboardScreen>
           itemCount: habits.length,
           itemBuilder: (context, index) {
             final habit = habits[index];
-            return WeeklyHabitTracker(habit: habit);
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg)
+                  .copyWith(bottom: AppSpacing.md),
+              child: WeeklyHabitTracker(habit: habit),
+            );
           },
         ),
         ListView.builder(

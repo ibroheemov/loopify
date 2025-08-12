@@ -1,62 +1,59 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'habit.dart';
+part of 'challenge.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HabitAdapter extends TypeAdapter<Habit> {
+class ChallengeAdapter extends TypeAdapter<Challenge> {
   @override
-  final int typeId = 3;
+  final int typeId = 9;
 
   @override
-  Habit read(BinaryReader reader) {
+  Challenge read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Habit(
+    return Challenge(
       id: fields[0] as String,
       title: fields[1] as String,
-      icon: fields[2] as HiveIcon,
-      color: fields[3] as String,
-      createdAt: fields[4] as DateTime,
-      goal: fields[5] as Goal,
-      weekdays: fields[6] as Weekdays,
-      reminder: fields[7] as Reminder,
-      challenge: fields[10] as Challenge?,
-      showcaseview: fields[8] as bool,
-      isChallenge: fields[9] as bool,
+      description: fields[2] as String,
+      goal: fields[3] as Goal,
+      duration: fields[4] as int,
+      forMuslims: fields[5] as bool,
+      participants: fields[8] as int,
+      color: fields[9] as String,
+      hadith_en: fields[6] as String,
+      hadith_ar: fields[7] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Habit obj) {
+  void write(BinaryWriter writer, Challenge obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
-      ..write(obj.icon)
+      ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.color)
-      ..writeByte(4)
-      ..write(obj.createdAt)
-      ..writeByte(5)
       ..write(obj.goal)
+      ..writeByte(4)
+      ..write(obj.duration)
+      ..writeByte(5)
+      ..write(obj.forMuslims)
       ..writeByte(6)
-      ..write(obj.weekdays)
+      ..write(obj.hadith_en)
       ..writeByte(7)
-      ..write(obj.reminder)
+      ..write(obj.hadith_ar)
       ..writeByte(8)
-      ..write(obj.showcaseview)
+      ..write(obj.participants)
       ..writeByte(9)
-      ..write(obj.isChallenge)
-      ..writeByte(10)
-      ..write(obj.challenge);
+      ..write(obj.color);
   }
 
   @override
@@ -65,7 +62,7 @@ class HabitAdapter extends TypeAdapter<Habit> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is HabitAdapter &&
+      other is ChallengeAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

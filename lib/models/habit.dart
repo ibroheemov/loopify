@@ -1,3 +1,8 @@
+import 'dart:math';
+
+import 'package:betterloop/constants/lifestyle_icons.dart';
+import 'package:betterloop/features/custom_habit/widgets/choose_color.dart';
+import 'package:betterloop/models/challenge.dart';
 import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/hive_icon.dart';
 import 'package:betterloop/models/reminder.dart';
@@ -34,6 +39,12 @@ class Habit extends HiveObject {
   @HiveField(8)
   final bool showcaseview;
 
+  @HiveField(9)
+  final bool isChallenge;
+
+  @HiveField(10)
+  final Challenge? challenge;
+
   Habit({
     required this.id,
     required this.title,
@@ -43,6 +54,26 @@ class Habit extends HiveObject {
     required this.goal,
     required this.weekdays,
     required this.reminder,
+    this.challenge,
     this.showcaseview = false,
+    this.isChallenge = false,
   });
+
+  factory Habit.fromChallenge(Challenge challenge) {
+    return Habit(
+      id: challenge.id,
+      title: challenge.title,
+      icon: HiveIcon(
+        code: LifeStyleIcons.stars2.codePoint,
+        family: LifeStyleIcons.stars2.fontFamily,
+      ),
+      color: challenge.color,
+      createdAt: DateTime.now(),
+      goal: challenge.goal,
+      weekdays: Weekdays.defaultWeekdays(),
+      reminder: Reminder.defaultReminder(),
+      isChallenge: true,
+      challenge: challenge,
+    );
+  }
 }
