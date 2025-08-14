@@ -9,3 +9,9 @@ class Participant {
     required this.totalProgress,
   });
 }
+
+class RankGroup {
+  final int rank;
+  final List<Participant> participants;
+  RankGroup({required this.rank, required this.participants});
+}

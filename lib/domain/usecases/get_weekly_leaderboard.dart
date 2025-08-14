@@ -4,13 +4,14 @@ import 'package:betterloop/domain/usecases/usecase.dart';
 import 'package:betterloop/models/participant.dart';
 import 'package:dartz/dartz.dart';
 
-class GetWeeklyLeaderboard extends UseCase<List<Participant>, String> {
+class GetWeeklyLeaderboardUsecase
+    extends StreamUseCase<List<RankGroup>, String> {
   final ChallengeRepository repository;
 
-  GetWeeklyLeaderboard(this.repository);
+  GetWeeklyLeaderboardUsecase(this.repository);
 
   @override
-  Future<Either<Failure, List<Participant>>> call(params) async {
-    return await repository.getWeeklyLeaderboard(params);
+  Stream<Either<Failure, List<RankGroup>>> call(params) {
+    return repository.getWeeklyLeaderboard(params);
   }
 }

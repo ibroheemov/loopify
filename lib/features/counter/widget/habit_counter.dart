@@ -1,18 +1,22 @@
+import 'package:betterloop/domain/usecases/usecase.dart';
+import 'package:betterloop/features/counter/providers/counter_notifier.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/services/habit_log_service.dart';
 import 'package:betterloop/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class HabitCounter extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class HabitCounter extends ConsumerStatefulWidget {
   const HabitCounter({super.key, required this.habit});
   final Habit habit;
 
   @override
-  State<HabitCounter> createState() => _HabitCounterState();
+  ConsumerState<HabitCounter> createState() => _HabitCounterState();
 }
 
-class _HabitCounterState extends State<HabitCounter> {
+class _HabitCounterState extends ConsumerState<HabitCounter> {
   int current = 0;
   int target = 100;
   late Habit habit;
@@ -30,6 +34,11 @@ class _HabitCounterState extends State<HabitCounter> {
     setState(() {
       if (current < target) current++;
     });
+    if (habit.isChallenge && current % 10 == 0) {
+      print("UPDATE");
+      ref.read(counterNotifierProvider.notifier).updateProgress(
+          UpdateProgressParams(challengeId: habit.id, progress: 10));
+    }
   }
 
   void setCurrent() async {

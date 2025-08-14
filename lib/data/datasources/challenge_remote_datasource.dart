@@ -10,7 +10,8 @@ abstract class ChallengeRemoteDatasource {
   Future<void> joinChallenge(JoinChallengeParams params);
   Future<void> leaveChallenge(String challengeId);
   Future<bool> isUserInChallenge(String challengeId);
-  Future<List<Participant>> getWeeklyLeaderboard(String challengeId);
+  Stream<List<RankGroup>> getWeeklyLeaderboardStream(String challengeId);
+  Future<void> updateProgress(UpdateProgressParams params);
 }
 
 class ChallengeRemoteDatasourceImpl extends ChallengeRemoteDatasource {
@@ -94,7 +95,7 @@ class ChallengeRemoteDatasourceImpl extends ChallengeRemoteDatasource {
         // Add participant with initial progress
         transaction.set(participantRef, {
           // 'joinedAt': FieldValue.serverTimestamp(),
-          'progress': 0,
+          'totalProgress': 0,
           // 'streak': 0,
           'displayName': params.displayName,
           // 'lastUpdated': FieldValue.serverTimestamp(),
@@ -132,64 +133,134 @@ class ChallengeRemoteDatasourceImpl extends ChallengeRemoteDatasource {
 
         // Decrement participant count
         transaction.update(challengeRef, {
-          'totalParticipants': FieldValue.increment(-1),
+          'participants': FieldValue.increment(-1),
         });
       }
     });
   }
 
   @override
-  Future<List<Participant>> getWeeklyLeaderboard(String challengeId) async {
+  Stream<List<RankGroup>> getWeeklyLeaderboardStream(String challengeId) {
+    final participantsRef = FirebaseFirestore.instance
+        .collection('challenges')
+        .doc(challengeId)
+        .collection('participants');
+
+    return participantsRef
+        .orderBy('totalProgress', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      final List<RankGroup> ranks = [];
+      int currentRank = 1;
+      int? lastProgress;
+
+      final docs = snapshot.docs;
+      int index = 0;
+
+      while (ranks.length < 3 && index < docs.length) {
+        final progress = docs[index]['totalProgress'] as int;
+
+        if (lastProgress == null || progress < lastProgress) {
+          final tiedParticipants =
+              docs.where((doc) => doc['totalProgress'] == progress).map((doc) {
+            final data = doc.data();
+            return Participant(
+              id: doc.id,
+              displayName: data['displayName'],
+              totalProgress: data['totalProgress'],
+            );
+          }).toList();
+
+          ranks.add(
+              RankGroup(rank: currentRank, participants: tiedParticipants));
+          currentRank++;
+          lastProgress = progress;
+        }
+
+        index++;
+      }
+
+      return ranks;
+    });
+  }
+
+  @override
+  Future<List<RankGroup>> getWeeklyLeaderboard(String challengeId) async {
     try {
       final participantsRef = FirebaseFirestore.instance
           .collection('challenges')
           .doc(challengeId)
           .collection('participants');
 
-      // 1️⃣ Get top 3 participants
-      final top3Snap = await participantsRef
-          .orderBy('totalProgress', descending: true)
-          .limit(3)
-          .get();
+      final List<RankGroup> ranks = [];
+      int currentRank = 1;
+      int? lastProgress;
 
-      // No participants yet
-      if (top3Snap.docs.isEmpty) {
-        return [];
-      }
+      while (ranks.length < 3) {
+        // 1️⃣ Get next highest progress value
+        Query query =
+            participantsRef.orderBy('totalProgress', descending: true).limit(1);
 
-      final top3Participants = top3Snap.docs.map((doc) {
-        final data = doc.data();
-        return Participant(
-          id: doc.id,
-          displayName: data['displayName'] as String,
-          totalProgress: data['totalProgress'] as int,
-        );
-      }).toList();
+        if (lastProgress != null) {
+          query = query.where('totalProgress', isLessThan: lastProgress);
+        }
 
-      // 2️⃣ Get the last progress value in the top 3
-      final lastProgressInTop3 = top3Participants.last.totalProgress;
+        final topProgressSnap = await query.get();
+        if (topProgressSnap.docs.isEmpty) break; // No more participants
 
-      // 3️⃣ Get ALL participants tied with that last progress (if more than 3)
-      final tiedSnap = await participantsRef
-          .where('totalProgress', isEqualTo: lastProgressInTop3)
-          .get();
+        final topProgressValue =
+            topProgressSnap.docs.first['totalProgress'] as int;
 
-      final topWithTies = {for (var p in top3Participants) p.id: p};
+        // 2️⃣ Get all participants with that progress value
+        final tiedSnap = await participantsRef
+            .where('totalProgress', isEqualTo: topProgressValue)
+            .get();
 
-      for (var doc in tiedSnap.docs) {
-        topWithTies.putIfAbsent(doc.id, () {
+        final participants = tiedSnap.docs.map((doc) {
           final data = doc.data();
           return Participant(
             id: doc.id,
-            displayName: data['displayName'] as String,
-            totalProgress: data['totalProgress'] as int,
+            displayName: data['displayName'],
+            totalProgress: data['totalProgress'],
           );
-        });
+        }).toList();
+
+        ranks.add(RankGroup(rank: currentRank, participants: participants));
+        currentRank++;
+        lastProgress = topProgressValue;
       }
 
-      final finalTopList = topWithTies.values.toList();
+      return ranks;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-      return finalTopList;
+  @override
+  Future<void> updateProgress(UpdateProgressParams params) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) throw Exception("User not signed in");
+
+      final challengeRef =
+          firestore.collection('challenges').doc(params.challengeId);
+      final participantRef =
+          challengeRef.collection('participants').doc(user.uid);
+
+      await firestore.runTransaction((transaction) async {
+        final participantSnap = await transaction.get(participantRef);
+
+        if (participantSnap.exists) {
+          print("object");
+          transaction.set(
+            participantRef,
+            {
+              'totalProgress': FieldValue.increment(10),
+            },
+            SetOptions(merge: true),
+          );
+        }
+      });
     } catch (e) {
       rethrow;
     }

@@ -1,6 +1,7 @@
 import 'package:betterloop/features/challenges/providers/isuser_joined_provider.dart';
 import 'package:betterloop/features/challenges/providers/join_challenge_notifier.dart';
 import 'package:betterloop/models/challenge.dart';
+import 'package:betterloop/services/habit_log_service.dart';
 import 'package:betterloop/widgets/app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,6 +51,7 @@ class _LeaveButtonState extends ConsumerState<LeaveButton> {
     ref
         .read(challengeNotifierProvider.notifier)
         .leaveChallenge(widget.challenge.id);
+    HabitLogService.deleteLogsForHabit(widget.challenge.id);
     Navigator.pop(context);
   }
 }

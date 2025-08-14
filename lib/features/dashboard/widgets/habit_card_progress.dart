@@ -73,20 +73,16 @@ class _HabitCardProgressState extends State<HabitCardProgress>
     final habit = widget.habit;
     final showCounter = habit.goal.unit == "Times";
     final textTheme = Theme.of(context).textTheme;
-
+    final progress = HabitLogService.getProgressForHabit(habit.id);
     return AnimatedOpacity(
       duration: Duration(milliseconds: 700),
       opacity: opacity,
       child: FutureBuilder(
-        future: HabitLogService.getProgressForHabit(habit.id),
+        future: null,
         builder: (context, snapshot) {
-          int progress = 0;
-          int completeBy = 0;
-          final hasData = snapshot.hasData;
-          if (hasData) {
-            progress = snapshot.data!;
-            completeBy = ((habit.goal.value - progress) / 2).round();
-          }
+          // int progress = 0;
+          int completeBy = ((habit.goal.value - progress) / 2).round();
+
           bool isCompleByOne = completeBy == 1;
           bool isComplete = habit.goal.value == progress;
 
@@ -145,15 +141,13 @@ class _HabitCardProgressState extends State<HabitCardProgress>
                           Flexible(
                             child: AppCard(
                               disabled: habit.showcaseview,
-                              onTap: hasData
-                                  ? () => _onCompleteByX(completeBy)
-                                  : null,
+                              onTap: () => _onCompleteByX(completeBy),
                               color: Helpers.parseColor(habit.color),
                               padding: EdgeInsets.all(0),
                               margin: EdgeInsets.only(right: AppSpacing.md),
                               child: Center(
                                 child: Text(
-                                  hasData ? "$completeBy+" : "...",
+                                  "$completeBy+",
                                   style: textTheme.displayMedium
                                       ?.copyWith(color: Colors.white),
                                 ),

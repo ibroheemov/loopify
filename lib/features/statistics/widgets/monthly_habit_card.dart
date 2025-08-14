@@ -72,15 +72,12 @@ class _SimpleCalendarState extends State<SimpleCalendar> {
                 margin: EdgeInsets.only(bottom: 5),
               )
             : FutureBuilder(
-                future: widget.habit.goal.enabled
-                    ? HabitLogService.getProgressForHabit(widget.habit.id, date)
-                    : null,
+                future: null,
                 builder: (context, snapshot) {
-                  int progress = 0;
+                  final progress = HabitLogService.getProgressForHabit(
+                      widget.habit.id, date);
                   final hasData = snapshot.hasData;
-                  if (hasData) {
-                    progress = snapshot.data!;
-                  }
+
                   return Center(
                     child: Container(
                       width: 30,

@@ -1,4 +1,5 @@
 import 'package:betterloop/features/challenges/widgets/challenge_card.dart';
+import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,10 @@ class ChallengesScreen extends ConsumerWidget {
         data: (challenges) => AppContainer(
           child: ListView.builder(
             itemCount: challenges.length,
-            itemBuilder: (_, i) => ChallengeCard(challenge: challenges[i]),
+            itemBuilder: (_, i) => Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.md_lg),
+              child: ChallengeCard(challenge: challenges[i]),
+            ),
           ),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),

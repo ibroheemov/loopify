@@ -1,8 +1,10 @@
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/habit_log.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:collection/collection.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HabitLogService {
   static const String _boxName = 'habit_logs';
@@ -13,6 +15,11 @@ class HabitLogService {
     }
     return Hive.box<HabitLog>(_boxName);
   }
+
+  /// Get box
+  static Box<HabitLog> get _box => Hive.box<HabitLog>(_boxName);
+
+  static ValueListenable<Box<HabitLog>> get boxListenable => _box.listenable();
 
   static Future<void> deleteLogsForHabit(String habitId) async {
     final box = await openBox();
@@ -43,13 +50,11 @@ class HabitLogService {
     await box.add(log);
   }
 
-  static Future<int> getProgressForHabit(String habitId,
-      [DateTime? day]) async {
-    final box = await openBox();
+  static int getProgressForHabit(String habitId, [DateTime? day]) {
+    final box = _box;
     final logs = box.values.where((log) {
       return log.habitId == habitId &&
-          isSameDay(log.completedAt,
-              day ?? DateTime.now()); // you'll need a helper for this
+          isSameDay(log.completedAt, day ?? DateTime.now());
     });
 
     return logs.fold<int>(0, (sum, log) => sum + log.progress);
@@ -93,15 +98,14 @@ class HabitLogService {
         .toList();
   }
 
-  static Future<bool> isHabitCompleted(String habitId, DateTime date) async {
-    final box = await openBox();
-    final result = box.values.firstWhereOrNull((log) =>
-        log.habitId == habitId &&
-        log.completedAt.year == date.year &&
-        log.completedAt.month == date.month &&
-        log.completedAt.day == date.day);
+  static bool isHabitCompleted(String habitId, DateTime date) {
+    final box = _box;
+    final isCompleted = box.values.any((d) =>
+        d.completedAt.year == date.year &&
+        d.completedAt.month == date.month &&
+        d.completedAt.day == date.day);
 
-    return result != null;
+    return isCompleted;
   }
 
   /// Optional: remove a log (e.g. undo)
@@ -209,7 +213,7 @@ class HabitLogService {
             await HabitLogService.getProgressForHabit(habit.id, date);
         isPerfect = progress == habit.goal.value;
       } else {
-        isPerfect = await HabitLogService.isHabitCompleted(habit.id, date);
+        isPerfect = HabitLogService.isHabitCompleted(habit.id, date);
       }
 
       if (isPerfect) perfectDays++;

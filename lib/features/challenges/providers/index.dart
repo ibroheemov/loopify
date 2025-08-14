@@ -2,9 +2,11 @@ import 'package:betterloop/data/datasources/challenge_remote_datasource.dart';
 import 'package:betterloop/data/repositories/challenge_repository_impl.dart';
 import 'package:betterloop/domain/repositories/challenge_repository.dart';
 import 'package:betterloop/domain/usecases/get_challenges.dart';
+import 'package:betterloop/domain/usecases/get_weekly_leaderboard.dart';
 import 'package:betterloop/domain/usecases/isuser_inchallenge_usecase.dart';
 import 'package:betterloop/domain/usecases/join_challenge.dart';
 import 'package:betterloop/domain/usecases/leave_challenge.dart';
+import 'package:betterloop/domain/usecases/update_progress_usecase.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 
 final challengeRemoteDataSourceProvider = Provider<ChallengeRemoteDatasource>(
@@ -34,4 +36,15 @@ final isUserInChallengeUsecaseProvider =
     Provider<IsUserInChallengeUsecase>((ref) {
   final repo = ref.watch(challengeRepositoryProvider);
   return IsUserInChallengeUsecase(repo);
+});
+
+final weeklyLeaderboardUsecaseProvider =
+    Provider<GetWeeklyLeaderboardUsecase>((ref) {
+  final repo = ref.watch(challengeRepositoryProvider);
+  return GetWeeklyLeaderboardUsecase(repo);
+});
+
+final updateProgressUsecaseProvider = Provider<UpdateProgressUsecase>((ref) {
+  final repo = ref.watch(challengeRepositoryProvider);
+  return UpdateProgressUsecase(repo);
 });

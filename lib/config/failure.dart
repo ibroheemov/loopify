@@ -26,3 +26,7 @@ class IsUserInChallenge extends Failure {
   const IsUserInChallenge([String message = 'User is not the challenge'])
       : super(message);
 }
+
+class ServerFailure extends Failure {
+  const ServerFailure([String message = 'ServerFailure']) : super(message);
+}

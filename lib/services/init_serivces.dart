@@ -11,6 +11,7 @@ import 'package:betterloop/models/habit_type.dart';
 import 'package:betterloop/models/hive_icon.dart';
 import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/models/weekdays.dart';
+import 'package:betterloop/services/habit_log_service.dart';
 import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/services/joined_challenges_service.dart';
 import 'package:betterloop/services/notification_service.dart';
@@ -29,7 +30,6 @@ class InitSerivces {
     await _initFirebase();
     await _initSharedPrefs();
     await _initHive();
-    await HabitService.openBox();
   }
 
   Future<void> _initFirebase() async {
@@ -54,8 +54,6 @@ class InitSerivces {
   Future<void> _initHive() async {
     await Hive.initFlutter();
 
-    JoinedChallengesService.init();
-
     Hive.registerAdapter(HabitAdapter());
     Hive.registerAdapter(HabitAreaAdapter());
     Hive.registerAdapter(HabitTypeAdapter());
@@ -65,6 +63,10 @@ class InitSerivces {
     Hive.registerAdapter(WeekdaysAdapter());
     Hive.registerAdapter(ReminderAdapter());
     Hive.registerAdapter(ChallengeAdapter());
+
+    await JoinedChallengesService.init();
+    await HabitLogService.openBox();
+    await HabitService.openBox();
   }
 
   Future<void> initPlatformState() async {

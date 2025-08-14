@@ -1,6 +1,7 @@
 import 'package:betterloop/config/failure.dart';
 import 'package:betterloop/data/datasources/challenge_remote_datasource.dart';
 import 'package:betterloop/domain/repositories/challenge_repository.dart';
+import 'package:betterloop/domain/usecases/usecase.dart';
 import 'package:betterloop/models/challenge.dart';
 import 'package:betterloop/models/participant.dart';
 import 'package:dartz/dartz.dart';
@@ -51,10 +52,27 @@ class ChallengeRepositoryImpl implements ChallengeRepository {
   }
 
   @override
-  Future<Either<Failure, List<Participant>>> getWeeklyLeaderboard(
-      String challengeId) async {
+  Stream<Either<Failure, List<RankGroup>>> getWeeklyLeaderboard(
+      String challengeId) {
     try {
-      final result = await remoteDataSource.getWeeklyLeaderboard(challengeId);
+      return remoteDataSource
+          .getWeeklyLeaderboardStream(challengeId)
+          .map<Either<Failure, List<RankGroup>>>(
+            (ranks) => Right(ranks),
+          )
+          .handleError(
+            (error) => Left(ServerFailure(error.toString())),
+          );
+    } catch (e) {
+      return Stream.value(Left(ServerFailure(e.toString())));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateProgress(
+      UpdateProgressParams params) async {
+    try {
+      final result = await remoteDataSource.updateProgress(params);
       return Right(result);
     } catch (e) {
       return Left(IsUserInChallenge(e.toString()));

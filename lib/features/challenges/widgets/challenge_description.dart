@@ -11,32 +11,34 @@ class ChallengeDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      children: [
-        if (!challenge.forMuslims)
-          Text(
-            textAlign: TextAlign.center,
-            style: textTheme.titleLarge,
-            challenge.description,
-          ),
-        if (challenge.forMuslims)
-          Column(
-            children: [
-              Text(
-                textAlign: TextAlign.center,
-                style: textTheme.titleLarge,
-                challenge.hadith_en,
-              ),
-              SizedBox(height: AppSpacing.lg),
-              Text(
-                textAlign: TextAlign.center,
-                style:
-                    textTheme.titleLarge?.copyWith(wordSpacing: 5, height: 2),
-                challenge.hadith_ar,
-              ),
-            ],
-          )
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          if (!challenge.forMuslims)
+            Text(
+              textAlign: TextAlign.center,
+              style: textTheme.titleMedium,
+              challenge.description,
+            ),
+          if (challenge.forMuslims)
+            Column(
+              children: [
+                Text(
+                  textAlign: TextAlign.center,
+                  style: textTheme.titleMedium,
+                  challenge.hadith_en,
+                ),
+                SizedBox(height: AppSpacing.lg),
+                Text(
+                  textAlign: TextAlign.center,
+                  style: textTheme.titleMedium
+                      ?.copyWith(wordSpacing: 5, height: 2),
+                  challenge.hadith_ar,
+                ),
+              ],
+            )
+        ],
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:betterloop/features/challenges/pages/leaderboard_screen.dart';
 import 'package:betterloop/features/challenges/providers/isuser_joined_provider.dart';
 import 'package:betterloop/features/challenges/providers/join_challenge_notifier.dart';
 import 'package:betterloop/features/challenges/widgets/challenge_description.dart';
@@ -114,7 +115,7 @@ class _ChallengeDetailsScreenState extends ConsumerState<ChallengeDetailsScreen>
         case ChallengeTabs.description:
           return ChallengeDescription(challenge: widget.challenge);
         case ChallengeTabs.leaderboard:
-          return Center(child: Text("Leaderboard"));
+          return LeaderboardScreen(challenge: widget.challenge);
       }
     }).toList();
   }

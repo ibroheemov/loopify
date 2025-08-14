@@ -9,6 +9,7 @@ abstract class ChallengeRepository {
   Future<Either<Failure, bool>> isUserInChallenge(String challengeId);
   Future<Either<Failure, void>> joinChallenge(JoinChallengeParams params);
   Future<Either<Failure, void>> leaveChallenge(String challengeId);
-  Future<Either<Failure, List<Participant>>> getWeeklyLeaderboard(
+  Stream<Either<Failure, List<RankGroup>>> getWeeklyLeaderboard(
       String challengeId);
+  Future<Either<Failure, void>> updateProgress(UpdateProgressParams params);
 }
