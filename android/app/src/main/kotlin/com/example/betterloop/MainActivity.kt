@@ -1,4 +1,4 @@
-package com.app.apexhabit
+package com.loopify.app
 
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -9,7 +9,7 @@ import android.content.Context
 import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity: FlutterActivity() {
-    private val CHANNEL = "com.app.apexhabit/notifications"
+    private val CHANNEL = "com.loopify.app/notifications"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)

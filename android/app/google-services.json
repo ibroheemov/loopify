@@ -7,26 +7,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:817590284277:android:861ee8e7ef122ac849babc",
+        "mobilesdk_app_id": "1:817590284277:android:0d9ae20e42d6572a49babc",
         "android_client_info": {
-          "package_name": "com.app.apexhabit"
+          "package_name": "com.app.loopify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "817590284277-ejjap74anadb991cnat6u7pim69slr02.apps.googleusercontent.com",
+          "client_id": "817590284277-4nqnh2dled997jocu745bqacf3i4i0m3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.apexhabit",
-            "certificate_hash": "6abee37ef78f14bf113aa022f2d5450c69005faa"
+            "package_name": "com.app.loopify",
+            "certificate_hash": "d40be8e728562b1dc61dcb3b26172e7cea935136"
           }
         },
         {
-          "client_id": "817590284277-vdsi76ulam452ieo6e60e4kp061l3iro.apps.googleusercontent.com",
+          "client_id": "817590284277-cljcb6gfsjhg3hpgiv8jkgltcandc0at.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.apexhabit",
-            "certificate_hash": "d40be8e728562b1dc61dcb3b26172e7cea935136"
+            "package_name": "com.app.loopify",
+            "certificate_hash": "6abee37ef78f14bf113aa022f2d5450c69005faa"
           }
         },
         {

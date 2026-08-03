@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCRHv0q0M5W6IAKsgPRfSy7YtFPZOK_TTQ',
-    appId: '1:817590284277:android:861ee8e7ef122ac849babc',
+    appId: '1:817590284277:android:8240e54145cc1a5649babc',
     messagingSenderId: '817590284277',
     projectId: 'betterloop-5b55e',
     storageBucket: 'betterloop-5b55e.firebasestorage.app',
