@@ -63,9 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '817590284277',
     projectId: 'betterloop-5b55e',
     storageBucket: 'betterloop-5b55e.firebasestorage.app',
-    androidClientId: '817590284277-ejjap74anadb991cnat6u7pim69slr02.apps.googleusercontent.com',
-    iosClientId: '817590284277-cv11l29neiof76t8hg7hqroleu6unka5.apps.googleusercontent.com',
+    androidClientId:
+        '817590284277-ejjap74anadb991cnat6u7pim69slr02.apps.googleusercontent.com',
+    iosClientId:
+        '817590284277-cv11l29neiof76t8hg7hqroleu6unka5.apps.googleusercontent.com',
     iosBundleId: 'com.example.betterloop',
   );
-
 }
