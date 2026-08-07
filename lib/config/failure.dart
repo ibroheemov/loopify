@@ -13,20 +13,17 @@ abstract class Failure extends Equatable {
 }
 
 class BackupFailure extends Failure {
-  const BackupFailure([String message = 'Failed to back up data'])
-      : super(message);
+  const BackupFailure([super.message = 'Failed to back up data']);
 }
 
 class RestoreFailure extends Failure {
-  const RestoreFailure([String message = 'Failed to restore data'])
-      : super(message);
+  const RestoreFailure([super.message = 'Failed to restore data']);
 }
 
 class IsUserInChallenge extends Failure {
-  const IsUserInChallenge([String message = 'User is not the challenge'])
-      : super(message);
+  const IsUserInChallenge([super.message = 'User is not the challenge']);
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure([String message = 'ServerFailure']) : super(message);
+  const ServerFailure([super.message = 'ServerFailure']);
 }

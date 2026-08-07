@@ -2,7 +2,6 @@ import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/habit_log.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:collection/collection.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -139,7 +138,6 @@ class HabitLogService {
           log.completedAt.day == today.day,
     );
     if (logToRemove != null) {
-      print(logToRemove.habitId);
       await logToRemove.delete();
     }
   }
@@ -164,8 +162,7 @@ class HabitLogService {
             weekdays.selectedWeekDays.contains(weekday);
         if (!isExpectedDay) continue;
 
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
+        final progress = HabitLogService.getProgressForHabit(habit.id, date);
         totalProgress += progress;
         countedDays++;
       }
@@ -209,8 +206,7 @@ class HabitLogService {
       bool isPerfect = false;
 
       if (habit.goal.enabled) {
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
+        final progress = HabitLogService.getProgressForHabit(habit.id, date);
         isPerfect = progress == habit.goal.value;
       } else {
         isPerfect = HabitLogService.isHabitCompleted(habit.id, date);
@@ -248,11 +244,10 @@ class HabitLogService {
 
       bool isCompleted = false;
       if (habit.goal.enabled) {
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
+        final progress = HabitLogService.getProgressForHabit(habit.id, date);
         isCompleted = progress == habit.goal.value;
       } else {
-        isCompleted = await HabitLogService.isHabitCompleted(habit.id, date);
+        isCompleted = HabitLogService.isHabitCompleted(habit.id, date);
       }
 
       if (isCompleted) completedDays++;
@@ -295,11 +290,10 @@ class HabitLogService {
       bool isCompleted = false;
 
       if (habit.goal.enabled) {
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
+        final progress = HabitLogService.getProgressForHabit(habit.id, date);
         isCompleted = progress == habit.goal.value;
       } else {
-        isCompleted = await HabitLogService.isHabitCompleted(habit.id, date);
+        isCompleted = HabitLogService.isHabitCompleted(habit.id, date);
       }
 
       if (isCompleted) {

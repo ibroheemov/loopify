@@ -124,7 +124,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     SizedBox(height: 10),
                     Text(
                       user != null
-                          ? "${user?.displayName ?? user?.email}"
+                          ? "${user.displayName ?? user.email}"
                           : "Anonymous",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -258,6 +258,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   void onConfirm() async {
     await FirebaseAuth.instance.signOut();
+
+    if (!mounted) return;
+
     Navigator.pop(context);
     setState(() {});
   }

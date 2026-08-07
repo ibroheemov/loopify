@@ -1,7 +1,5 @@
 import 'package:betterloop/data/seed/default_habit_types.dart';
-import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/habit.dart';
-import 'package:betterloop/models/habit_type.dart';
 import 'package:betterloop/models/hive_icon.dart';
 import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/models/weekdays.dart';
@@ -58,7 +56,7 @@ class _HabitTypeTileState extends State<HabitTypeTile>
     return Container(
       width: double.infinity,
       height: 80,
-      margin: EdgeInsets.only(bottom: AppSpacing.sm_md),
+      margin: EdgeInsets.only(bottom: AppSpacing.smMd),
       child: AnimatedScale(
         duration: const Duration(milliseconds: 150),
         scale: _tapped ? 0.96 : 1.0,
@@ -128,7 +126,7 @@ class _HabitTypeTileState extends State<HabitTypeTile>
                 path: "assets/images/icons/alt-arrow-right.svg",
                 width: 30,
                 height: 30,
-                color: colorScheme.onBackground,
+                color: colorScheme.onSurface,
               ),
             ],
           ),

@@ -1,4 +1,3 @@
-import 'package:purchases_flutter/models/offerings_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class PurchaseService {

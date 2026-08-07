@@ -1,9 +1,7 @@
-import 'package:betterloop/features/custom_habit/providers/goal_provider.dart';
 import 'package:betterloop/features/custom_habit/providers/reminder_provider.dart';
 import 'package:betterloop/features/custom_habit/widgets/choose_weekdays.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/reminder.dart';
-import 'package:betterloop/services/notification_service.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/extensions.dart';
@@ -22,7 +20,7 @@ class ReminderSection extends ConsumerStatefulWidget {
 }
 
 class _ReminderSectionState extends ConsumerState<ReminderSection> {
-  final expansionController = ExpansionTileController();
+  final expansionController = ExpansibleController();
   int hour = 19;
   int minute = 0;
   bool enabled = false;
@@ -53,9 +51,9 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           initiallyExpanded: enabled,
-          tilePadding: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
+          tilePadding: EdgeInsets.symmetric(horizontal: AppSpacing.mdLg),
           childrenPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm)
-              .copyWith(bottom: AppSpacing.md_lg),
+              .copyWith(bottom: AppSpacing.mdLg),
           trailing: Icon(
             Icons.arrow_forward_ios_outlined,
             size: 20,
@@ -107,7 +105,7 @@ class _ReminderSectionState extends ConsumerState<ReminderSection> {
             ),
             SizedBox(height: AppSpacing.vertical),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.mdLg),
               child: ChooseWeekdays(
                   selectedWeekDays: selectedWeekDays,
                   onTapWeekDay: _onTapWeekDay),

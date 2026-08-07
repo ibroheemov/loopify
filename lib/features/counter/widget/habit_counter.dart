@@ -35,14 +35,13 @@ class _HabitCounterState extends ConsumerState<HabitCounter> {
       if (current < target) current++;
     });
     if (habit.isChallenge && current % 10 == 0) {
-      print("UPDATE");
       ref.read(counterNotifierProvider.notifier).updateProgress(
           UpdateProgressParams(challengeId: habit.id, progress: 10));
     }
   }
 
   void setCurrent() async {
-    final progress = await HabitLogService.getProgressForHabit(habit.id);
+    final progress = HabitLogService.getProgressForHabit(habit.id);
     setState(() {
       current = progress;
     });

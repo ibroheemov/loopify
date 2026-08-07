@@ -65,7 +65,6 @@ class SupportSection extends StatelessWidget {
       await launchUrl(emailUri);
     } else {
       // Handle the error
-      print('Could not launch email client');
     }
   }
 
@@ -81,7 +80,6 @@ class SupportSection extends StatelessWidget {
       await launchUrl(emailUri);
     } else {
       // Handle the error
-      print('Could not launch email client');
     }
   }
 }

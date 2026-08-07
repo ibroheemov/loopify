@@ -40,7 +40,7 @@ class PremiumFeature extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            GeneralIcons.check_circle_bold,
+            GeneralIcons.checkCircleBold,
             color: AppColors.primary,
           ),
           SizedBox(width: 5),

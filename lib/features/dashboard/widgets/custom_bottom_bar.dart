@@ -18,7 +18,7 @@ class CustomBottomBar extends StatelessWidget {
     GeneralIcons.betterloop,
     Icons.bubble_chart_outlined,
     Icons.stacked_line_chart_rounded,
-    GeneralIcons.settings_outline,
+    GeneralIcons.settingsOutline,
   ];
 
   static final List<String> labels = [
@@ -61,6 +61,8 @@ class CustomBottomBar extends StatelessWidget {
                         return IconButton.filled(
                           onPressed: () async {
                             final habits = await HabitService.getAllHabits();
+                            if (!context.mounted) return;
+
                             if (habits.length >= 2 && !isPro) {
                               Navigator.pushNamed(context, RouteNames.paywall);
                             } else {

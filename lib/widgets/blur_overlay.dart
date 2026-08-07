@@ -8,10 +8,10 @@ class BlurredOverlay extends StatelessWidget {
   final bool blur;
 
   const BlurredOverlay({
-    Key? key,
+    super.key,
     required this.child,
     this.blur = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class BlurredOverlay extends StatelessWidget {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
               child: Container(
-                color: Colors.black.withOpacity(0.2), // Optional dimming
+                color: Colors.black.withValues(alpha: 0.2), // Optional dimming
                 child: Center(
                   child: PrimaryButton(
                       isRounded: true,

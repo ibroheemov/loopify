@@ -69,7 +69,6 @@ class _StatisticsScreenState extends ConsumerState<StatisticsScreen> {
                             child: PerfectDays(),
                           ),
                           SizedBox(width: 15),
-                          // [ TODO ] Consider replacing with total times completed in a month
                           Expanded(
                             child: AveragePerDaily(),
                           ),

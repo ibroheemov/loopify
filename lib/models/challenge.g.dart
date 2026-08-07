@@ -25,8 +25,8 @@ class ChallengeAdapter extends TypeAdapter<Challenge> {
       forMuslims: fields[5] as bool,
       participants: fields[8] as int,
       color: fields[9] as String,
-      hadith_en: fields[6] as String,
-      hadith_ar: fields[7] as String,
+      hadithEn: fields[6] as String,
+      hadithAr: fields[7] as String,
     );
   }
 
@@ -47,9 +47,9 @@ class ChallengeAdapter extends TypeAdapter<Challenge> {
       ..writeByte(5)
       ..write(obj.forMuslims)
       ..writeByte(6)
-      ..write(obj.hadith_en)
+      ..write(obj.hadithEn)
       ..writeByte(7)
-      ..write(obj.hadith_ar)
+      ..write(obj.hadithAr)
       ..writeByte(8)
       ..write(obj.participants)
       ..writeByte(9)

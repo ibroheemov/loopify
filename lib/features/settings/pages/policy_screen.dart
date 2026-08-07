@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class PolicyScreen extends StatelessWidget {
+  const PolicyScreen({super.key});
+
   Future<String> loadPolicyText(String fileName) async {
     return await rootBundle.loadString('assets/$fileName');
   }

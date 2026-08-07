@@ -31,11 +31,11 @@ class HabitDaysBox extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
               color: isSelected
-                  ? colorScheme.primary.withOpacity(0.2)
+                  ? colorScheme.primary.withValues(alpha: 0.2)
                   : colorScheme.outline),
           shape: BoxShape.circle,
           color: isSelected
-              ? colorScheme.primary.withOpacity(0.2)
+              ? colorScheme.primary.withValues(alpha: 0.2)
               : AppColors.of(context).surfaceSecondary,
         ),
         child: Center(

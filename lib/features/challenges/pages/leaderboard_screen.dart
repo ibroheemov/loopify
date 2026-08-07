@@ -63,8 +63,6 @@ class LeaderboardScreen extends ConsumerWidget {
         final rankGroup = ranks[index];
         final rankLabel =
             "${rankGroup.rank}${_rankSuffix(rankGroup.rank)} place";
-        final participantsNames =
-            rankGroup.participants.map((p) => p.displayName).join(", ");
 
         return ListTile(
           title: Text(rankLabel,
@@ -89,8 +87,9 @@ class LeaderboardScreen extends ConsumerWidget {
       final isHighlighted = highlightedIds.contains(p.id);
       return AnimatedContainer(
         duration: Duration(milliseconds: 500),
-        color:
-            isHighlighted ? Colors.yellow.withOpacity(0.3) : Colors.transparent,
+        color: isHighlighted
+            ? Colors.yellow.withValues(alpha: 0.3)
+            : Colors.transparent,
         padding: EdgeInsets.all(8),
         child: Text(
           p.displayName,

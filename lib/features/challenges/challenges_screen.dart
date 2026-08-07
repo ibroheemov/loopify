@@ -20,7 +20,7 @@ class ChallengesScreen extends ConsumerWidget {
           child: ListView.builder(
             itemCount: challenges.length,
             itemBuilder: (_, i) => Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.md_lg),
+              padding: const EdgeInsets.only(bottom: AppSpacing.mdLg),
               child: ChallengeCard(challenge: challenges[i]),
             ),
           ),

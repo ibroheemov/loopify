@@ -55,7 +55,7 @@ class AppRouter {
         return _createAnimatedRoute(ProviderScope(
           overrides: [
             goalProvider.overrideWith((ref) => Goal.defaultGoal()),
-            habitIconProvider.overrideWith((ref) => GeneralIcons.camera_add),
+            habitIconProvider.overrideWith((ref) => GeneralIcons.cameraAdd),
             reminderProvider.overrideWith((ref) => Reminder.defaultReminder()),
             weekdaysProvider.overrideWith((ref) => Weekdays.defaultWeekdays())
           ],

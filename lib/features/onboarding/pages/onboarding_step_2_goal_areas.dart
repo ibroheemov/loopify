@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OnboardingStep2GoalAreas extends ConsumerStatefulWidget {
-  const OnboardingStep2GoalAreas({Key? key}) : super(key: key);
+  const OnboardingStep2GoalAreas({super.key});
 
   @override
   ConsumerState<OnboardingStep2GoalAreas> createState() =>
@@ -116,6 +116,8 @@ class _OnboardingStep2GoalAreasState
     await Future.delayed(const Duration(seconds: 1));
     SharedPrefsService().setOnboardingComplete(true);
     setState(() => isLoading = false);
+    if (!mounted) return;
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       RouteNames.home,

@@ -34,12 +34,12 @@ class _HabitChartWithDropdownState
     final Map<int, double> mapped = {};
 
     // Helper that returns the completion % for a single date.
-    Future<double> _getPercent(DateTime date) async {
+    Future<double> getPercent(DateTime date) async {
       if (habit.goal.enabled) {
-        final p = await HabitLogService.getProgressForHabit(habitId, date);
+        final p = HabitLogService.getProgressForHabit(habitId, date);
         return ((p / habit.goal.value) * 100).clamp(0, 100);
       } else {
-        final done = await HabitLogService.isHabitCompleted(habitId, date);
+        final done = HabitLogService.isHabitCompleted(habitId, date);
         return done ? 100.0 : 0.0;
       }
     }
@@ -60,7 +60,7 @@ class _HabitChartWithDropdownState
         continue;
       }
 
-      futures.add(_getPercent(date).then((percent) {
+      futures.add(getPercent(date).then((percent) {
         mapped[day] = percent;
       }));
     }
@@ -205,7 +205,7 @@ class _HabitChartWithDropdownState
                           show: true,
                           color: selectedHabit != null
                               ? Helpers.parseColor(selectedHabit.color)
-                                  .withOpacity(0.3)
+                                  .withValues(alpha: 0.3)
                               : null,
                         ),
                         dotData: FlDotData(show: false),

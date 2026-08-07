@@ -24,10 +24,10 @@ class Challenge {
   final bool forMuslims;
 
   @HiveField(6)
-  final String hadith_en;
+  final String hadithEn;
 
   @HiveField(7)
-  final String hadith_ar;
+  final String hadithAr;
 
   @HiveField(8)
   final int participants;
@@ -44,7 +44,7 @@ class Challenge {
     required this.forMuslims,
     required this.participants,
     required this.color,
-    this.hadith_en = "",
-    this.hadith_ar = "",
+    this.hadithEn = "",
+    this.hadithAr = "",
   });
 }

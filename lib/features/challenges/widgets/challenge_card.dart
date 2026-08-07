@@ -33,7 +33,7 @@ class ChallengeCard extends StatelessWidget {
             //       ),
             //     )),
             Padding(
-              padding: EdgeInsetsGeometry.all(AppSpacing.md_lg),
+              padding: EdgeInsetsGeometry.all(AppSpacing.mdLg),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

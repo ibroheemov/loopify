@@ -1,7 +1,6 @@
 import 'package:betterloop/models/challenge.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ChallengeDescription extends StatelessWidget {
   const ChallengeDescription({super.key, required this.challenge});
@@ -26,14 +25,14 @@ class ChallengeDescription extends StatelessWidget {
                 Text(
                   textAlign: TextAlign.center,
                   style: textTheme.titleMedium,
-                  challenge.hadith_en,
+                  challenge.hadithEn,
                 ),
                 SizedBox(height: AppSpacing.lg),
                 Text(
                   textAlign: TextAlign.center,
                   style: textTheme.titleMedium
                       ?.copyWith(wordSpacing: 5, height: 2),
-                  challenge.hadith_ar,
+                  challenge.hadithAr,
                 ),
               ],
             )

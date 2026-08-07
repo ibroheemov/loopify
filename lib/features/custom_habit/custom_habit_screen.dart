@@ -80,7 +80,7 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(
-                vertical: AppSpacing.lg, horizontal: AppSpacing.sm_md),
+                vertical: AppSpacing.lg, horizontal: AppSpacing.smMd),
             width: double.infinity,
             child: Form(
               key: _formKey,
@@ -168,6 +168,8 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
               if (habit == null) return;
               await HabitService.deleteHabit(habit!.id);
               await HabitLogService.deleteLogsForHabit(habit!.id);
+              if (!context.mounted) return;
+
               Navigator.pop(context);
               Navigator.pop(context);
               setState(() {});
@@ -181,7 +183,7 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
 
   void showAllIcons() {
     showModalBottomSheet<void>(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
@@ -203,7 +205,7 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: Helpers.parseColor(iconColor).withOpacity(0.2),
+          color: Helpers.parseColor(iconColor).withValues(alpha: 0.2),
         ),
         child: Icon(
           icon,

@@ -29,7 +29,7 @@ class SectionDailyGoal extends ConsumerStatefulWidget {
 }
 
 class _SectionDailyGoalState extends ConsumerState<SectionDailyGoal> {
-  final expansionController = ExpansionTileController();
+  final expansionController = ExpansibleController();
   bool initiallyExpanded = false;
   int unitInitalItem = 0;
   int valueInitalItem = 0;
@@ -59,9 +59,9 @@ class _SectionDailyGoalState extends ConsumerState<SectionDailyGoal> {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           initiallyExpanded: initiallyExpanded,
-          tilePadding: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg),
+          tilePadding: EdgeInsets.symmetric(horizontal: AppSpacing.mdLg),
           childrenPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm)
-              .copyWith(bottom: AppSpacing.md_lg),
+              .copyWith(bottom: AppSpacing.mdLg),
           trailing: Icon(
             Icons.arrow_forward_ios_outlined,
             size: 20,

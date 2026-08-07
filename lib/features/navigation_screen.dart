@@ -33,7 +33,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             info.updateAvailability == UpdateAvailability.updateAvailable;
       });
     } catch (e) {
-      print("Update check failed: $e");
+      rethrow;
     }
   }
 
@@ -46,7 +46,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         InAppUpdate.performImmediateUpdate();
       }
     } catch (e) {
-      print("Update check failed: $e");
+      rethrow;
     }
   }
 

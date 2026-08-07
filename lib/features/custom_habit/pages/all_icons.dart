@@ -21,7 +21,7 @@ class AllIcons extends StatefulWidget {
 
 class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
   late final TabController _tabController;
-  IconData selectedIcon = GeneralIcons.camera_add;
+  IconData selectedIcon = GeneralIcons.cameraAdd;
   late Color currentColor;
 
   @override
@@ -115,8 +115,9 @@ class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
 
     if (isPremium && !isPro) {
       await Future.delayed(Duration(milliseconds: 500));
-      setState(() => selectedIcon = GeneralIcons.camera_add);
+      setState(() => selectedIcon = GeneralIcons.cameraAdd);
       widget.ref.read(habitIconProvider.notifier).state = selectedIcon;
+      if (!mounted) return;
       Navigator.pushNamed(context, RouteNames.paywall);
     }
   }

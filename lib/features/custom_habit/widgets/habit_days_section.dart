@@ -44,8 +44,6 @@ class _SectionHabitDaysState extends ConsumerState<SectionHabitDays> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return AppCard(
       child: Column(
         children: [

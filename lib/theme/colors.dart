@@ -11,7 +11,7 @@ class AppColors {
   static const gray30 = Color(0xFFD1D5DB); // Amber
 
   // Light Theme Colors
-  static const light = _AppColorScheme(
+  static const light = AppColorScheme(
     background: Color(0xFFF9FAFB),
     backgroundDark: Color(0xFFEBEEF1),
     surface: Colors.white,
@@ -26,7 +26,7 @@ class AppColors {
   );
 
   // Dark Theme Colors
-  static const dark = _AppColorScheme(
+  static const dark = AppColorScheme(
     background: Color(0xFF121212),
     backgroundDark: Color.fromARGB(255, 13, 13, 13),
     surface: Color(0xFF1E1E1E),
@@ -41,13 +41,13 @@ class AppColors {
   );
 
   /// Call this with `context` to get the appropriate theme colors
-  static _AppColorScheme of(BuildContext context) {
+  static AppColorScheme of(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     return brightness == Brightness.dark ? dark : light;
   }
 }
 
-class _AppColorScheme {
+class AppColorScheme {
   final Color background;
   final Color backgroundDark;
   final Color surface;
@@ -60,7 +60,7 @@ class _AppColorScheme {
   final Color appBar;
   final Color surfaceSecondary;
 
-  const _AppColorScheme({
+  const AppColorScheme({
     required this.background,
     required this.backgroundDark,
     required this.surface,

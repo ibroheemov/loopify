@@ -1,13 +1,12 @@
 import 'dart:ui';
 
-import 'package:betterloop/features/settings/widgets/choose_themes.dart';
 import 'package:flutter/material.dart';
 
 class Helpers {
   static Color parseColor(String colorString) {
     colorString = colorString.replaceAll('#', '');
     int colorValue = int.parse(colorString, radix: 16);
-    return Color(colorValue).withOpacity(1);
+    return Color(colorValue).withValues(alpha: 1);
   }
 
   String timeAgoSinceDate(DateTime dateTime, {bool numericDates = true}) {

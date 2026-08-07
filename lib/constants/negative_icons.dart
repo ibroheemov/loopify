@@ -6,110 +6,105 @@ class NegativeIcons {
 
   static const String _kFontFam = 'NegativeIcons';
 
-  static const IconData angry_emoticon =
-      IconData(0xe900, fontFamily: _kFontFam);
-  static const IconData beer_limit = IconData(0xe901, fontFamily: _kFontFam);
-  static const IconData angry_man = IconData(0xe902, fontFamily: _kFontFam);
-  static const IconData beer_stop = IconData(0xe903, fontFamily: _kFontFam);
-  static const IconData cake_stop = IconData(0xe904, fontFamily: _kFontFam);
+  static const IconData angryEmoticon = IconData(0xe900, fontFamily: _kFontFam);
+  static const IconData beerLimit = IconData(0xe901, fontFamily: _kFontFam);
+  static const IconData angryMan = IconData(0xe902, fontFamily: _kFontFam);
+  static const IconData beerStop = IconData(0xe903, fontFamily: _kFontFam);
+  static const IconData cakeStop = IconData(0xe904, fontFamily: _kFontFam);
   static const IconData candy = IconData(0xe905, fontFamily: _kFontFam);
-  static const IconData cigarette_limit =
+  static const IconData cigaretteLimit =
       IconData(0xe906, fontFamily: _kFontFam);
-  static const IconData cigarette_stop =
-      IconData(0xe907, fontFamily: _kFontFam);
+  static const IconData cigaretteStop = IconData(0xe907, fontFamily: _kFontFam);
   static const IconData close = IconData(0xe908, fontFamily: _kFontFam);
-  static const IconData drink_can_soda =
-      IconData(0xe909, fontFamily: _kFontFam);
-  static const IconData gossip_stop_question =
+  static const IconData drinkCanSoda = IconData(0xe909, fontFamily: _kFontFam);
+  static const IconData gossipStopQuestion =
       IconData(0xe90a, fontFamily: _kFontFam);
-  static const IconData heartbeat_stop =
-      IconData(0xe90b, fontFamily: _kFontFam);
-  static const IconData id_card = IconData(0xe90c, fontFamily: _kFontFam);
-  static const IconData meal_limit = IconData(0xe90d, fontFamily: _kFontFam);
-  static const IconData meat_slice = IconData(0xe90e, fontFamily: _kFontFam);
-  static const IconData milk_shake_drink_stop =
+  static const IconData heartbeatStop = IconData(0xe90b, fontFamily: _kFontFam);
+  static const IconData idCard = IconData(0xe90c, fontFamily: _kFontFam);
+  static const IconData mealLimit = IconData(0xe90d, fontFamily: _kFontFam);
+  static const IconData meatSlice = IconData(0xe90e, fontFamily: _kFontFam);
+  static const IconData milkShakeDrinkStop =
       IconData(0xe90f, fontFamily: _kFontFam);
-  static const IconData mobile_screen_button_solid =
+  static const IconData mobileScreenButtonSolid =
       IconData(0xe910, fontFamily: _kFontFam);
-  static const IconData moon_stop = IconData(0xe911, fontFamily: _kFontFam);
-  static const IconData no_chat_stop = IconData(0xe912, fontFamily: _kFontFam);
-  static const IconData pacman_eat_stop =
-      IconData(0xe913, fontFamily: _kFontFam);
+  static const IconData moonStop = IconData(0xe911, fontFamily: _kFontFam);
+  static const IconData noChatStop = IconData(0xe912, fontFamily: _kFontFam);
+  static const IconData pacmanEatStop = IconData(0xe913, fontFamily: _kFontFam);
   static const IconData prohibited = IconData(0xe914, fontFamily: _kFontFam);
-  static const IconData ring_bell_notifcation_off =
+  static const IconData ringBellNotifcationOff =
       IconData(0xe915, fontFamily: _kFontFam);
-  static const IconData sad_emoticon_stop =
+  static const IconData sadEmoticonStop =
       IconData(0xe916, fontFamily: _kFontFam);
-  static const IconData sad_suffering_crying_emoticon_stop =
+  static const IconData sadSufferingCryingEmoticonStop =
       IconData(0xe917, fontFamily: _kFontFam);
-  static const IconData salt_limit = IconData(0xe918, fontFamily: _kFontFam);
-  static const IconData scream_angry_stop =
+  static const IconData saltLimit = IconData(0xe918, fontFamily: _kFontFam);
+  static const IconData screamAngryStop =
       IconData(0xe919, fontFamily: _kFontFam);
-  static const IconData scream_stop = IconData(0xe91a, fontFamily: _kFontFam);
-  static const IconData smartphone_block =
+  static const IconData screamStop = IconData(0xe91a, fontFamily: _kFontFam);
+  static const IconData smartphoneBlock =
       IconData(0xe91b, fontFamily: _kFontFam);
-  static const IconData trash_stop = IconData(0xe91c, fontFamily: _kFontFam);
+  static const IconData trashStop = IconData(0xe91c, fontFamily: _kFontFam);
 
   static final List<IconMeta> iconMetaList = [
-    IconMeta(NegativeIcons.angry_emoticon, 'angry_emoticon',
+    IconMeta(NegativeIcons.angryEmoticon, 'angry_emoticon',
         ['angry', 'emoticon', 'face', 'emotion']),
     IconMeta(
-        NegativeIcons.beer_limit, 'beer_limit', ['beer', 'limit', 'alcohol']),
-    IconMeta(NegativeIcons.angry_man, 'angry_man',
+        NegativeIcons.beerLimit, 'beer_limit', ['beer', 'limit', 'alcohol']),
+    IconMeta(NegativeIcons.angryMan, 'angry_man',
         ['angry', 'man', 'emotion', 'face']),
-    IconMeta(NegativeIcons.beer_stop, 'beer_stop', ['beer', 'stop', 'alcohol']),
-    IconMeta(NegativeIcons.cake_stop, 'cake_stop',
+    IconMeta(NegativeIcons.beerStop, 'beer_stop', ['beer', 'stop', 'alcohol']),
+    IconMeta(NegativeIcons.cakeStop, 'cake_stop',
         ['cake', 'stop', 'sugar', 'dessert']),
     IconMeta(
         NegativeIcons.candy, 'candy', ['candy', 'sweet', 'sugar', 'treat']),
-    IconMeta(NegativeIcons.cigarette_limit, 'cigarette_limit',
+    IconMeta(NegativeIcons.cigaretteLimit, 'cigarette_limit',
         ['cigarette', 'limit', 'smoking']),
-    IconMeta(NegativeIcons.cigarette_stop, 'cigarette_stop',
+    IconMeta(NegativeIcons.cigaretteStop, 'cigarette_stop',
         ['cigarette', 'stop', 'smoking']),
     IconMeta(
         NegativeIcons.close, 'close', ['close', 'cancel', 'exit', 'remove']),
-    IconMeta(NegativeIcons.drink_can_soda, 'drink_can_soda',
+    IconMeta(NegativeIcons.drinkCanSoda, 'drink_can_soda',
         ['drink', 'can', 'soda', 'beverage']),
-    IconMeta(NegativeIcons.gossip_stop_question, 'gossip_stop_question',
+    IconMeta(NegativeIcons.gossipStopQuestion, 'gossip_stop_question',
         ['gossip', 'stop', 'question', 'talk']),
-    IconMeta(NegativeIcons.heartbeat_stop, 'heartbeat_stop',
+    IconMeta(NegativeIcons.heartbeatStop, 'heartbeat_stop',
         ['heartbeat', 'stop', 'health']),
-    IconMeta(NegativeIcons.id_card, 'id_card',
+    IconMeta(NegativeIcons.idCard, 'id_card',
         ['id', 'card', 'identity', 'document']),
-    IconMeta(NegativeIcons.meal_limit, 'meal_limit', ['meal', 'limit', 'food']),
-    IconMeta(NegativeIcons.meat_slice, 'meat_slice',
+    IconMeta(NegativeIcons.mealLimit, 'meal_limit', ['meal', 'limit', 'food']),
+    IconMeta(NegativeIcons.meatSlice, 'meat_slice',
         ['meat', 'slice', 'food', 'protein']),
-    IconMeta(NegativeIcons.milk_shake_drink_stop, 'milk_shake_drink_stop',
+    IconMeta(NegativeIcons.milkShakeDrinkStop, 'milk_shake_drink_stop',
         ['milkshake', 'drink', 'stop', 'sugar']),
     IconMeta(
-        NegativeIcons.mobile_screen_button_solid,
+        NegativeIcons.mobileScreenButtonSolid,
         'mobile_screen_button_solid',
         ['mobile', 'screen', 'button', 'solid', 'device']),
-    IconMeta(NegativeIcons.moon_stop, 'moon_stop',
+    IconMeta(NegativeIcons.moonStop, 'moon_stop',
         ['moon', 'stop', 'night', 'sleep']),
-    IconMeta(NegativeIcons.no_chat_stop, 'no_chat_stop',
+    IconMeta(NegativeIcons.noChatStop, 'no_chat_stop',
         ['chat', 'no', 'stop', 'message']),
-    IconMeta(NegativeIcons.pacman_eat_stop, 'pacman_eat_stop',
+    IconMeta(NegativeIcons.pacmanEatStop, 'pacman_eat_stop',
         ['pacman', 'eat', 'stop', 'game']),
     IconMeta(NegativeIcons.prohibited, 'prohibited',
         ['prohibited', 'forbidden', 'stop']),
-    IconMeta(NegativeIcons.ring_bell_notifcation_off,
-        'ring_bell_notifcation_off', ['bell', 'ring', 'notification', 'off']),
-    IconMeta(NegativeIcons.sad_emoticon_stop, 'sad_emoticon_stop',
+    IconMeta(NegativeIcons.ringBellNotifcationOff, 'ring_bell_notifcation_off',
+        ['bell', 'ring', 'notification', 'off']),
+    IconMeta(NegativeIcons.sadEmoticonStop, 'sad_emoticon_stop',
         ['sad', 'emoticon', 'stop', 'emotion']),
     IconMeta(
-        NegativeIcons.sad_suffering_crying_emoticon_stop,
+        NegativeIcons.sadSufferingCryingEmoticonStop,
         'sad_suffering_crying_emoticon_stop',
         ['sad', 'suffering', 'crying', 'emoticon', 'stop']),
     IconMeta(
-        NegativeIcons.salt_limit, 'salt_limit', ['salt', 'limit', 'health']),
-    IconMeta(NegativeIcons.scream_angry_stop, 'scream_angry_stop',
+        NegativeIcons.saltLimit, 'salt_limit', ['salt', 'limit', 'health']),
+    IconMeta(NegativeIcons.screamAngryStop, 'scream_angry_stop',
         ['scream', 'angry', 'stop', 'emotion']),
-    IconMeta(NegativeIcons.scream_stop, 'scream_stop',
-        ['scream', 'stop', 'emotion']),
-    IconMeta(NegativeIcons.smartphone_block, 'smartphone_block',
+    IconMeta(
+        NegativeIcons.screamStop, 'scream_stop', ['scream', 'stop', 'emotion']),
+    IconMeta(NegativeIcons.smartphoneBlock, 'smartphone_block',
         ['smartphone', 'block', 'device']),
-    IconMeta(NegativeIcons.trash_stop, 'trash_stop',
+    IconMeta(NegativeIcons.trashStop, 'trash_stop',
         ['trash', 'stop', 'delete', 'garbage']),
   ];
 }

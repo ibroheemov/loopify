@@ -1,4 +1,3 @@
-import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 
@@ -18,8 +17,6 @@ class SingleSettingContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return AppCard(
       boxShadow: false,
       borderRadius: false,

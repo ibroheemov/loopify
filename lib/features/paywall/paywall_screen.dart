@@ -20,7 +20,6 @@ class PaywallScreen extends ConsumerStatefulWidget {
 class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   final PageController _pageController = PageController();
   Package? selectedPackage;
-  int _currentPage = 0;
   Package? sixMonthPackage;
   Package? monthlyPackage;
   Timer? _carouselTimer;
@@ -33,65 +32,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     // _startAutoScroll();
   }
 
-  void _startAutoScroll() {
-    _carouselTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-      int nextPage = (_currentPage + 1) % 3;
-      _pageController.animateToPage(
-        nextPage,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
-    });
-  }
-
   @override
   void dispose() {
     _carouselTimer?.cancel();
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _onPageChanged(int index) {
-    setState(() => _currentPage = index);
-  }
-
-  Widget _buildPage(String title, String subtitle) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Center(
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-        Text(
-          subtitle,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 16),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDots() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(3, (index) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 20),
-          width: _currentPage == index ? 10 : 6,
-          height: _currentPage == index ? 10 : 6,
-          decoration: BoxDecoration(
-            color: _currentPage == index ? Colors.white : Colors.grey,
-            shape: BoxShape.circle,
-          ),
-        );
-      }),
-    );
   }
 
   String buildPrice(Package? value) {
@@ -211,20 +156,20 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       if (offerings.current != null &&
           offerings.current!.availablePackages.isNotEmpty) {
         final packages = offerings.current!.availablePackages;
-        final rc_six_month = packages
+        final rcSixMonth = packages
             .firstWhereOrNull((val) => val.identifier == "\$rc_six_month");
-        final rc_monthly = packages
+        final rcMonthly = packages
             .firstWhereOrNull((val) => val.identifier == "\$rc_monthly");
 
         setState(() {
-          sixMonthPackage = rc_six_month;
-          monthlyPackage = rc_monthly;
+          sixMonthPackage = rcSixMonth;
+          monthlyPackage = rcMonthly;
           selectedPackage = sixMonthPackage;
         });
 
         // Display packages for sale
       }
-    } on PlatformException catch (e) {
+    } on PlatformException {
       // optional error handling
     }
   }

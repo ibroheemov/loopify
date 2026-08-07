@@ -2,7 +2,6 @@ import 'package:betterloop/constants/general_icons.dart';
 import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/services/habit_log_service.dart';
-import 'package:betterloop/services/habit_service.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/helpers.dart';
@@ -104,7 +103,7 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Helpers.parseColor(habit.color).withOpacity(0.2),
+        color: Helpers.parseColor(habit.color).withValues(alpha: 0.2),
       ),
       child: Icon(habit.icon.toIconData,
           color: Helpers.parseColor(habit.color), size: 30),
@@ -121,8 +120,8 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
             onPressed: widget.isComplete ? null : widget.onComplete,
             icon: Icon(
               widget.isComplete
-                  ? GeneralIcons.check_circle_bold
-                  : GeneralIcons.circle_outline,
+                  ? GeneralIcons.checkCircleBold
+                  : GeneralIcons.circleOutline,
               size: 35,
               color: widget.isComplete
                   ? colorScheme.primary
@@ -138,8 +137,8 @@ class _HabitCardState extends State<HabitCard> with TickerProviderStateMixin {
                 onPressed: () => _onComplete(isCompleted),
                 icon: Icon(
                   isCompleted
-                      ? GeneralIcons.check_circle_bold
-                      : GeneralIcons.circle_outline,
+                      ? GeneralIcons.checkCircleBold
+                      : GeneralIcons.circleOutline,
                   size: 35,
                   color: isCompleted
                       ? colorScheme.primary

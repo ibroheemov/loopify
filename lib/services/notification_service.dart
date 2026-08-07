@@ -88,7 +88,6 @@ class NotificationService {
         timeH: notificationItem.timeH,
         timeM: notificationItem.timeM,
       );
-      print(scheduledDate);
       await _localNotifications.zonedSchedule(
         id,
         notificationTemplate.title,
@@ -103,32 +102,6 @@ class NotificationService {
     }
   }
 
-  String _notificationTitle(int id) {
-    switch (id) {
-      case 1:
-        return "Global";
-      case 2:
-        return "Morning";
-      case 3:
-        return "Afternoon";
-      default:
-        return "Evening";
-    }
-  }
-
-  String _notificationBody(int id) {
-    switch (id) {
-      case 1:
-        return "Keep up the momentum! Remember to check in on your habits today";
-      case 2:
-        return "Good morning! Start your day strong by working on your habits";
-      case 3:
-        return "You're halfway through the day. Have you completed your habits yet?";
-      default:
-        return "The day is wrapping up. Don't forget to complete your habits before it ends!";
-    }
-  }
-
   Future<void> scheduleOneTimeNotification({
     required int id,
     required String title,
@@ -137,7 +110,6 @@ class NotificationService {
     required int timeH,
     required int timeM,
   }) async {
-    print('id: $id');
     // Cancel previously scheduled notifications
     await cancelNotifications(id);
 

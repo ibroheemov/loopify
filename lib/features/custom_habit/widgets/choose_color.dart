@@ -13,7 +13,7 @@ class AppColor {
   AppColor({required this.value, this.isPremium = false});
 }
 
-final app_colors = [
+final appColors = [
   AppColor(value: "1B8FFF"),
   AppColor(value: "10C580"),
   AppColor(value: "F8BD33"),
@@ -34,7 +34,7 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
 
   @override
   void initState() {
-    selectedColor = app_colors.first.value;
+    selectedColor = appColors.first.value;
     super.initState();
   }
 
@@ -49,11 +49,11 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
             childAspectRatio: 1.2,
             padding: const EdgeInsets.all(0),
             physics: const NeverScrollableScrollPhysics(),
-            crossAxisSpacing: AppSpacing.sm_md,
+            crossAxisSpacing: AppSpacing.smMd,
             shrinkWrap: true,
             crossAxisCount: 6,
             children: [
-              ...app_colors.map(
+              ...appColors.map(
                 (color) {
                   Color parsedColor = parseColor(color.value);
 
@@ -71,21 +71,21 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
                           // borderRadius: BorderRadius.circular(12),
                           color: parsedColor,
                         ),
-                        padding: EdgeInsets.all(AppSpacing.sm_md),
+                        padding: EdgeInsets.all(AppSpacing.smMd),
                         child: AnimatedContainer(
                           duration: Duration(milliseconds: 200),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isSelected
                                 ? Colors.white
-                                : Colors.white.withOpacity(0.3),
+                                : Colors.white.withValues(alpha: 0.3),
                           ),
                         ),
                       ),
                     );
                   });
                 },
-              ).toList(),
+              ),
             ],
           ),
         ),
@@ -101,9 +101,11 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
     await Future.delayed(Duration(milliseconds: 500));
     if (color.isPremium && !isPro) {
       setState(() {
-        selectedColor = app_colors.first.value;
+        selectedColor = appColors.first.value;
         ref.read(habitColorProvider.notifier).state = selectedColor;
       });
+      if (!mounted) return;
+
       Navigator.pushNamed(context, RouteNames.paywall);
     }
   }
@@ -111,6 +113,6 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
   static Color parseColor(String colorString) {
     colorString = colorString.replaceAll('#', '');
     int colorValue = int.parse(colorString, radix: 16);
-    return Color(colorValue).withOpacity(1.0);
+    return Color(colorValue).withValues(alpha: 1.0);
   }
 }

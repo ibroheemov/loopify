@@ -46,7 +46,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
 
     return SafeArea(
       child: Stack(
@@ -157,7 +156,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     }).toList();
 
     return todaysHabits;
-    return habits;
   }
 
   Widget _habitsBuilder(context, Box<Habit> box, _) {
@@ -185,7 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           itemBuilder: (context, index) {
             final habit = habits[index];
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSpacing.md_lg)
+              padding: EdgeInsets.symmetric(horizontal: AppSpacing.mdLg)
                   .copyWith(bottom: AppSpacing.md),
               child: WeeklyHabitTracker(habit: habit),
             );
