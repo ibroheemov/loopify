@@ -1,4 +1,3 @@
-
 import 'package:betterloop/constants/lifestyle_icons.dart';
 import 'package:betterloop/models/challenge.dart';
 import 'package:betterloop/models/goal.dart';
