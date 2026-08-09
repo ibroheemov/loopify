@@ -89,8 +89,8 @@ jobs:
         run: |
           flutter build ipa \
             --release \
-            --export-method app-store \
-            --no-tree-shake-icons
+            --no-tree-shake-icons \
+            --export-options-plist=ios/ExportOptions.plist
       
       - name: Find IPA
         run: |
