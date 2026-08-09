@@ -2,10 +2,10 @@ name: iOS Release
 
 on:
   push:
-  branches:
-    - main
-    - develop
-    - ci-cd-setup
+    branches:
+      - main
+      - develop
+      - ci-cd-setup
 
 jobs:
   release:
