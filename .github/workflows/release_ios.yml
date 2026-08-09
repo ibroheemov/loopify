@@ -96,7 +96,17 @@ jobs:
         run: |
           echo "Looking for IPA files..."
           find build -type f -name "*.ipa" -print
-      
+
+      - name: Install Fastlane
+        run: |
+          gem install fastlane -v 2.226.0 --no-document
+
+      - name: Check Fastlane
+        run: |
+          fastlane --version
+          ruby --version
+          openssl version
+
       - name: Upload to TestFlight
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
@@ -105,22 +115,52 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/private_keys"
 
-          KEY_PATH="$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
-
-          printf '%s' "$APP_STORE_CONNECT_PRIVATE_KEY" > "$KEY_PATH"
+          printf '%s' "$APP_STORE_CONNECT_PRIVATE_KEY" \
+            > "$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
 
           IPA_PATH=$(find build -type f -name "*.ipa" -print -quit)
 
           if [ -z "$IPA_PATH" ]; then
-            echo "ERROR: No IPA found"
+            echo "ERROR: No IPA file found."
             exit 1
           fi
 
           echo "Uploading: $IPA_PATH"
 
-          xcrun altool \
-            --upload-app \
-            --type ios \
-            --file "$IPA_PATH" \
-            --apiKey "$APP_STORE_CONNECT_KEY_ID" \
-            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
+          fastlane pilot upload \
+            --ipa "$IPA_PATH" \
+            --api_key_path <(
+              cat <<EOF
+          {
+            "key_id": "$APP_STORE_CONNECT_KEY_ID",
+            "issuer_id": "$APP_STORE_CONNECT_ISSUER_ID",
+            "key": "$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8",
+            "in_house": false
+          }
+          EOF
+            )
+
+      # - name: Upload to TestFlight
+      #   env:
+      #     APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      #     APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      #     APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+      #   run: |
+      #     mkdir -p "$RUNNER_TEMP/private_keys"
+
+      #     printf '%s' "$APP_STORE_CONNECT_PRIVATE_KEY" \
+      #       > "$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
+
+      #     fastlane pilot upload \
+      #       --ipa build/ios/ipa/*.ipa \
+      #       --api_key_path <(
+      #         cat <<EOF
+      #     {
+      #       "key_id": "$APP_STORE_CONNECT_KEY_ID",
+      #       "issuer_id": "$APP_STORE_CONNECT_ISSUER_ID",
+      #       "key": "$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8",
+      #       "in_house": false
+      #     }
+      #     EOF
+      #     )
+
