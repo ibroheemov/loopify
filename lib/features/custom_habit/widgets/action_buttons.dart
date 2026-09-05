@@ -90,10 +90,14 @@ class ActionButtons extends ConsumerWidget {
       await HabitService.addHabit(habit);
     }
 
+    // Always clear any previously scheduled reminders for this habit first,
+    // so edits (changed days, or turning the reminder off) don't leave stale
+    // notifications behind.
+    await NotificationService().cancelAllForHabit(habit.id);
+
     if (!reminder.enabled) return;
-    final hash = habitId.hashCode;
     await NotificationService().scheduleNotification(
-      notificationId: hash,
+      notificationId: habit.id.hashCode,
       habit: habit,
       notificationItem: NotificationItem(
           timeH: reminder.hour, timeM: reminder.minute, id: 1222),

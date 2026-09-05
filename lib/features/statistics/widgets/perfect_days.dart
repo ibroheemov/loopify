@@ -18,6 +18,7 @@ class _PerfectDaysState extends ConsumerState<PerfectDays> {
   Future<void> calculateStreak(Habit habit) async {
     final streak =
         await HabitLogService.getPerfectDaysForMonth(habit, DateTime.now());
+    if (!mounted) return;
     setState(() => value = streak);
   }
 

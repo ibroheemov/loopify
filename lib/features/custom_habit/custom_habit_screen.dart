@@ -1,6 +1,8 @@
 import 'package:betterloop/features/custom_habit/pages/all_icons.dart';
 import 'package:betterloop/features/custom_habit/providers/goal_provider.dart';
 import 'package:betterloop/features/custom_habit/providers/habit_color_provider.dart';
+import 'package:betterloop/features/custom_habit/providers/reminder_provider.dart';
+import 'package:betterloop/features/custom_habit/providers/weekdays_provider.dart';
 import 'package:betterloop/features/custom_habit/widgets/action_buttons.dart';
 import 'package:betterloop/features/custom_habit/widgets/choose_color.dart';
 import 'package:betterloop/features/custom_habit/widgets/daily_goal.dart';
@@ -54,6 +56,8 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
         ref.read(goalProvider.notifier).state = habit.goal;
         ref.read(habitIconProvider.notifier).state =
             IconData(habit.icon.code, fontFamily: habit.icon.family);
+        ref.read(reminderProvider.notifier).state = habit.reminder;
+        ref.read(weekdaysProvider.notifier).state = habit.weekdays;
       }
     });
   }

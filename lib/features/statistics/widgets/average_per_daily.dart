@@ -18,6 +18,7 @@ class _AveragePerDailyState extends ConsumerState<AveragePerDaily> {
   Future<void> calculateStreak(Habit habit) async {
     final streak =
         await HabitLogService.getAverageDailyProgress(habit, DateTime.now());
+    if (!mounted) return;
     setState(() => value = streak);
   }
 

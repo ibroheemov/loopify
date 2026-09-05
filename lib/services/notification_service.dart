@@ -176,4 +176,11 @@ class NotificationService {
   Future<void> cancelNotifications(int notificationId) async {
     await _localNotifications.cancel(notificationId);
   }
+
+  Future<void> cancelAllForHabit(String habitId) async {
+    final base = habitId.hashCode;
+    for (var weekday = 1; weekday <= 7; weekday++) {
+      await cancelNotifications(base + weekday);
+    }
+  }
 }
