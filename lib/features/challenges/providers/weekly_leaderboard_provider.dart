@@ -1,6 +1,5 @@
 import 'package:betterloop/models/participant.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'
-    show FutureProvider, StreamProvider;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show StreamProvider;
 
 import 'index.dart';
 

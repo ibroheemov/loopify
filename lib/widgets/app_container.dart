@@ -8,7 +8,7 @@ class AppContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.symmetric(horizontal: AppSpacing.md_lg),
+      padding: EdgeInsetsGeometry.symmetric(horizontal: AppSpacing.mdLg),
       child: child,
     );
   }

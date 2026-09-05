@@ -9,7 +9,6 @@ class HabitTypeService {
   }
 
   static Future<void> addHabitType(HabitType habitType) async {
-    print(habitType.id);
     final box = await _openBox();
     await box.put(habitType.id, habitType);
   }

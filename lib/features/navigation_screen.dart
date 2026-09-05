@@ -28,12 +28,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
     try {
       final info = await InAppUpdate.checkForUpdate();
 
+      if (!mounted) return;
       setState(() {
         updateAvailable =
             info.updateAvailability == UpdateAvailability.updateAvailable;
       });
     } catch (e) {
-      print("Update check failed: $e");
+      // In-app update check is best-effort; ignore failures (e.g. no Play Store on device).
     }
   }
 
@@ -42,11 +43,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
       final info = await InAppUpdate.checkForUpdate();
 
       if (info.updateAvailability == UpdateAvailability.updateAvailable) {
-        //  Immediate update
-        InAppUpdate.performImmediateUpdate();
+        await InAppUpdate.performImmediateUpdate();
       }
     } catch (e) {
-      print("Update check failed: $e");
+      // Update flow can fail (e.g. not installed from Play Store); nothing to recover here.
     }
   }
 

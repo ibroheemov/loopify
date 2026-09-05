@@ -26,15 +26,15 @@ class ChooseThemes extends ConsumerWidget {
                 onTap: () {
                   ref.read(themeProvider.notifier).setMode(e);
                 },
-                margin: EdgeInsets.only(bottom: AppSpacing.sm_md),
+                margin: EdgeInsets.only(bottom: AppSpacing.smMd),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(e.name.capitalize(), style: textTheme.titleMedium),
                     Icon(
                       currentTheme.name == e.name
-                          ? GeneralIcons.check_circle_bold
-                          : GeneralIcons.circle_outline,
+                          ? GeneralIcons.checkCircleBold
+                          : GeneralIcons.circleOutline,
                       size: 30,
                       color: currentTheme.name == e.name
                           ? colorScheme.primary

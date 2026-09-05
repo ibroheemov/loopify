@@ -16,13 +16,10 @@ class Weekday extends StatelessWidget {
   Widget build(BuildContext context) {
     final isCompleted = HabitLogService.isHabitCompleted(habit.id, date);
     // final progress = HabitLogService.getProgressForHabit(habit.id, date);
-    print("Weekday");
 
     return ValueListenableBuilder(
       valueListenable: HabitLogService.boxListenable, // expose listenable
       builder: (context, Box<HabitLog> box, _) {
-        print("Weekday");
-
         final progress = HabitLogService.getProgressForHabit(habit.id, date);
         return _buildWeekday(
           context: context,
@@ -65,7 +62,7 @@ class Weekday extends StatelessWidget {
                       : progress == 0
                           ? AppColors.of(context).onSurfaceBg
                           : Helpers.parseColor(habit.color)
-                              .withOpacity(progress / habit.goal.value),
+                              .withValues(alpha: progress / habit.goal.value),
                 ),
                 child: (isMonday || isSunday)
                     ? Center(child: Text(date.day.toString()))

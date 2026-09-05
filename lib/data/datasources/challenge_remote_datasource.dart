@@ -51,8 +51,8 @@ class ChallengeRemoteDatasourceImpl extends ChallengeRemoteDatasource {
           goal: Goal.fromJson(data['goal']),
           forMuslims: data['forMuslims'] as bool,
           color: data['color'] as String,
-          hadith_ar: data['hadith_ar'] as String,
-          hadith_en: data['hadith_en'] as String,
+          hadithAr: data['hadith_ar'] as String,
+          hadithEn: data['hadith_en'] as String,
           participants: data['participants'] as int,
         );
       }).toList();
@@ -184,7 +184,6 @@ class ChallengeRemoteDatasourceImpl extends ChallengeRemoteDatasource {
     });
   }
 
-  @override
   Future<List<RankGroup>> getWeeklyLeaderboard(String challengeId) async {
     try {
       final participantsRef = FirebaseFirestore.instance
@@ -251,7 +250,6 @@ class ChallengeRemoteDatasourceImpl extends ChallengeRemoteDatasource {
         final participantSnap = await transaction.get(participantRef);
 
         if (participantSnap.exists) {
-          print("object");
           transaction.set(
             participantRef,
             {

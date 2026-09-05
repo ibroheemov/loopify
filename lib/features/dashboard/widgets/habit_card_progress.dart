@@ -198,28 +198,15 @@ class _HabitCardProgressState extends State<HabitCardProgress>
     setState(() {});
   }
 
-  void _onCompleteByOne(Habit habit, [isTest = false]) {
-    if (isTest) {
-      _onCompleteByX(1);
-    } else {
-      HabitLogService.logCompletion(habit, 1);
-      controller.close();
-      setState(() {});
-    }
+  void _onCompleteByOne(Habit habit) {
+    HabitLogService.logCompletion(habit, 1);
+    controller.close();
+    setState(() {});
   }
 
-  void _onCompleteByX(int progress, [isTest = false]) {
-    if (isTest) {
-      final testCompleteBy = 7;
-      final days = 17;
-      final date = DateTime.now().add(Duration(days: days));
-      HabitLogService.logCompletion(widget.habit, testCompleteBy, date);
-      controller.close();
-      setState(() {});
-    } else {
-      HabitLogService.logCompletion(widget.habit, progress);
-      controller.close();
-      setState(() {});
-    }
+  void _onCompleteByX(int progress) {
+    HabitLogService.logCompletion(widget.habit, progress);
+    controller.close();
+    setState(() {});
   }
 }

@@ -1,6 +1,5 @@
 import 'package:betterloop/theme/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'colors.dart';
 import 'typography.dart';
 
@@ -16,12 +15,10 @@ final ThemeData appLightTheme = ThemeData(
   colorScheme: ColorScheme.light(
     primary: AppColors.primary,
     secondary: AppColors.secondary,
-    background: AppColors.light.background,
     surface: AppColors.light.surface,
     error: AppColors.error,
     onPrimary: Colors.white,
     onSecondary: Colors.white,
-    onBackground: AppColors.light.textPrimary,
     onSurface: AppColors.light.textPrimary,
     onError: Colors.white,
     outline: AppColors.light.outline,
@@ -34,7 +31,7 @@ final ThemeData appLightTheme = ThemeData(
     //   systemNavigationBarColor: AppColors.light.surface,
     //   systemNavigationBarIconBrightness: Brightness.dark,
     // ),
-    actionsPadding: EdgeInsets.only(right: AppSpacing.sm_md),
+    actionsPadding: EdgeInsets.only(right: AppSpacing.smMd),
   ),
   navigationBarTheme: NavigationBarThemeData(
     backgroundColor: Colors.transparent,
@@ -58,12 +55,10 @@ final ThemeData appDarkTheme = ThemeData(
   colorScheme: ColorScheme.dark(
     primary: AppColors.primary,
     secondary: AppColors.secondary,
-    background: AppColors.dark.background,
     surface: AppColors.dark.surface,
     error: AppColors.error,
     onPrimary: Colors.white,
     onSecondary: Colors.white,
-    onBackground: AppColors.dark.textPrimary,
     onSurface: AppColors.dark.textPrimary,
     onError: Colors.white,
     outline: AppColors.dark.outline,
@@ -83,7 +78,7 @@ final ThemeData appDarkTheme = ThemeData(
     //   systemNavigationBarColor: AppColors.dark.surface,
     //   systemNavigationBarIconBrightness: Brightness.light,
     // ),
-    actionsPadding: EdgeInsets.only(right: AppSpacing.sm_md),
+    actionsPadding: EdgeInsets.only(right: AppSpacing.smMd),
   ),
   progressIndicatorTheme: ProgressIndicatorThemeData().copyWith(
       color: AppColors.primary, linearTrackColor: AppColors.dark.outline),

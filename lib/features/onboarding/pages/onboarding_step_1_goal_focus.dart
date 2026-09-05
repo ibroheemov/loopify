@@ -19,18 +19,6 @@ class _OnboardingStep1GoalFocusState
     extends ConsumerState<OnboardingStep1GoalFocus> {
   GoalType? selectedGoal;
 
-  Future<void> _handleSelection(GoalType type) async {
-    setState(() {
-      selectedGoal = type;
-    });
-
-    // Save to SharedPreferences (assuming SharedPrefsService is already implemented)
-    // await SharedPrefsService.setGoalType(type.name);
-
-    // Move to next step
-    widget.goToNextPage();
-  }
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -152,7 +140,7 @@ class GoalFocusButton extends StatelessWidget {
               path: "assets/images/icons/alt-arrow-right.svg",
               width: 30,
               height: 30,
-              color: colorScheme.onBackground,
+              color: colorScheme.onSurface,
             ),
           ],
         ),

@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:betterloop/constants/lifestyle_icons.dart';
-import 'package:betterloop/features/custom_habit/widgets/choose_color.dart';
 import 'package:betterloop/models/challenge.dart';
 import 'package:betterloop/models/goal.dart';
 import 'package:betterloop/models/hive_icon.dart';

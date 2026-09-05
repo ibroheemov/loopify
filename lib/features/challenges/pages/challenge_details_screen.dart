@@ -70,7 +70,6 @@ class _ChallengeDetailsScreenState extends ConsumerState<ChallengeDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final challenge = widget.challenge;
     final isJoined = ref.watch(isUserJoinedProvider);
 

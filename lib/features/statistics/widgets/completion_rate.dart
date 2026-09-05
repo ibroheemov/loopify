@@ -18,6 +18,7 @@ class _CompletionRateState extends ConsumerState<CompletionRate> {
   Future<void> calculateStreak(Habit habit) async {
     final streak =
         await HabitLogService.getMonthlyCompletionRate(habit, DateTime.now());
+    if (!mounted) return;
     setState(() => value = streak);
   }
 

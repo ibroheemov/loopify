@@ -69,8 +69,6 @@ class _ChallengeOverviewState extends ConsumerState<ChallengeOverview> {
   }
 
   Widget _buildStatItem(String label, String value, IconData icon) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Column(
       children: [
         Text(

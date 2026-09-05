@@ -2,10 +2,7 @@ import 'package:betterloop/constants/general_icons.dart';
 import 'package:betterloop/features/settings/providers/backup_notifier.dart';
 import 'package:betterloop/features/settings/widgets/choose_themes.dart';
 import 'package:betterloop/features/settings/widgets/last_backup_time.dart';
-import 'package:betterloop/features/settings/widgets/reasons_to_upgrade.dart';
 import 'package:betterloop/features/settings/widgets/single_setting_container.dart';
-import 'package:betterloop/providers/pro_user_provider.dart';
-import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:betterloop/widgets/app_dialog.dart';
@@ -124,7 +121,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     SizedBox(height: 10),
                     Text(
                       user != null
-                          ? "${user?.displayName ?? user?.email}"
+                          ? "${user.displayName ?? user.email}"
                           : "Anonymous",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -134,7 +131,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   ],
                 ),
               ),
-              ReasonsToUpgrade(),
               SizedBox(height: AppSpacing.lg),
               Padding(
                 padding: const EdgeInsets.only(left: AppSpacing.md),
@@ -148,32 +144,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   padding: EdgeInsets.all(0),
                   child: Column(
                     children: [
-                      Consumer(builder: (context, ref, _) {
-                        final isProAsync = ref.watch(isProUserProvider);
-                        final isPro = isProAsync.hasValue && isProAsync.value!;
-
-                        return Column(
-                          children: [
-                            SingleSettingContainer(
-                              onTap: () => _onTapBackup(user, isPro),
-                              icondata: Icons.backup,
-                              title: "Backup",
-                              rightContent: backupState.isLoading
-                                  ? CupertinoActivityIndicator(radius: 12)
-                                  : null,
-                            ),
-                            Separator(),
-                            SingleSettingContainer(
-                              onTap: () => _onTapRestore(user, isPro),
-                              icondata: Icons.restart_alt_outlined,
-                              title: "Restore data",
-                              rightContent: restoreState.isLoading
-                                  ? CupertinoActivityIndicator(radius: 12)
-                                  : null,
-                            ),
-                          ],
-                        );
-                      }),
+                      SingleSettingContainer(
+                        onTap: () => _onTapBackup(user),
+                        icondata: Icons.backup,
+                        title: "Backup",
+                        rightContent: backupState.isLoading
+                            ? CupertinoActivityIndicator(radius: 12)
+                            : null,
+                      ),
+                      Separator(),
+                      SingleSettingContainer(
+                        onTap: () => _onTapRestore(user),
+                        icondata: Icons.restart_alt_outlined,
+                        title: "Restore data",
+                        rightContent: restoreState.isLoading
+                            ? CupertinoActivityIndicator(radius: 12)
+                            : null,
+                      ),
                       Separator(),
                       SingleSettingContainer(
                         onTap: () {
@@ -197,11 +184,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     );
   }
 
-  void _onTapBackup(User? user, bool isPro) {
-    if (!isPro) {
-      Navigator.pushNamed(context, RouteNames.paywall);
-      return;
-    }
+  void _onTapBackup(User? user) {
     if (user == null) {
       Navigator.pushNamed(context, "/sign_in").then((signedIn) {
         if (signedIn == true) {
@@ -213,11 +196,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     }
   }
 
-  void _onTapRestore(User? user, bool isPro) {
-    if (!isPro) {
-      Navigator.pushNamed(context, RouteNames.paywall);
-      return;
-    }
+  void _onTapRestore(User? user) {
     if (user == null) {
       Navigator.pushNamed(context, "/sign_in").then((signedIn) {
         if (signedIn == true) {
@@ -258,6 +237,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   void onConfirm() async {
     await FirebaseAuth.instance.signOut();
+
+    if (!mounted) return;
+
     Navigator.pop(context);
     setState(() {});
   }

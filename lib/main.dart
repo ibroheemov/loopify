@@ -2,6 +2,8 @@ import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/services/init_serivces.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/utils/theme_extension.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await InitSerivces().initServices();
+  await _initCrashlytics();
   final isOnboardingDone = SharedPrefsService().onboardingComplete;
 
   runApp(ProviderScope(
@@ -24,6 +27,17 @@ void main() async {
       initialRoute: isOnboardingDone ? RouteNames.home : RouteNames.welcome,
     ),
   ));
+}
+
+Future<void> _initCrashlytics() async {
+  await FirebaseCrashlytics.instance
+      .setCrashlyticsCollectionEnabled(!kDebugMode);
+
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 }
 
 class MyApp extends ConsumerStatefulWidget {

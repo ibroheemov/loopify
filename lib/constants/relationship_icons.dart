@@ -6,79 +6,78 @@ class RelationshipIcons {
 
   static const String _kFontFam = 'RelationshipIcons';
 
-  static const IconData family_network =
-      IconData(0xe900, fontFamily: _kFontFam);
-  static const IconData talk_conversation =
+  static const IconData familyNetwork = IconData(0xe900, fontFamily: _kFontFam);
+  static const IconData talkConversation =
       IconData(0xe901, fontFamily: _kFontFam);
-  static const IconData talk_success = IconData(0xe902, fontFamily: _kFontFam);
-  static const IconData hug_svgrepo_com =
-      IconData(0xe903, fontFamily: _kFontFam);
-  static const IconData gift_svgrepo_com =
+  static const IconData talkSuccess = IconData(0xe902, fontFamily: _kFontFam);
+  static const IconData hugSvgrepoCom = IconData(0xe903, fontFamily: _kFontFam);
+  static const IconData giftSvgrepoCom =
       IconData(0xe904, fontFamily: _kFontFam);
-  static const IconData person_saying_i_love =
+  static const IconData personSayingILove =
       IconData(0xe905, fontFamily: _kFontFam);
-  static const IconData document_add_svgrepo_com =
+  static const IconData documentAddSvgrepoCom =
       IconData(0xe908, fontFamily: _kFontFam);
-  static const IconData person_speaking =
+  static const IconData personSpeaking =
       IconData(0xe909, fontFamily: _kFontFam);
-  static const IconData conversation_talk_typing_chat =
+  static const IconData conversationTalkTypingChat =
       IconData(0xe90a, fontFamily: _kFontFam);
-  static const IconData no_bug = IconData(0xe90b, fontFamily: _kFontFam);
-  static const IconData conversation_talk_questioning =
+  static const IconData noBug = IconData(0xe90b, fontFamily: _kFontFam);
+  static const IconData conversationTalkQuestioning =
       IconData(0xe90c, fontFamily: _kFontFam);
-  static const IconData illustration_of_handshake_svgrepo_com =
+  static const IconData illustrationOfHandshakeSvgrepoCom =
       IconData(0xe90d, fontFamily: _kFontFam);
-  static const IconData meeting_consider_deliberate_about_meet =
+  static const IconData meetingConsiderDeliberateAboutMeet =
       IconData(0xe90e, fontFamily: _kFontFam);
-  static const IconData person_brain_network =
+  static const IconData personBrainNetwork =
       IconData(0xe90f, fontFamily: _kFontFam);
-  static const IconData salt_pot_svgrepo_com =
+  static const IconData saltPotSvgrepoCom =
       IconData(0xe910, fontFamily: _kFontFam);
-  static const IconData small_duck_svgrepo_com =
+  static const IconData smallDuckSvgrepoCom =
       IconData(0xe911, fontFamily: _kFontFam);
-  static const IconData smile_to_people =
-      IconData(0xe912, fontFamily: _kFontFam);
-  static const IconData t_shirt_tshirt_relationship =
+  static const IconData smileToPeople = IconData(0xe912, fontFamily: _kFontFam);
+  static const IconData tShirtTshirtRelationship =
       IconData(0xe913, fontFamily: _kFontFam);
-  static const IconData write_envelope_letter =
+  static const IconData writeEnvelopeLetter =
       IconData(0xe914, fontFamily: _kFontFam);
-  static const IconData syringe_svgrepo_com =
+  static const IconData syringeSvgrepoCom =
       IconData(0xe915, fontFamily: _kFontFam);
 
   static final List<IconMeta> iconMetaList = [
-    IconMeta(family_network, 'family_network',
+    IconMeta(familyNetwork, 'familyNetwork',
         ['family', 'connection', 'network', 'relatives', 'support']),
-    IconMeta(talk_conversation, 'talk_conversation',
+    IconMeta(talkConversation, 'talkConversation',
         ['talk', 'communication', 'chat', 'dialogue']),
-    IconMeta(talk_success, 'talk_success',
+    IconMeta(talkSuccess, 'talkSuccess',
         ['positive', 'conversation', 'success', 'communication']),
-    IconMeta(hug_svgrepo_com, 'hug_svgrepo_com',
+    IconMeta(hugSvgrepoCom, 'hugSvgrepoCom',
         ['hug', 'affection', 'support', 'comfort']),
-    IconMeta(gift_svgrepo_com, 'gift_svgrepo_com',
+    IconMeta(giftSvgrepoCom, 'giftSvgrepoCom',
         ['gift', 'present', 'surprise', 'gratitude']),
-    IconMeta(person_saying_i_love, 'person_saying_i_love',
+    IconMeta(personSayingILove, 'personSayingILove',
         ['love', 'expression', 'emotion', 'romance']),
-    IconMeta(document_add_svgrepo_com, 'document_add_svgrepo_com',
+    IconMeta(documentAddSvgrepoCom, 'documentAddSvgrepoCom',
         ['invite', 'request', 'relationship form']),
-    IconMeta(person_speaking, 'person_speaking',
+    IconMeta(personSpeaking, 'personSpeaking',
         ['talk', 'speak', 'communication', 'presentation']),
-    IconMeta(conversation_talk_typing_chat, 'conversation_talk_typing_chat',
+    IconMeta(conversationTalkTypingChat, 'conversationTalkTypingChat',
         ['chat', 'typing', 'talk', 'texting']),
-    IconMeta(no_bug, 'no_bug', ['no-conflict', 'peace', 'clarity', 'trust']),
-    IconMeta(conversation_talk_questioning, 'conversation_talk_questioning',
+    IconMeta(noBug, 'noBug', ['no-conflict', 'peace', 'clarity', 'trust']),
+    IconMeta(conversationTalkQuestioning, 'conversationTalkQuestioning',
         ['question', 'ask', 'talk', 'curiosity']),
     IconMeta(
-        illustration_of_handshake_svgrepo_com,
-        'illustration_of_handshake_svgrepo_com',
+        illustrationOfHandshakeSvgrepoCom,
+        'illustrationOfHandshakeSvgrepoCom',
         ['handshake', 'trust', 'deal', 'agreement']),
     IconMeta(
-        meeting_consider_deliberate_about_meet,
-        'meeting_consider_deliberate_about_meet',
+        meetingConsiderDeliberateAboutMeet,
+        'meetingConsiderDeliberateAboutMeet',
         ['meeting', 'discussion', 'relationship', 'planning']),
-    IconMeta(person_brain_network, 'person_brain_network',
+    IconMeta(personBrainNetwork, 'personBrainNetwork',
         ['thinking', 'connection', 'relationship', 'emotional intelligence']),
-    IconMeta(salt_pot_svgrepo_com, 'salt_pot_svgrepo_com',
+    IconMeta(saltPotSvgrepoCom, 'saltPotSvgrepoCom',
         ['salt', 'spice', 'flavor', 'humor']),
-    IconMeta(small_duck_svgrepo_com, 'small_duck_svgrepo_com', ['cute', 'pet'])
+    IconMeta(smallDuckSvgrepoCom, 'smallDuckSvgrepoCom', ['cute', 'pet']),
+    // If you add this icon to the metadata list:
+    // IconMeta(syringeSvgrepoCom, 'syringeSvgrepoCom', ['medical', 'health']),
   ];
 }

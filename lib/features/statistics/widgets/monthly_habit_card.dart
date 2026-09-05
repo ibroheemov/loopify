@@ -76,7 +76,6 @@ class _SimpleCalendarState extends State<SimpleCalendar> {
                 builder: (context, snapshot) {
                   final progress = HabitLogService.getProgressForHabit(
                       widget.habit.id, date);
-                  final hasData = snapshot.hasData;
 
                   return Center(
                     child: Container(
@@ -102,7 +101,6 @@ class _SimpleCalendarState extends State<SimpleCalendar> {
         rows.add(TableRow(children: List.from(currentRow)));
         currentRow.clear();
       }
-      print(day);
 
       day++;
     }
@@ -141,7 +139,7 @@ class _SimpleCalendarState extends State<SimpleCalendar> {
       return progress == 0
           ? AppColors.of(context).onSurfaceBg
           : Helpers.parseColor(widget.habit.color)
-              .withOpacity(progress / widget.habit.goal.value);
+              .withValues(alpha: progress / widget.habit.goal.value);
     }
   }
 }

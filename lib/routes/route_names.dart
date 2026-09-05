@@ -7,7 +7,6 @@ class RouteNames {
   static const String auth = '/auth';
   static const String statistics = '/statistics';
   static const String settings = '/settings';
-  static const String paywall = '/paywall';
   static const String policy = '/policy';
   static const String faqs = '/faqs';
   static const String counter = '/counter';

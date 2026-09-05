@@ -2,7 +2,6 @@ import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/habit_log.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:collection/collection.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -139,7 +138,6 @@ class HabitLogService {
           log.completedAt.day == today.day,
     );
     if (logToRemove != null) {
-      print(logToRemove.habitId);
       await logToRemove.delete();
     }
   }
@@ -164,8 +162,7 @@ class HabitLogService {
             weekdays.selectedWeekDays.contains(weekday);
         if (!isExpectedDay) continue;
 
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
+        final progress = HabitLogService.getProgressForHabit(habit.id, date);
         totalProgress += progress;
         countedDays++;
       }
@@ -209,8 +206,7 @@ class HabitLogService {
       bool isPerfect = false;
 
       if (habit.goal.enabled) {
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
+        final progress = HabitLogService.getProgressForHabit(habit.id, date);
         isPerfect = progress == habit.goal.value;
       } else {
         isPerfect = HabitLogService.isHabitCompleted(habit.id, date);
@@ -248,11 +244,10 @@ class HabitLogService {
 
       bool isCompleted = false;
       if (habit.goal.enabled) {
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
+        final progress = HabitLogService.getProgressForHabit(habit.id, date);
         isCompleted = progress == habit.goal.value;
       } else {
-        isCompleted = await HabitLogService.isHabitCompleted(habit.id, date);
+        isCompleted = HabitLogService.isHabitCompleted(habit.id, date);
       }
 
       if (isCompleted) completedDays++;
@@ -276,37 +271,41 @@ class HabitLogService {
     return completionRate;
   }
 
-  static Future<int> getCurrentMonthStreak(Habit habit) async {
+  static Future<int> getCurrentStreak(Habit habit) async {
     if (habit.weekdays.isXdaysPerWeek) {
       throw Exception("Use weekly streak logic for flexible weekly goals");
     }
 
-    final now = DateTime.now();
+    final today = DateTime.now();
+    final createdAt = habit.createdAt;
+    final startDate = DateTime(createdAt.year, createdAt.month, createdAt.day);
+
     int streak = 0;
+    DateTime date = DateTime(today.year, today.month, today.day);
 
-    for (int i = 0; i < now.day; i++) {
-      final date = DateTime(now.year, now.month, now.day - i);
-
-      // Only consider scheduled days
+    // Walk backwards day-by-day from today until the habit's creation date,
+    // so the streak doesn't artificially reset at the start of a calendar month.
+    while (!date.isBefore(startDate)) {
       final isScheduledDay =
           habit.weekdays.selectedWeekDays.contains(date.weekday);
-      if (!isScheduledDay) continue;
 
-      bool isCompleted = false;
+      if (isScheduledDay) {
+        bool isCompleted;
+        if (habit.goal.enabled) {
+          final progress = HabitLogService.getProgressForHabit(habit.id, date);
+          isCompleted = progress == habit.goal.value;
+        } else {
+          isCompleted = HabitLogService.isHabitCompleted(habit.id, date);
+        }
 
-      if (habit.goal.enabled) {
-        final progress =
-            await HabitLogService.getProgressForHabit(habit.id, date);
-        isCompleted = progress == habit.goal.value;
-      } else {
-        isCompleted = await HabitLogService.isHabitCompleted(habit.id, date);
+        if (isCompleted) {
+          streak++;
+        } else {
+          break; // streak broken on a scheduled day
+        }
       }
 
-      if (isCompleted) {
-        streak++;
-      } else {
-        break; // streak broken on a scheduled day
-      }
+      date = date.subtract(const Duration(days: 1));
     }
 
     return streak;

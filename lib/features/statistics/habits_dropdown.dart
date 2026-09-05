@@ -50,8 +50,8 @@ class _HabitsDropdownState extends ConsumerState<HabitsDropdown> {
       requestFocusOnTap: false,
       leadingIcon: selectedHabit != null
           ? Icon(
-              selectedHabit?.icon.toIconData ?? Icons.warning_amber_rounded,
-              color: Helpers.parseColor(selectedHabit!.color),
+              selectedHabit.icon.toIconData,
+              color: Helpers.parseColor(selectedHabit.color),
             )
           : Icon(
               Icons.warning_amber_rounded,

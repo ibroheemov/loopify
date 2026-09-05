@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FaqsScreen extends StatelessWidget {
+  const FaqsScreen({super.key});
+
   Future<String> loadText(String fileName) async {
     return await rootBundle.loadString('assets/$fileName');
   }

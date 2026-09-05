@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class HabitAreaCard extends StatelessWidget {
   final List<Widget> children;
   final HabitArea area;
-  final ExpansionTileController? controller;
+  final ExpansibleController? controller;
   final void Function(bool)? onExpansionChanged;
 
   const HabitAreaCard({

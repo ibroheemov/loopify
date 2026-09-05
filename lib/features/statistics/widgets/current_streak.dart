@@ -21,7 +21,8 @@ class _CurrentStreakState extends ConsumerState<CurrentStreak> {
       setState(() => isXdaysPerWeek = true);
       return;
     }
-    final streak = await HabitLogService.getCurrentMonthStreak(habit);
+    final streak = await HabitLogService.getCurrentStreak(habit);
+    if (!mounted) return;
     setState(() => value = streak);
   }
 
