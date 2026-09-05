@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:betterloop/config/auth_config.dart';
 import 'package:betterloop/firebase_options.dart';
 import 'package:betterloop/models/challenge.dart';
@@ -19,14 +17,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 
 import 'shared_prefs_service.dart';
 
 class InitSerivces {
   Future<void> initServices() async {
     await _initNotifications();
-    await initPlatformState();
     await _initFirebase();
     await _initSharedPrefs();
     await _initHive();
@@ -67,22 +63,5 @@ class InitSerivces {
     await JoinedChallengesService.init();
     await HabitLogService.openBox();
     await HabitService.openBox();
-  }
-
-  Future<void> initPlatformState() async {
-    await Purchases.setLogLevel(LogLevel.info);
-
-    PurchasesConfiguration configuration;
-    if (Platform.isAndroid) {
-      configuration =
-          PurchasesConfiguration("goog_tyGrHyGYhkPeUUJnfleSJfPUEUy");
-    } else if (Platform.isIOS) {
-      configuration =
-          PurchasesConfiguration("<revenuecat_project_apple_api_key>");
-    } else {
-      configuration =
-          PurchasesConfiguration("goog_tyGrHyGYhkPeUUJnfleSJfPUEUy");
-    }
-    await Purchases.configure(configuration);
   }
 }

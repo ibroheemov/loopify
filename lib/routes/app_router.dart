@@ -8,7 +8,6 @@ import 'package:betterloop/features/custom_habit/providers/reminder_provider.dar
 import 'package:betterloop/features/custom_habit/providers/weekdays_provider.dart';
 import 'package:betterloop/features/navigation_screen.dart';
 import 'package:betterloop/features/onboarding/welcome_screen.dart';
-import 'package:betterloop/features/paywall/paywall_screen.dart';
 import 'package:betterloop/features/settings/pages/faqs_screen.dart';
 import 'package:betterloop/features/settings/pages/policy_screen.dart';
 import 'package:betterloop/features/settings/settings_screen.dart';
@@ -68,8 +67,6 @@ class AppRouter {
           ],
           child: StatisticsScreen(),
         ));
-      case RouteNames.paywall:
-        return _createAnimatedRoute(PaywallScreen());
       case RouteNames.settings:
         return _createAnimatedRoute(ProviderScope(
           child: SettingsScreen(),

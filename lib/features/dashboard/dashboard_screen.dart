@@ -84,21 +84,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                   Text(DateFormat.MMMMd().format(DateTime.now()),
                       style: textTheme.titleSmall),
                   _buildTabBar(),
-                  // IconButton.filled(
-                  //     style: IconButton.styleFrom(
-                  //         fixedSize: Size(52, 52),
-                  //         backgroundColor:
-                  //             AppColors.of(context).backgroundDark),
-                  //     color: AppColors.of(context).textSecondary,
-                  //     onPressed: () {
-                  //       Navigator.pushNamed(context, RouteNames.paywall);
-                  //     },
-                  //     icon: Center(
-                  //       child: Icon(
-                  //         GeneralIcons.settings_outline,
-                  //         size: 30,
-                  //       ),
-                  //     ))
                 ],
               ),
             ),

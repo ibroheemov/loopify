@@ -1,25 +1,16 @@
 import 'package:betterloop/features/custom_habit/providers/habit_color_provider.dart';
-import 'package:betterloop/providers/pro_user_provider.dart';
-import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/widgets/app_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppColor {
-  final String value;
-  final bool isPremium;
-
-  AppColor({required this.value, this.isPremium = false});
-}
-
 final appColors = [
-  AppColor(value: "1B8FFF"),
-  AppColor(value: "10C580"),
-  AppColor(value: "F8BD33"),
-  AppColor(value: "933DFF"),
-  AppColor(value: "FE7450"),
-  AppColor(value: "F63466"),
+  "1B8FFF",
+  "10C580",
+  "F8BD33",
+  "933DFF",
+  "FE7450",
+  "F63466",
 ];
 
 class ChooseColor extends ConsumerStatefulWidget {
@@ -34,7 +25,7 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
 
   @override
   void initState() {
-    selectedColor = appColors.first.value;
+    selectedColor = appColors.first;
     super.initState();
   }
 
@@ -55,35 +46,28 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
             children: [
               ...appColors.map(
                 (color) {
-                  Color parsedColor = parseColor(color.value);
+                  Color parsedColor = parseColor(color);
 
-                  final isSelected = selectedColor == color.value;
-                  return Consumer(builder: (context, ref, _) {
-                    final isProAsync = ref.watch(isProUserProvider);
-                    final isPro = isProAsync.hasValue && isProAsync.value!;
-                    // final isPro = true;
-
-                    return GestureDetector(
-                      onTap: () => _onTapColor(color, isPro),
-                      child: Container(
+                  final isSelected = selectedColor == color;
+                  return GestureDetector(
+                    onTap: () => _onTapColor(color),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: parsedColor,
+                      ),
+                      padding: EdgeInsets.all(AppSpacing.smMd),
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 200),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          // borderRadius: BorderRadius.circular(12),
-                          color: parsedColor,
-                        ),
-                        padding: EdgeInsets.all(AppSpacing.smMd),
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: isSelected
-                                ? Colors.white
-                                : Colors.white.withValues(alpha: 0.3),
-                          ),
+                          color: isSelected
+                              ? Colors.white
+                              : Colors.white.withValues(alpha: 0.3),
                         ),
                       ),
-                    );
-                  });
+                    ),
+                  );
                 },
               ),
             ],
@@ -93,21 +77,11 @@ class _ChooseColorState extends ConsumerState<ChooseColor> {
     );
   }
 
-  void _onTapColor(AppColor color, bool isPro) async {
+  void _onTapColor(String color) {
     setState(() {
-      ref.read(habitColorProvider.notifier).state = color.value;
-      selectedColor = color.value;
+      ref.read(habitColorProvider.notifier).state = color;
+      selectedColor = color;
     });
-    await Future.delayed(Duration(milliseconds: 500));
-    if (color.isPremium && !isPro) {
-      setState(() {
-        selectedColor = appColors.first.value;
-        ref.read(habitColorProvider.notifier).state = selectedColor;
-      });
-      if (!mounted) return;
-
-      Navigator.pushNamed(context, RouteNames.paywall);
-    }
   }
 
   static Color parseColor(String colorString) {

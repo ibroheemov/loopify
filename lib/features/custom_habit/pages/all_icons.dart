@@ -3,7 +3,6 @@ import 'package:betterloop/features/custom_habit/models/icontype.dart';
 import 'package:betterloop/features/custom_habit/providers/habit_icon_provider.dart';
 import 'package:betterloop/features/custom_habit/widgets/icon_box.dart';
 import 'package:betterloop/models/icon_meta.dart';
-import 'package:betterloop/routes/route_names.dart';
 import 'package:betterloop/theme/colors.dart';
 import 'package:betterloop/theme/spacing.dart';
 import 'package:betterloop/utils/extensions.dart';
@@ -73,11 +72,7 @@ class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
                 final iconmeta = tabicons[index];
                 final isSelected = selectedIcon == iconmeta.icon;
                 return IconBox(
-                  onTap: (isPremium, isPro) => _onTapIcon(
-                    icon: iconmeta.icon,
-                    isPremium: isPremium,
-                    isPro: isPro,
-                  ),
+                  onTap: () => _onTapIcon(iconmeta.icon),
                   icon: iconmeta.icon,
                   isSelected: isSelected,
                 );
@@ -105,20 +100,8 @@ class _AllIconsState extends State<AllIcons> with TickerProviderStateMixin {
     );
   }
 
-  void _onTapIcon({
-    required IconData icon,
-    required bool isPremium,
-    required bool isPro,
-  }) async {
+  void _onTapIcon(IconData icon) {
     setState(() => selectedIcon = icon);
     widget.ref.read(habitIconProvider.notifier).state = selectedIcon;
-
-    if (isPremium && !isPro) {
-      await Future.delayed(Duration(milliseconds: 500));
-      setState(() => selectedIcon = GeneralIcons.cameraAdd);
-      widget.ref.read(habitIconProvider.notifier).state = selectedIcon;
-      if (!mounted) return;
-      Navigator.pushNamed(context, RouteNames.paywall);
-    }
   }
 }
