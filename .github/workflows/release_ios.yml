@@ -90,6 +90,7 @@ jobs:
           flutter build ipa \
             --release \
             --no-tree-shake-icons \
+            --build-number="${{ github.run_number }}" \
             --export-options-plist=ios/ExportOptions.plist
       
       - name: Find IPA
