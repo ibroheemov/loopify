@@ -55,6 +55,7 @@ class _CustomHabitScreenState extends ConsumerState<CustomHabitScreen> {
         ref.read(habitColorProvider.notifier).state = habit.color;
         ref.read(goalProvider.notifier).state = habit.goal;
         ref.read(habitIconProvider.notifier).state =
+            // ignore: non_const_argument_for_const_parameter
             IconData(habit.icon.code, fontFamily: habit.icon.family);
         ref.read(reminderProvider.notifier).state = habit.reminder;
         ref.read(weekdaysProvider.notifier).state = habit.weekdays;
