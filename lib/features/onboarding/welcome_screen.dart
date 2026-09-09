@@ -25,7 +25,7 @@ class WelcomeScreen extends StatelessWidget {
             //     size: 80, color: Theme.of(context).colorScheme.primary),
             const SizedBox(height: AppSpacing.lg),
             Text(
-              'Welcome to Loopify!',
+              'Welcome to Upmind!',
               style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
             ),
