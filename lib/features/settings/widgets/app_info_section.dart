@@ -51,8 +51,8 @@ class AppInfoSection extends StatelessWidget {
               SingleSettingContainer(
                 onTap: () {
                   Share.share(
-                    'Check out Loopify, the ultimate habit tracker app! Download now: https://play.google.com/store/apps/details?id=com.loopify.app', // Replace with your actual app link
-                    subject: 'Join Loopify Today!',
+                    'Check out Upmind, the ultimate habit tracker app! Download now: https://play.google.com/store/apps/details?id=com.loopify.app', // Replace with your actual app link
+                    subject: 'Join Upmind Today!',
                   );
                 },
                 icondata: Icons.share,

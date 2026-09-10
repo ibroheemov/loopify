@@ -19,6 +19,7 @@ import 'package:betterloop/models/habit.dart';
 import 'package:betterloop/models/reminder.dart';
 import 'package:betterloop/models/weekdays.dart';
 import 'package:betterloop/routes/route_names.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,10 +91,26 @@ class AppRouter {
           },
         );
       default:
-        return MaterialPageRoute(
-          builder: (_) => const Scaffold(
-            body: Center(child: Text('Page not found')),
-          ),
+        // Unrecognized route requests can reach here from outside our own
+        // navigation calls - e.g. Firebase Dynamic Links' native SDK still
+        // performs an automatic post-install "weak match" check on first
+        // launch (a leftover of the now-shutdown Dynamic Links service,
+        // linked transitively via firebase_ui_auth), which can surface as a
+        // stray push to a URL like "/link/?dismiss=1&is_weak_match=1".
+        // Rather than show a broken "Page not found" screen to real users,
+        // log it and leave the user exactly where they were.
+        FirebaseCrashlytics.instance
+            .log('Ignored unroutable navigation request: ${settings.name}');
+        return PageRouteBuilder(
+          opaque: false,
+          pageBuilder: (context, animation, secondaryAnimation) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
+            });
+            return const SizedBox.shrink();
+          },
         );
     }
   }
